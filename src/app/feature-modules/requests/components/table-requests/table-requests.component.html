@@ -1,0 +1,30 @@
+
+<ng-container *ngIf="(records$ | async)?.length; else noResult">
+
+    <!-- (sortChange)="sort($event)" -->
+
+    <!-- Table -->
+    <app-table-wrapper 
+    [records$]="records$" 
+    [config]="tableConfig" 
+    (actionTaken)="mapTableAction($event)" 
+    (sortChange)="fireSortRequestsAction($event)"
+    [showAndHideShowDetails]="true"
+    (showDetailsChange)="toggleShowDetails($event)"
+    [classes]="pagination?.pageSize > 10 ? 'scroll' : 'no-scroll'"
+    [showAndHideDrippledColumns]="true"
+    >
+    </app-table-wrapper>
+
+
+    <!-- Pagination -->
+    <app-pagination [config]="pagination" (paginationChange)="firePaginateRequestsAction($event)">
+    </app-pagination>
+
+</ng-container>
+
+
+<ng-template #noResult>
+    <app-no-result></app-no-result>
+</ng-template>
+

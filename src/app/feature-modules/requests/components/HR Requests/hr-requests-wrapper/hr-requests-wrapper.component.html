@@ -1,0 +1,19 @@
+<div class="flex flex-wrap p-4 pt-0">
+
+    <!--Referral Request Wrapper-->
+
+    <div matRipple *appAccessControl="{permissions:['CREATE_REFERRAL']}"
+        class="border-2 flex items-center mt-5 py-4 px-6 rounded-2xl hover:bg-gray-100 cursor-pointer mr-3"
+        (click)="openReferralRequestForm()">
+
+
+        <mat-icon svgIcon="referral-bonus" class="mat-icon-4x"></mat-icon>
+
+        <div class="ml-6 flex flex-col">
+            <span>Referral</span>
+            <span>Bonus</span>
+        </div>
+
+    </div>
+
+</div>

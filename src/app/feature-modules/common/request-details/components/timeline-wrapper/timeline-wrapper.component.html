@@ -1,0 +1,207 @@
+<div class="w-full flex flex-col sm:flex-row items-center mt-0 sm:mt-5 px-5" *ngIf="timelineItem">
+
+    <div class="flex flex-col flex-30 justify-start">
+        
+    <!-- Date and icon -->
+    <div class="flex flex-col sm:flex-row flex-30 items-center justify-start">
+
+
+
+        <div *ngIf="!isFirst" class="border-r-2 border-l-2 h-8 border-gray-200 sm:hidden mb-2"></div>
+
+
+        <span class="sm:w-5/12 text-sm sm:mr-2 mb-2 sm:mb-0">{{timelineItem?.actionDate | date}}</span>
+
+
+
+
+        <div class="sm:w-3/12 flex justify-end">
+
+            <!-- TERMINAL ICON -->
+            <ng-container *ngIf="timelineItem.isTerminalState; else nonTerminalIconTemplate">
+                <mat-icon class="timeline-icon-svg" svgIcon="done" [title]="timelineItem.actionTaken"></mat-icon>            
+            </ng-container>
+
+
+            <!-- NON TERMINAL ICON -->
+            <ng-template #nonTerminalIconTemplate>
+                <ng-container *ngIf="ALL_REQUESTS_ICONS.REQUESTS_STATUSES_ICONS[timelineItem.actionTaken] != null; else inProgressTemplate">
+                    <mat-icon class="timeline-icon-svg" svgIcon="{{ALL_REQUESTS_ICONS.REQUESTS_STATUSES_ICONS[timelineItem.actionTaken]}}" [title]="timelineItem.actionTaken"></mat-icon>
+                </ng-container>
+                <ng-template #inProgressTemplate>
+                    <mat-icon class="timeline-icon-svg" svgIcon="in-progress" [title]="timelineItem.actionTaken ? timelineItem.actionTaken : 'In Progress'"></mat-icon>
+                </ng-template>
+                
+                <!-- <ng-container [ngSwitch]="timelineItem.actionTaken">
+                    <ng-template ngSwitchCase="Applied">
+                        <mat-icon class="text-4xl sm:text-5xl text-teal-500 ">check_circle</mat-icon>
+                    </ng-template>
+                    <ng-template ngSwitchCase="Approved">
+                        <mat-icon class="text-4xl sm:text-5xl text-blue-500 ">check_circle</mat-icon>
+                    </ng-template>
+                    <ng-template ngSwitchCase="Completed">
+                        <mat-icon class="text-4xl sm:text-5xl text-purple-500 ">check_circle</mat-icon>
+                    </ng-template>
+
+
+
+                    <ng-template ngSwitchCase="Deleted">
+                        <mat-icon class="text-4xl sm:text-5xl text-red-700 ">remove_circle</mat-icon>
+                    </ng-template>
+
+                    <ng-template ngSwitchCase="Failed">
+                        <mat-icon class="text-4xl sm:text-5xl text-black ">cancel</mat-icon>
+                    </ng-template>
+                    <ng-template ngSwitchCase="Archived">
+                        <mat-icon class="text-4xl sm:text-5xl text-yellow-500 ">remove_circle</mat-icon>
+                    </ng-template>
+
+                    <ng-template ngSwitchCase="Rejected">
+                        <mat-icon class="text-4xl sm:text-5xl text-red-500 ">cancel</mat-icon>
+                    </ng-template>
+                    
+                    <ng-template ngSwitchCase="Closed">
+                        <mat-icon class="text-4xl sm:text-5xl text-gray-700 ">cancel</mat-icon>
+                    </ng-template>
+                    <ng-template ngSwitchCase="Expired with no response">
+                        <mat-icon class="text-4xl sm:text-5xl text-black ">cancel</mat-icon>
+                    </ng-template>
+
+                    <ng-template ngSwitchDefault>
+                        <mat-icon class="text-4xl sm:text-5xl text-yellow-500 ">pause_circle_filled</mat-icon>
+                        dsfasdf
+                    </ng-template>
+
+
+
+                </ng-container> -->
+            </ng-template>
+
+        </div>
+
+
+
+
+        <div class="border-r-2 border-l-2 h-8 border-gray-200 sm:hidden"></div>
+
+        <div class="hidden sm:block w-4/12 border-t-2 border-gray-200"></div>
+
+    </div>
+
+        <div class="flex justify-center my-4" *ngIf="showReverButton">
+            <button class="border-2 items-center mt-5 py-2 px-4 rounded-2xl hover:bg-gray-100 bg-blue-100"
+                (click)="openRevertModal()">Revert</button>
+        </div>
+    </div>
+
+    <!-- TIMELINE-ITEM-BOX -->
+    <div class="flex-70 border rounded-md py-3 pl-5"
+        [ngClass]="{'text-gray-400 cursor-not-allowed bg-gray-200':timelineItem.isTerminalState}">
+
+
+        <!-- TASK NAME -->
+        <div class="font-bold mt-3">{{timelineItem.isTerminalState?"Status :":"Task name :" }}
+            <span class="font-normal ml-1 italic">{{timelineItem?.taskName}}</span>
+        </div>
+
+
+
+        <!-- Assignees -->
+        <div class="font-bold mt-3" *ngIf="timelineItem.assignees.length">
+
+
+            <!-- SINGLE ASSIGNEE -->
+            <ng-container *ngIf="timelineItem.assignees.length < 2">
+                Assigned to :
+                <span class="font-normal ml-1 italic">{{timelineItem?.assignees[0].fullName}}</span>
+
+                <div class="font-bold mt-3">Email :
+                    <span class="font-normal ml-1 italic">
+                        <a href="mailto:{{timelineItem.assignees[0].email}}">{{timelineItem.assignees[0].email}}</a>
+                    </span>
+                    <!-- <span class="font-normal ml-1 italic">{{timelineItem?.isTerminalState? timelineItem.actionBy?.email:
+                        timelineItem.assignees[0].email}}</span> -->
+                </div>
+            </ng-container>
+
+
+
+
+            <!-- MULTIPLE ASSIGNEES -->
+            <mat-expansion-panel *ngIf="timelineItem.assignees.length >= 2" [expanded]="false" [hideToggle]="true"
+                class="mr-2 mt-2" [ngClass]="{'bg-transparent ':timelineItem.isTerminalState}">
+                <mat-expansion-panel-header expandedHeight="30px" collapsedHeight="20px" [ngClass]="{'bg-gray-200 ':timelineItem.isTerminalState}">
+                    <mat-panel-title class="font-medium" (click)="matExpanded = !matExpanded" [ngClass]="{'transparent-text ':timelineItem.isTerminalState}">
+                        Assigned to
+                         <mat-icon>{{matExpanded ? 'expand_less' : 'expand_more'}}</mat-icon>
+                    </mat-panel-title>
+                </mat-expansion-panel-header>
+
+                <ul class="list-disc">
+                    <li *ngFor="let assignee of timelineItem.assignees" class="font-normal ml-2 mb-2">
+                        {{assignee.fullName}}
+                        <span class="font-normal ml-1 italic">
+                            <a href="mailto:{{assignee.email}}">{{assignee.email}}</a>
+                        </span>
+                        <!-- <span class="italic text-gray-600 text-sm"> ({{assignee.email}})</span> -->
+                    </li>
+                </ul>
+
+
+            </mat-expansion-panel>
+        </div>
+
+
+
+        <!-- ACTION BY -->
+        <ng-container *ngIf="timelineItem.actionBy">
+            <div class="font-bold mt-3"> Action by :
+                <span class="font-normal ml-1 italic"> {{timelineItem.actionBy?.fullName}}</span>
+            </div>
+
+
+            <div class="font-bold mt-3">Email :
+                <span class="font-normal ml-1 italic">
+                    <a href="mailto:{{timelineItem.actionBy?.email}}">{{timelineItem.actionBy?.email}}</a>
+                </span>
+                <!-- <span class="font-normal ml-1 italic">{{timelineItem.actionBy?.email}}</span> -->
+            </div>
+        </ng-container>
+
+
+
+
+
+
+
+        <!-- ASSIGNED DATE -->
+        <div class="font-bold mt-3">{{timelineItem?.taskName==='Expired'?'Expiry Date :' : 'Assigned date :'}}
+            <span class="font-normal ml-1 italic">{{timelineItem?.assignedDate | date}}</span>
+        </div>
+
+
+        <div *ngIf="timelineItem.actionTaken" class="font-bold mt-3"> Action :
+            <span [ngClass]="{
+                'text-teal-500': timelineItem.actionTaken == 'Applied',
+                'text-blue-500': timelineItem.actionTaken == 'Approved',
+                'text-red-500': timelineItem.actionTaken == 'Rejected',
+                'text-red-700': timelineItem.actionTaken == 'Deleted',
+                'text-yellow-500': timelineItem.actionTaken == 'Archived',
+                'text-purple-500': timelineItem.actionTaken == 'Completed',
+                'text-gray-700':timelineItem.actionTaken == 'Closed'}"
+                class="font-normal ml-1 italic">{{timelineItem.actionTaken}}</span>
+        </div>
+
+           <!-- ACTION NOTE -->
+           <ssa-info-field type="note" label="Action Note :" *ngIf="timelineItem?.actionNote"
+           [value]="timelineItem?.actionNote">
+            </ssa-info-field>
+
+
+        <div class="font-medium mt-5 text-center" *ngIf="timelineItem.isTerminalState">
+            The request has reached the final state
+        </div>
+
+    </div>
+
+</div>

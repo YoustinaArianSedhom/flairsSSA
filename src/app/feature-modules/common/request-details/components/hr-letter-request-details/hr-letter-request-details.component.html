@@ -1,0 +1,27 @@
+<section class="px-5 mt-7">
+   
+    <div class='relative border rounded-md py-2 pl-5' *ngIf="HRLetterRequestDetails">
+    <!-- <span class="bg-white absolute -top-4 left-2 font-bold text-black-700"> Raise Details:
+    </span> -->
+
+
+
+        <ssa-info-field label="Full Name :" [value]="HRLetterRequestDetails?.fullName"></ssa-info-field>
+
+        <ssa-info-field label="Title :" [value]="HRLetterRequestDetails?.title"></ssa-info-field>
+
+        <ssa-info-field label="Letter Language :" [value]="!HRLetterRequestDetails?.language? 'English':'Arabic'">
+        </ssa-info-field>
+
+        <ssa-info-field label="To Whom :" [value]="HRLetterRequestDetails?.toWhomItMayConcern"></ssa-info-field>
+
+        <ssa-info-field label="Gross Salary Included :"
+            [value]="HRLetterRequestDetails.grossSalaryIncluded? 'YES' : 'NO'">
+        </ssa-info-field>
+
+
+   
+
+    
+</div>
+</section>

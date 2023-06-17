@@ -1,0 +1,260 @@
+<app-form-modal>
+    <h2 mat-dialog-title>New Promotion Request</h2>
+
+    <mat-dialog-content class="custom-scrolling">
+        <form [formGroup]="promotionForm">
+
+            <section class="flex flex-wrap">
+                <!-- Employee Name -->
+                <mat-form-field class="flex-100">
+                    <mat-label>Employee Name</mat-label>
+
+                    <input type="text" placeholder="Employee name" matInput required
+                        formControlName="targetOrganizationEmail" [matAutocomplete]="employeesAutoComplete"
+                        (input)="fireAutocomplete()" (focus)="onFocusAutoComplete()" />
+
+                    <mat-error>
+                        <app-validation-error [control]="promotionForm.get('targetOrganizationEmail')"
+                            businessName="Employee name">
+                        </app-validation-error>
+                    </mat-error>
+                    <!--Auto Select-->
+
+                    <mat-autocomplete #employeesAutoComplete="matAutocomplete" class="custom-scrolling"
+                        (optionSelected)="onSelectEmployeeEmail($event.option.value)">
+                        <mat-option *ngFor="let employee of employeesList" [value]="employee.organizationEmail">
+                            {{ employee.organizationEmail }}
+                            <span class=' text-gray-400 text-sm'>({{employee.fullName}})</span>
+                        </mat-option>
+                    </mat-autocomplete>
+                </mat-form-field>
+
+                <!--Entity Name-->
+                <mat-form-field class="flex-100">
+                    <mat-label>Entity</mat-label>
+                    <mat-select formControlName="entityName" required placeholder="Entity">
+                        <ng-container *ngIf="entityName">
+                            <mat-option [value]="entityName">
+                                {{ entityName }}
+                            </mat-option>
+                        </ng-container>
+                    </mat-select>
+
+                    <mat-error>
+                        <app-validation-error [control]="formControls.entityName" businessName="Entity">
+                        </app-validation-error>
+                    </mat-error>
+                </mat-form-field>
+
+                <!--Title-->
+                <mat-form-field class="flex-100">
+                    <mat-label>Title</mat-label>
+
+                    <input type="text" placeholder="Title" matInput required formControlName="title" />
+
+                    <mat-error>
+                        <app-validation-error [control]="promotionForm.get('title')" businessName="Title">
+                        </app-validation-error>
+                    </mat-error>
+                </mat-form-field>
+
+
+                <!-- Department -->
+                <section *ngIf="selectedEmployee"
+                    class="bg-gray-50 cursor-not-allowed flex-100 flex flex-col my-4 py-6 px-3 relative shadow-md">
+                    <span class="-top-3 absolute font-black left-2.5 px-0.5 text-sm break-words italic bg-white">Department Details</span>
+
+                    <!--current salaries card wrapper-->
+                    <div class="flex flex-col lg:flex-row flex-100 lg:justify-between">
+
+
+                        <!--Current Gross-->
+                        <div class="flex justify-start items-baseline flex-wrap flex-50 mb-2.5">
+
+                            <span class=" text-sm">
+                                Department :
+                            </span>
+
+                            <span class="font-normal ml-2 text-sm text-gray-400 italic">
+                                {{selectedEmployee?.department?.name ? selectedEmployee?.department?.name : 'N/A'}}
+                            </span>
+
+                        </div>
+
+
+                        <!--Current Net-->
+
+                        <div class="flex justify-start items-baseline flex-wrap flex-50 mb-2.5">
+
+                            <span class="text-sm">
+                                Code :
+                            </span>
+
+                            <span class="font-normal ml-2 text-gray-400 italic text-sm">
+                                {{selectedEmployee?.department?.code ? selectedEmployee?.department?.code : 'N/A'}}
+                            </span>
+
+                        </div>
+
+                    </div>
+
+                </section>
+
+
+                <!--Animated Cards wrapper-->
+
+                <div *ngIf="formControls.currentLevelId.value" @animatedInfoCards class="flex-100">
+
+                    <!--Animation current Details card wrapper-->
+                    <section
+                        class="bg-gray-50 cursor-not-allowed flex flex-col justify-between lg:flex-row mb-2 mt-4 px-3 py-6 relative shadow-md">
+
+                        <span class="-top-3 absolute left-2.5 font-black px-0.5 text-sm italic bg-white">Level
+                            details</span>
+
+                        <!--Current employee job-->
+                        <div class="flex justify-start items-baseline flex-wrap flex-50 mb-2.5 lg:mb-0">
+
+                            <span class="text-sm">
+                                Current job :
+                            </span>
+
+                            <span class="font-normal ml-2 text-sm italic text-gray-400">
+                                {{formControls.currentJobName.value}}
+                            </span>
+
+                        </div>
+
+
+
+
+                        <!--Current employee level-->
+                        <div class="flex justify-start items-baseline flex-wrap flex-50 mb-2.5 lg:mb-0">
+
+                            <span class="text-sm">
+                                Current level :
+                            </span>
+
+                            <span class="font-normal ml-2 text-sm italic text-gray-400">
+                                {{formControls.currentLevelName.value}}
+                            </span>
+
+                        </div>
+
+                    </section>
+
+                    <section class="bg-gray-50 cursor-not-allowed mb-2 mt-8 px-3 py-6 relative shadow-md">
+                        <span class="-top-3 absolute left-2.5 font-black px-0.5 text-sm italic bg-white">Current level
+                            description</span>
+
+                        <ul class=" overflow-y-auto max-h-14 list-disc px-8 custom-scrolling">
+
+                            <li class="font-normal ml-2 text-sm italic text-gray-400 break-words"
+                                *ngFor="let item of formControls.currentLevelDescription.value.split('\\n')">
+                                {{item}}
+                            </li>
+
+                        </ul>
+
+
+                    </section>
+
+
+                </div>
+
+
+                <!--promotion jobs dropdown-->
+
+                <mat-form-field class="flex-100 lg:flex-50 lg:pr-3">
+                    <mat-label>Promotion job</mat-label>
+
+                    <mat-select formControlName="promotionJobId" required placeholder="Promotion job"
+                        class="custom-scrolling" (selectionChange)="onSelectPromotionJob($event.value)">
+                        <mat-option *ngFor="let job of promotionJobsList" [value]="job.id">
+                            {{ job.function }}
+                        </mat-option>
+                    </mat-select>
+
+                    <mat-error>
+                        <app-validation-error [control]="promotionForm.get('promotionJobId')"
+                            businessName="Promotion job">
+                        </app-validation-error>
+                    </mat-error>
+                </mat-form-field>
+
+                <!--promotion levels dropdown-->
+
+                <mat-form-field class="flex-100 lg:flex-50 lg:pl-3">
+                    <mat-label>Promotion level</mat-label>
+
+                    <mat-select formControlName="promotionLevelId" required placeholder="Promotion level"
+                        class="custom-scrolling" (selectionChange)="onSelectPromotionLevel($event.value)">
+                        <mat-option *ngFor="let level of promotionLevelsList" [value]="level.id"
+                            [disabled]="level.id===formControls.currentLevelId.value">
+                            {{level.name}}
+                        </mat-option>
+                    </mat-select>
+
+                    <mat-error>
+                        <app-validation-error [control]="promotionForm.get('promotionLevelId')"
+                            businessName="Promotion level">
+                        </app-validation-error>
+                    </mat-error>
+                </mat-form-field>
+
+
+
+
+
+
+
+
+                <!--Selected Level Description-->
+
+                <div *ngIf="formControls.promotionLevelDescription.value" @animatedPromotionLevelDescription
+                    class="bg-gray-50 cursor-not-allowed  flex-100  mb-2 mt-4 px-3 py-6 relative shadow-md">
+                    <span class="-top-3 absolute left-2.5 font-black px-0.5 text-sm italic bg-white">Promotion level
+                        description</span>
+
+                    <ul class=" overflow-y-auto max-h-14 list-disc px-8 custom-scrolling">
+
+                        <li class="font-normal ml-2 text-sm italic text-gray-400 break-words"
+                            *ngFor="let item of formControls.promotionLevelDescription.value.split('\n')">
+                            {{item}}
+                        </li>
+
+                    </ul>
+
+                </div>
+
+                <!--notes-->
+                <mat-form-field class="flex-100" hintLabel="Max 1000 characters">
+                    <mat-label>Notes</mat-label>
+
+                    <textarea type="text" formControlName="note" placeholder="Notes" matInput></textarea>
+
+                    <mat-hint align="end">{{ formControls.note.value?.length || 0 }}/1000</mat-hint>
+
+                    <mat-error>
+                        <app-validation-error [control]="formControls.note" businessName="Notes"
+                            [customValidatorsErrorMessages]="{ 'pattern':'Notes value consists of white space only!'}">
+                        </app-validation-error>
+                    </mat-error>
+                </mat-form-field>
+
+            </section>
+        </form>
+    </mat-dialog-content>
+
+    <mat-dialog-actions align="end">
+        <div class="justify-between flex">
+            <button mat-button mat-dialog-close (click)="cancel()" class="cancel-btn rounded-none" cdkFocusInitial>
+                Cancel
+            </button>
+
+            <button mat-button [disabled]="promotionForm.invalid" class="action-btn rounded-none" (click)="submit()">
+                Submit
+            </button>
+        </div>
+    </mat-dialog-actions>
+</app-form-modal>

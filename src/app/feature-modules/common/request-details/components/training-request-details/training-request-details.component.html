@@ -1,0 +1,26 @@
+<div class='relative pt-6 pb-2 px-5'>
+
+    <div class="relative border rounded-md py-2 pl-5">
+
+        <ssa-info-field label="Training Name :" [value]="trainingRequestDetails?.trainingName"></ssa-info-field>
+        <ssa-info-field label="Description :" type="note" [value]="trainingRequestDetails?.courseDescription">
+        </ssa-info-field>
+    
+
+        <ssa-info-field label="Course Link :">
+            <a class="font-normal ml-2 text-sm italic break-words" href="{{trainingRequestDetails.courseLink}}"
+                target="blank">{{trainingRequestDetails?.courseLink}}</a>
+        </ssa-info-field>
+        <ssa-info-field label="Place :" type="note" [value]="trainingRequestDetails?.place">
+        </ssa-info-field>
+    
+
+        <ssa-info-field label="Price :" type="currency" [value]="trainingRequestDetails?.expectedPrice">
+        </ssa-info-field>
+
+        <ssa-info-field label="Impact :" type="note" [value]="trainingRequestDetails?.impact">
+        </ssa-info-field>
+    
+    </div>
+
+</div>

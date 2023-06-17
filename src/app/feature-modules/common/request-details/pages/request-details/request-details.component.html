@@ -1,0 +1,175 @@
+<!--<p>request-details works!</p>-->
+
+<ng-container *ngIf="requestSummary; else noResultTemp">
+
+
+
+    <app-form-modal>
+
+        <ssa-request-details-header [requestSummary]="requestSummary"></ssa-request-details-header>
+
+        <section class="mt-2 custom-scrolling overflow-y-auto manage-height">
+
+
+
+
+
+            <ssa-request-details-summary [requestSummary]="requestSummary"></ssa-request-details-summary>
+
+
+
+
+            <ng-container [ngSwitch]='requestType'>
+
+                <ng-template ngSwitchCase="Raise">
+                    <ssa-raise-request-details [raiseRequestDetails]="raiseRequestDetails">
+                    </ssa-raise-request-details>
+
+                </ng-template>
+
+                <ng-template ngSwitchCase="Promotion">
+
+                    <ssa-promotion-request-details [promotionRequestDetails]='promotionRequestDetails'>
+                    </ssa-promotion-request-details>
+                </ng-template>
+
+
+                <ng-template ngSwitchCase="HR Letter">
+
+                    <ssa-hr-letter-request-details [HRLetterRequestDetails]='HRLetterRequestDetails'>
+
+                    </ssa-hr-letter-request-details>
+                </ng-template>
+
+
+                <ng-template ngSwitchCase="Change Management">
+
+                    <ssa-change-manager-request-details [changeManagerRequestDetails]="changeManagerRequestDetails">
+                    </ssa-change-manager-request-details>
+                </ng-template>
+
+
+                <ng-template ngSwitchCase="Voucher">
+
+                    <ssa-voucher-request-details [voucherRequestDetails]="voucherRequestDetails">
+                    </ssa-voucher-request-details>
+                </ng-template>
+
+
+                <ng-template ngSwitchCase="Referral Bonus">
+
+                    <ssa-referral-request-details [referralRequestDetails]="referralRequestDetails">
+                    </ssa-referral-request-details>
+                </ng-template>
+
+
+                <ng-template ngSwitchCase="Gouna Voucher">
+
+                    <ssa-gouna-voucher-request-details [gounaVoucherRequestDetails]="gounaVoucherRequestDetails">
+                    </ssa-gouna-voucher-request-details>
+                </ng-template>
+
+                <ng-template ngSwitchCase="Training">
+
+                    <ssa-training-request-details [trainingRequestDetails]="trainingRequestDetails">
+                    </ssa-training-request-details>
+                </ng-template>
+
+                <ng-template ngSwitchCase="Peer-to-Peer">
+
+                    <ssa-peer-to-peer-request-details [peerToPeerRequestDetails]="peerToPeerRequestDetails">
+                    </ssa-peer-to-peer-request-details>
+                </ng-template>
+
+                <ng-template ngSwitchCase="Offer">
+
+                    <ssa-offer-request-details [offerRequestDetails]="offerRequestDetails">
+                    </ssa-offer-request-details>
+                </ng-template>
+
+                <ng-template ngSwitchCase="Probation">
+                    <ssa-probation-details [probationDetails]="probationDetails"></ssa-probation-details>
+                </ng-template>
+                <ng-template ngSwitchCase="Annual Leave">
+                    <ssa-leave-details [leaveDetails]="LeaveDetails"></ssa-leave-details>
+                </ng-template>
+                <ng-template ngSwitchCase="Maternity Leave">
+                    <ssa-leave-details [leaveDetails]="LeaveDetails"></ssa-leave-details>
+                </ng-template>
+                <ng-template ngSwitchCase="Sick Leave">
+                    <ssa-leave-details [leaveDetails]="LeaveDetails"></ssa-leave-details>
+                </ng-template>
+                <ng-template ngSwitchCase="Military Leave">
+                    <ssa-leave-details [leaveDetails]="LeaveDetails"></ssa-leave-details>
+                </ng-template>
+                <ng-template ngSwitchCase="Emergency Leave">
+                    <ssa-leave-details [leaveDetails]="LeaveDetails"></ssa-leave-details>
+                </ng-template>
+                <ng-template ngSwitchCase="Bereavement Leave">
+                    <ssa-leave-details [leaveDetails]="LeaveDetails"></ssa-leave-details>
+                </ng-template>
+                <ng-template ngSwitchCase="Half-day Leave">
+                    <ssa-leave-details [leaveDetails]="LeaveDetails"></ssa-leave-details>
+                </ng-template>
+                <ng-template ngSwitchCase="Balance Management">
+                    <ssa-balanace-management *ngIf="BlanaceManagementDetails" [itemDetail]="BlanaceManagementDetails"></ssa-balanace-management>
+                </ng-template>
+                <ng-template ngSwitchCase="Allocation Request">
+                    <ssa-allocation-details *ngIf="AllocationDetails" [allocationDetail]="AllocationDetails"></ssa-allocation-details>
+                </ng-template>
+                <ng-template ngSwitchCase="Unpaid Leave">
+                    <ssa-unpaid-details  [unpaidDetails]="UnpaidDetails"></ssa-unpaid-details>
+                </ng-template>
+
+                <ng-template ngSwitchCase="No Show">
+                    <ssa-no-show-details [noShowDetails]="noShowDetails"></ssa-no-show-details>
+                </ng-template>
+
+                <ng-template ngSwitchCase="Resignation">
+                  <ssa-resignation-details [resignationDetails]="resignationDetails"></ssa-resignation-details>
+                </ng-template>
+
+                <ng-template ngSwitchCase="Recruitment">
+                  <ssa-recruitment-details [recruitmentDetails]="recruitmentDetails"></ssa-recruitment-details>
+                </ng-template>
+
+                <ng-template ngSwitchCase="Onboarding">
+                  <ssa-on-boarding-details [onBoardingDetails]="onBoardingDetails"></ssa-on-boarding-details>
+                </ng-template>
+                <ng-template ngSwitchCase="Expense Repayment">
+                  <ssa-expense-repayment-details [expenseRepaymentDetails]="expenseRepaymentDetails"></ssa-expense-repayment-details>
+                </ng-template>
+                <ng-template ngSwitchCase="PIP">
+                    <ssa-pip-details [pipDetails]="pipDetails"></ssa-pip-details>
+                </ng-template>
+
+            </ng-container>
+
+
+
+
+
+            <ng-container *ngIf="timelineDetails.length">
+
+                <div class="font-bold px-5 pt-4">Timeline:</div>
+                <div *ngFor="let item of timelineDetails; first as isFirst">
+                    <ssa-timeline-wrapper [timelineItem]="item" [isFirst]="isFirst"></ssa-timeline-wrapper>
+                </div>
+            </ng-container>
+
+
+        </section>
+
+
+
+
+    </app-form-modal>
+</ng-container>
+
+
+<ng-template #noResultTemp>
+    <app-no-result></app-no-result>
+    <div class="text-center w-full" *ngIf="(loading$|async) !== true">
+        <button mat-flat-button class="action-btn" (click)="closeRequestDetails()"> Close </button>
+    </div>
+</ng-template>

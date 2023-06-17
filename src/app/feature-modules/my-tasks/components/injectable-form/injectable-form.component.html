@@ -1,0 +1,510 @@
+<app-form-modal>
+
+
+    <h2 mat-dialog-title>Additional request information</h2>
+
+    <mat-dialog-content class="custom-scrolling">
+
+        <form [formGroup]="injectableFieldsForm">
+
+
+            <ng-container *ngFor="let injectedField of config.injectedFields">
+
+
+                <div [ngSwitch]="injectedField.type" [class]="'flex flex-wrap mt-1 ' + injectedField.cssClass">
+
+                    <!--type "0" for single select from dropdown list-->
+
+                    <ng-template ngSwitchCase="0">
+
+
+                        <mat-form-field class="flex-100">
+
+                            <mat-label>{{injectedField.required? injectedField.name + '*':injectedField.name}}
+                            </mat-label>
+
+                            <mat-select [formControlName]="injectedField.field" [placeholder]="injectedField.name"
+                                (selectionChange)="onCheckRequiredReloadedValidity(injectedField)">
+
+
+                                <mat-option *ngFor="let choice of injectedField.choices" [value]="choice">
+                                    {{choice}}
+                                </mat-option>
+
+
+
+                            </mat-select>
+
+
+
+                            <mat-error>
+                                <app-validation-error [control]="injectableFieldsForm.controls[injectedField.field]"
+                                    [businessName]="injectedField.name">
+                                </app-validation-error>
+                            </mat-error>
+                        </mat-form-field>
+
+
+
+                    </ng-template>
+
+
+                    <!--type "1" for inserting number value-->
+
+                    <ng-template ngSwitchCase="1">
+
+
+                        <mat-form-field class="flex-100">
+
+                            <mat-label>{{injectedField.required? injectedField.name + '*':injectedField.name}}
+                            </mat-label>
+
+                            <input matInput [formControlName]="injectedField.field" [placeholder]="injectedField.name"
+                                (change)="onCheckRequiredReloadedValidity(injectedField)" type="number">
+
+                            <mat-error>
+                                <app-validation-error [control]="injectableFieldsForm.controls[injectedField.field]"
+                                    [businessName]="injectedField.name">
+                                </app-validation-error>
+                            </mat-error>
+                        </mat-form-field>
+
+                    </ng-template>
+
+                    <!--type "2" for entering text in an input field-->
+
+
+                    <ng-template ngSwitchCase="2">
+
+
+                        <mat-form-field class="flex-100">
+
+                            <mat-label>{{injectedField.required? injectedField.name + '*':injectedField.name}}
+                            </mat-label>
+
+
+                            <ng-container *ngIf="injectedField.isTextArea; else inputInjectedField ">
+
+                                <textarea type="text" [formControlName]="injectedField.field"
+                                    (change)="onCheckRequiredReloadedValidity(injectedField)"
+                                    [placeholder]="injectedField.name" matInput></textarea>
+
+                            </ng-container>
+
+                            <ng-template #inputInjectedField>
+
+                                <input matInput [formControlName]="injectedField.field"
+                                    (change)="onCheckRequiredReloadedValidity(injectedField)"
+                                    [ngClass]="{'disabled-text': injectedField.disabled}"
+                                    [placeholder]="injectedField.name" type="text">
+
+                            </ng-template>
+
+                            <mat-hint align="end" *ngIf="!injectedField.disabled">
+                                {{injectableFieldsForm.get(injectedField.field).value?.length||injectedField.minLength||0}}/{{injectedField?.maxLength}}
+                            </mat-hint>
+
+                            <mat-error>
+                                <app-validation-error [control]="injectableFieldsForm.controls[injectedField.field]"
+                                    [businessName]="injectedField.name"
+                                    [customValidatorsErrorMessages]="{ 'pattern': 'Invalid format for ' + injectedField.name}">
+                                </app-validation-error>
+                            </mat-error>
+                        </mat-form-field>
+
+                    </ng-template>
+
+
+                    <!--Type "3" for upload or multi or single file will be saved for Disk-->
+                    <ng-template ngSwitchCase="3">
+
+
+                        <div class="flex-100 mt-1">
+
+                            <label class="block text-sm text-gray-500 py-2">{{injectedField.required? injectedField.name
+                                + '*':injectedField.name}}</label>
+                            <ng-container *ngIf="injectedField.allowMultiFileUpload; else singleUploader">
+
+                                <div *ngFor="let file of fileNames;  let i = index"
+                                    class="flex items-center justify-between">
+                                    <span class="block truncate w-48 text-gray-500 font-light px-2">{{file.name}}</span>
+                                    <button mat-icon-button (click)="removeFiles(i,injectedField)">
+                                        <mat-icon class="text-red-500">delete</mat-icon>
+                                    </button>
+                                </div>
+
+                                <div class="flex flex-wrap items-center justify-between py-2"
+                                    [ngClass]="{'border-t': this.totalMultipleFilesMaxSize}">
+                                    <button type="button" mat-button class="action-btn rounded-none"
+                                        (click)="file.click()" [disabled]="false">
+                                        Upload
+
+                                    </button>
+                                    <span class="block text-sm text-gray-500"
+                                        *ngIf="this.totalMultipleFilesMaxSize">Total file(s) Size:
+                                        {{(this.totalMultipleFilesMaxSize / 1024 / 1024) | number: '1.2-2' }} M/B</span>
+
+                                </div>
+
+                                <input [placeholder]="injectedField.name" type="file"
+                                    (change)="onSelectMultipleFiles($event,injectedField)" #file class="file" multiple
+                                    [accept]="injectedField.allowedMimeTypes.join()">
+
+                            </ng-container>
+
+                            <ng-template #singleUploader>
+                                <input [placeholder]="injectedField.name" type="file"
+                                    (change)="onFileChange($event,injectedField)"
+                                    [accept]="injectedField.allowedMimeTypes.join()">
+                            </ng-template>
+                            <div>
+                                <span class="text-xs text-red-600 py-2">
+                                    {{fileError || multipleFilesError}}
+                                </span>
+                            </div>
+
+                        </div>
+                    </ng-template>
+
+
+                    <!--Type "4" for uploading single or multiple files will be saved on DB-->
+                    <ng-template ngSwitchCase="4">
+
+                        <div class="flex-100 mt-1">
+                            <label class="block text-sm text-gray-500 py-2">{{injectedField.required? injectedField.name
+                                + '*':injectedField.name}}</label>
+
+                            <ng-container *ngIf="injectedField.allowMultiFileUpload; else singleUploader">
+
+                                <div *ngFor="let file of fileNames;  let i = index"
+                                    class="flex items-center justify-between">
+                                    <span class="block truncate w-48 text-gray-500 font-light px-2">{{file.name}}</span>
+                                    <button mat-icon-button (click)="removeFiles(i,injectedField)">
+                                        <mat-icon class="text-red-500">delete</mat-icon>
+                                    </button>
+                                </div>
+
+                                <div class="flex flex-wrap items-center justify-between py-2"
+                                    [ngClass]="{'border-t': this.totalMultipleFilesMaxSize}">
+                                    <button type="button" mat-button class="action-btn rounded-none"
+                                        (click)="file.click()" [disabled]="false">
+                                        Upload
+
+                                    </button>
+                                    <span class="block text-sm text-gray-500"
+                                        *ngIf="this.totalMultipleFilesMaxSize">Total file(s) Size:
+                                        {{(this.totalMultipleFilesMaxSize / 1024 / 1024) | number: '1.2-2' }} M/B</span>
+
+                                </div>
+
+                                <input [placeholder]="injectedField.name" type="file"
+                                    (change)="onSelectMultipleFiles($event,injectedField)" #file class="file" multiple
+                                    [accept]="injectedField.allowedMimeTypes.join()">
+
+                            </ng-container>
+
+                            <ng-template #singleUploader>
+                                <input [placeholder]="injectedField.name" type="file"
+                                    (change)="onFileChange($event,injectedField)"
+                                    [accept]="injectedField.allowedMimeTypes.join()">
+                            </ng-template>
+                            <div>
+                                <span class="text-xs text-red-600 py-2">
+                                    {{fileError || multipleFilesError}}
+                                </span>
+                            </div>
+                        </div>
+
+                    </ng-template>
+
+
+
+                    <!--Type "5" for datePicker input-->
+                    <ng-template ngSwitchCase="5">
+
+
+                        <mat-form-field class="flex-100">
+
+                            <mat-label>{{injectedField.required? injectedField.name + '*':injectedField.name}}
+                            </mat-label>
+
+                            <input readonly [matDatepicker]="selectedDate" [min]="injectedField.minValue"
+                                [max]="injectedField.maxValue" class="cursor-default" matInput
+                                [formControlName]="injectedField.field" [placeholder]="injectedField.name"
+                                (dateChange)="onSelectDate($event.value,injectedField)">
+                                <mat-datepicker-toggle matSuffix [for]="selectedDate"></mat-datepicker-toggle>
+                            <mat-datepicker #selectedDate startView="month" [disabled]="injectedField.disabled">
+                            </mat-datepicker>
+
+                            <mat-error>
+                                <app-validation-error [control]="injectableFieldsForm.controls[injectedField.field]"
+                                    [businessName]="injectedField.name">
+                                </app-validation-error>
+                            </mat-error>
+                        </mat-form-field>
+                        <mat-hint class="text-xs text-gray-400" *ngIf="injectedField.note">{{injectedField.note}}</mat-hint>
+
+                    </ng-template>
+
+
+                    <!--type 7 for multiple dropdown lists that depends on each other-->
+                    <ng-template ngSwitchCase="7">
+                        <div class="chip-list-wrapper w-full" *ngIf="injectedField?.selectedValues?.length">
+                            <mat-chip-list #chipList>
+                                <ng-container *ngFor="let item of injectedField.selectedValues; let i=index">
+                                    <mat-chip class="cardinal-colors balance-chip"
+                                        (selectionChange)="onCheckRequiredReloadedValidity(injectedField)"
+                                        (click)="removeItemFromList(item,injectedField)">
+                                        {{ item.id }}
+                                        <mat-icon class="mat-chip-remove text-white">close</mat-icon>
+                                    </mat-chip>
+                                </ng-container>
+                            </mat-chip-list>
+                        </div>
+
+                        <div class="flex-100 flex flex-col" [ngClass]="{'hide-arrow' : injectedField.isTextOnly}">
+                            <ng-container *ngIf="!injectedField.allowAutoComplete; else autocompleteControl">
+
+                                <mat-form-field class="flex-100">
+
+
+                                    <mat-label>{{injectedField.required?
+                                        injectedField.name + '*':injectedField.name}}
+                                    </mat-label>
+
+                                    <mat-select [formControlName]="injectedField.field"
+                                        (selectionChange)="onCheckRequiredReloadedValidity(injectedField)"
+                                        [placeholder]="injectedField.name">
+                                            <mat-option *ngFor="let choice of injectedField.choices"
+                                                [value]="choice.id">
+                                                {{choice.displayName}}
+                                            </mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </ng-container>
+
+                            <ng-template #autocompleteControl>
+
+                                <ng-container *ngIf="injectedField.allowMulticheck ; else singleSelectAutoComplete">
+                                    <div class="flex-100 w-full">
+                                        <ssa-autocomplete
+                                            [placeHolder]="injectedField.required? injectedField.name + '*':injectedField.name"
+                                            searchFullListProperty="displayName"
+                                            [fullSearchList]="injectedField.choices"
+                                            (checkValidity)="checkValidity($event, injectedField.field)"
+                                            [list]="injectedField.selectedValues"
+                                            (addItem)="addValueToInjectableFormField($event, injectedField)">
+                                        </ssa-autocomplete>
+                                    </div>
+
+                                </ng-container>
+                                <ng-template #singleSelectAutoComplete>
+                                    <mat-form-field class="flex-100">
+                                        <mat-label>{{injectedField.required?
+                                            injectedField.name + '*':injectedField.name}}
+                                        </mat-label>
+                                        <input type="text" [disabled]="injectedField.disabled"
+                                            [placeholder]="injectedField.required? injectedField.name + '*':injectedField.name"
+                                            matInput [formControlName]="injectedField.field" [matAutocomplete]="auto">
+                                        <mat-icon matSuffix mat-icon-button class="arrow-down cut-text">arrow_drop_down
+                                        </mat-icon>
+                                        <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete" class="custom-scrolling"
+                                            (optionSelected)="onCheckRequiredReloadedValidity(injectedField)"
+                                            [displayWith]="displayFn">
+                                            <mat-option *ngFor="let choice of injectedField.choicesAsync | async"
+                                                [value]="choice">
+                                                {{choice.displayName}}
+                                            </mat-option>
+                                        </mat-autocomplete>
+                                    </mat-form-field>
+                                </ng-template>
+                            </ng-template>
+                            <mat-error class="hint-message">
+                                <app-validation-error [control]="injectableFieldsForm.controls[injectedField.field]"
+                                    [businessName]="injectedField.name">
+                                </app-validation-error>
+                            </mat-error>
+                            <span class="text-red-600 pt-5" *ngIf="injectedField?.hintMessage">
+                                {{injectedField?.hintMessage}}
+                            </span>
+
+                        </div>
+
+
+                    </ng-template>
+
+                    <!--type 8 for radio buttons-->
+                    <ng-template ngSwitchCase="8">
+
+
+                        <div class="flex-100">
+
+                            <mat-radio-group class="flex flex-wrap justify-between" [ngClass]="{'flex-col' : config.action === 'INJECT_EMPLOYEE_REASON_NOSHOW'}"
+
+                                [formControlName]="injectedField.field"
+                                (change)="onCheckRequiredReloadedValidity(injectedField)">
+                                <mat-radio-button class="w-1/2 pb-3" *ngFor="let choice of injectedField.choices"
+                                    [value]="choice">
+                                    {{choice}}
+                                </mat-radio-button>
+                            </mat-radio-group>
+
+
+                        </div>
+
+                    </ng-template>
+
+                    <!--type 9 for slide toggle-->
+
+                    <ng-template ngSwitchCase="9">
+
+                        <div class="flex-100 mb-2"
+                            [ngClass]="{'flex':injectedField.field === 'IsEmployeeResourceBased'}">
+                            <span class="block text-gray-500 mb-1 text-sm">{{injectedField.required? injectedField.name
+                                +
+                                '*':injectedField.name}}</span>
+                            <!-- [checked]="injectedField.value.toLowerCase() === 'false'? false : true" -->
+                            <label class="switch"
+                                [ngClass]="{'ml-10':injectedField.field === 'IsEmployeeResourceBased'}">
+                                <input type="checkbox" [formControlName]="injectedField.field"
+                                    (change)="onCheckRequiredReloadedValidity(injectedField)">
+                                <span class="slider round"></span>
+                                <span class="slider-text"></span>
+                            </label>
+                        </div>
+
+
+                    </ng-template>
+
+
+
+                    <!--type "10" for single select from dropdown list with name and value-->
+                    <ng-template ngSwitchCase="10">
+
+
+                        <mat-form-field class="flex-100">
+
+                            <mat-label>{{injectedField.required? injectedField.name + '*':injectedField.name}}
+                            </mat-label>
+
+                            <mat-select [formControlName]="injectedField.field" [placeholder]="injectedField.name"
+                                [multiple]="injectedField.allowMulticheck"
+                                (selectionChange)="onCheckRequiredReloadedValidity(injectedField)">
+
+
+                                <mat-option *ngFor="let choice of injectedField.choices"
+                                    [value]="choice.value.toString()">
+                                    {{choice.name}}
+                                </mat-option>
+
+
+
+                            </mat-select>
+
+
+
+                            <mat-error>
+                                <app-validation-error [control]="injectableFieldsForm.controls[injectedField.field]"
+                                    [businessName]="injectedField.name">
+                                </app-validation-error>
+                            </mat-error>
+                        </mat-form-field>
+
+
+
+                    </ng-template>
+
+                    <!--type 11 for slide toggle-->
+
+                    <ng-template ngSwitchCase="11">
+
+                        <div class="flex-100 mt-3">
+                            <mat-checkbox color="warn" [formControlName]="injectedField.field"
+                                (change)="onCheckRequiredReloadedValidity(injectedField)">
+                                {{injectedField.name}}
+                            </mat-checkbox>
+                        </div>
+
+                    </ng-template>
+
+                    <!--type 12 for Email-->
+
+                    <ng-template ngSwitchCase="12">
+
+
+                        <mat-form-field class="flex-100">
+
+                            <mat-label>{{injectedField.required? injectedField.name + '*':injectedField.name}}
+                            </mat-label>
+
+
+                            <ng-container *ngIf="injectedField.isTextArea; else inputInjectedField ">
+
+                                <textarea type="text" [formControlName]="injectedField.field"
+                                    (change)="onCheckRequiredReloadedValidity(injectedField)"
+                                    [placeholder]="injectedField.name" matInput></textarea>
+
+                            </ng-container>
+
+                            <ng-template #inputInjectedField>
+
+                                <input matInput [formControlName]="injectedField.field"
+                                    (change)="onCheckRequiredReloadedValidity(injectedField)"
+                                    [placeholder]="injectedField.name" type="text">
+
+                            </ng-template>
+
+                            <mat-hint align="end" *ngIf="!injectedField.disabled">
+                                {{injectableFieldsForm.get(injectedField.field).value?.length||injectedField.minLength
+                                ||0}}/{{injectedField?.maxLength}}
+                            </mat-hint>
+
+                            <mat-error>
+                                <app-validation-error [control]="injectableFieldsForm.controls[injectedField.field]"
+                                    [businessName]="injectedField.name"
+                                    [customValidatorsErrorMessages]="{ 'pattern': 'Email Address Not Valid!'}">
+                                </app-validation-error>
+                            </mat-error>
+                        </mat-form-field>
+
+                    </ng-template>
+
+                    <!--type 14 for label Text-->
+                    <ng-template ngSwitchCase="14">
+                        <div [innerHTML]="injectedField.labelText"></div>
+                    </ng-template>
+                </div>
+
+            </ng-container>
+
+        </form>
+
+    </mat-dialog-content>
+
+
+
+    <mat-dialog-actions align="end">
+        <div class="justify-between flex">
+            <ng-container *ngIf="formActions?.length; else displayStaticActions">
+                <button mat-button *ngFor="let button of formActions" [class]="'rounded-none ' + button.cssClass"
+                    [disabled]="button.action === 'SUBMIT' ? injectableFieldsForm.invalid : false"
+                    (click)="takeInjectedAction(button)">
+                    {{button?.name}}
+                </button>
+            </ng-container>
+            <ng-template #displayStaticActions>
+                <button mat-button mat-dialog-close class="cancel-btn rounded-none" (click)="cancel()" cdkFocusInitial>
+                    Cancel
+                </button>
+
+                <button mat-button class="action-btn rounded-none" [disabled]="injectableFieldsForm.invalid"
+                    (click)="submit()">
+                    Submit
+                </button>
+            </ng-template>
+        </div>
+    </mat-dialog-actions>
+
+
+
+</app-form-modal>

@@ -1,0 +1,112 @@
+<app-form-modal>
+    <h2 mat-dialog-title>New Training Request</h2>
+
+    <mat-dialog-content class="custom-scrolling">
+        <form [formGroup]="trainingForm">
+
+
+
+            <section class="flex flex-wrap">
+
+                <!-- Training Name -->
+                <mat-form-field class="flex-100 ">
+                    <mat-label>Training Name</mat-label>
+
+                    <input type="text" placeholder="Training Name" matInput required formControlName="trainingName" />
+                    <mat-error>
+                        <app-validation-error [control]="formControls.trainingName" businessName="Training Name">
+                        </app-validation-error>
+                    </mat-error>
+                </mat-form-field>
+
+
+                <!-- Description -->
+                <mat-form-field class="flex-100 " hintLabel="Max 500 characters">
+                    <mat-label>Description</mat-label>
+
+                    <textarea type="text" placeholder="Description" matInput
+                        formControlName="courseDescription"></textarea>
+                    <mat-hint align="end">{{ formControls.courseDescription.value?.length || 0 }}/500</mat-hint>
+                    <mat-error>
+                        <app-validation-error [control]="formControls.courseDescription" businessName="Description"
+                        [customValidatorsErrorMessages]="{ 'pattern': 'Description value consists of white space only!'}">
+                        </app-validation-error>
+                    </mat-error>
+                </mat-form-field>
+
+
+
+                <!-- Link -->
+                <mat-form-field class="flex-100 " hintLabel="Max 500 characters">
+                    <mat-label>Link</mat-label>
+
+                    <textarea type="url" placeholder="Link" matInput formControlName="courseLink"></textarea>
+                    <mat-hint align="end">{{ formControls.courseLink.value?.length || 0 }}/500</mat-hint>
+                    <mat-error>
+                        <app-validation-error [control]="formControls.courseLink" businessName="Link"
+                        [customValidatorsErrorMessages]="{ 'pattern': 'Link value consists of white space only!'}">
+                        </app-validation-error>
+                    </mat-error>
+                </mat-form-field>
+
+
+
+                <!-- Price -->
+                <mat-form-field class="flex-100 ">
+                    <mat-label>Expected Price</mat-label>
+
+                    <input type="number" placeholder="Expected Price" matInput 
+                        formControlName="expectedPrice" />
+                    <mat-error>
+                        <app-validation-error [control]="formControls.expectedPrice" businessName="Expected Price">
+                        </app-validation-error>
+                    </mat-error>
+                </mat-form-field>
+
+
+                <!-- Place -->
+                <mat-form-field class="flex-100 " hintLabel="Max 200 characters">
+                    <mat-label>Place</mat-label>
+
+                    <textarea type="text" placeholder="Place" matInput  formControlName="place"></textarea>
+                    <mat-hint align="end">{{ formControls.place.value?.length || 0 }}/200</mat-hint>
+                    <mat-error>
+                        <app-validation-error [control]="formControls.place" businessName="Place" 
+                        [customValidatorsErrorMessages]="{ 'pattern': 'Place value consists of white space only!'}">
+                        </app-validation-error>
+                    </mat-error>
+                </mat-form-field>
+
+
+
+                <!-- Impact -->
+                <mat-form-field class="flex-100" hintLabel="Max 2000 characters">
+                    <mat-label>Impact</mat-label>
+                    <textarea type="text" formControlName="impact" placeholder="Impact" matInput required></textarea>
+                    <mat-hint align="end">{{ formControls.impact.value?.length || 0 }}/2000</mat-hint>
+                    <mat-error>
+                        <app-validation-error [control]="formControls.impact" businessName="Impact">
+                        </app-validation-error>
+                    </mat-error>
+                </mat-form-field>
+
+            </section>
+
+
+
+
+
+        </form>
+    </mat-dialog-content>
+
+    <mat-dialog-actions align="end">
+        <div class="justify-between flex">
+            <button mat-button mat-dialog-close (click)="cancel()" class="cancel-btn rounded-none" cdkFocusInitial>
+                Cancel
+            </button>
+            <button mat-button [disabled]="trainingForm.invalid" class="action-btn rounded-none" (click)="submit()">
+                Submit
+            </button>
+        </div>
+    </mat-dialog-actions>
+</app-form-modal>

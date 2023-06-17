@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="37" height="36" viewBox="0 0 37 36">
+  <g id="Group_3918" data-name="Group 3918" transform="translate(-1732 -70)">
+    <g id="Rectangle_2967" data-name="Rectangle 2967" transform="translate(1732 70)" fill="none" stroke="#d03827" stroke-width="1">
+      <rect width="37" height="36" rx="10" stroke="none"/>
+      <rect x="0.5" y="0.5" width="36" height="35" rx="9.5" fill="none"/>
+    </g>
+    <g id="Group_3910" data-name="Group 3910" transform="translate(1740 78)">
+      <g id="Group_3913" data-name="Group 3913" transform="translate(-0.001 0)">
+        <path id="lock_FILL1_wght400_GRAD0_opsz48" d="M161.488,436.017a1.419,1.419,0,0,1-1.051-.446A1.477,1.477,0,0,1,160,434.5V423.518a1.477,1.477,0,0,1,.437-1.072,1.419,1.419,0,0,1,1.051-.446h11.161c.024.091-.058.22,0,0h1.736a1.419,1.419,0,0,1,1.051.446,1.477,1.477,0,0,1,.437,1.072V434.5a1.477,1.477,0,0,1-.437,1.072,1.419,1.419,0,0,1-1.051.446Zm6.453-5.06a1.9,1.9,0,0,0,1.906-1.9,2,2,0,0,0-.562-1.379,1.779,1.779,0,0,0-2.7,0,2.027,2.027,0,0,0-.558,1.392,1.8,1.8,0,0,0,.562,1.328A1.852,1.852,0,0,0,167.941,430.957Z" transform="translate(-160 -415.017)" fill="#d03827"/>
+        <path id="lock_FILL1_wght400_GRAD0_opsz48-2" data-name="lock_FILL1_wght400_GRAD0_opsz48" d="M281.016,143.236v-2.429a4.807,4.807,0,1,1,9.615,0v2.429Zm1.518,0h6.578v-2.429a3.289,3.289,0,1,0-6.578,0Z" transform="translate(-269.63 -136)" fill="#d03827"/>
+      </g>
+    </g>
+  </g>
+</svg>

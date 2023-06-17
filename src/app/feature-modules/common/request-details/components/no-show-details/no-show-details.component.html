@@ -1,0 +1,18 @@
+<div class='relative pt-6 pb-2 px-5'>
+
+   <div class="relative border rounded-md py-2 pl-5">
+      <ssa-info-field label="Employee Name :" [value]="noShowDetails?.targetEmployee.fullName">
+      </ssa-info-field>
+
+      <ssa-info-field label="Day :" type="date" [value]="noShowDetails?.day">
+      </ssa-info-field>
+      <ssa-info-field label="Choice :"  [value]="noShowDetails?.chosenReason"
+      *ngIf="noShowDetails?.chosenReason">
+      </ssa-info-field>
+
+      <ssa-info-field label="Reason :" type="note" [value]="noShowDetails?.submittedReason"
+      *ngIf="noShowDetails?.submittedReason">
+      </ssa-info-field>
+   </div>
+  
+</div>

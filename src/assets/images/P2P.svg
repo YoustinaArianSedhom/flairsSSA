@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="62.677" height="63.704" viewBox="0 0 62.677 63.704">
+  <g id="Group_1700" data-name="Group 1700" transform="translate(-947.5 -399.989)">
+    <g id="Icon_feather-user" data-name="Icon feather-user" transform="translate(943 396.989)">
+      <path id="Path_1310" data-name="Path 1310" d="M32.677,32.5V29.169A6.669,6.669,0,0,0,26.008,22.5H12.669A6.669,6.669,0,0,0,6,29.169V32.5" transform="translate(0 2.008)" fill="none" stroke="#d03827" stroke-linecap="round" stroke-linejoin="round" stroke-width="3"/>
+      <path id="Path_1311" data-name="Path 1311" d="M25.338,11.169A6.669,6.669,0,1,1,18.669,4.5a6.669,6.669,0,0,1,6.669,6.669Z" transform="translate(0.669)" fill="none" stroke="#d03827" stroke-linecap="round" stroke-linejoin="round" stroke-width="3"/>
+    </g>
+    <g id="Icon_feather-user-2" data-name="Icon feather-user" transform="translate(976 427.681)">
+      <path id="Path_1310-2" data-name="Path 1310" d="M32.677,32.5V29.169A6.669,6.669,0,0,0,26.008,22.5H12.669A6.669,6.669,0,0,0,6,29.169V32.5" transform="translate(0 2.008)" fill="none" stroke="#d03827" stroke-linecap="round" stroke-linejoin="round" stroke-width="3"/>
+      <path id="Path_1311-2" data-name="Path 1311" d="M25.338,11.169A6.669,6.669,0,1,1,18.669,4.5a6.669,6.669,0,0,1,6.669,6.669Z" transform="translate(0.669)" fill="none" stroke="#d03827" stroke-linecap="round" stroke-linejoin="round" stroke-width="3"/>
+    </g>
+    <path id="Icon_material-subdirectory-arrow-right" data-name="Icon material-subdirectory-arrow-right" d="M22.177,17.863l-6.471,6.471L14.175,22.8l3.872-3.861H6V6H8.157V16.785h9.889l-3.872-3.861,1.531-1.531Z" transform="translate(953.996 426.181)" fill="#d03827"/>
+    <path id="Icon_material-subdirectory-arrow-right-2" data-name="Icon material-subdirectory-arrow-right" d="M22.177,17.863l-6.471,6.471L14.175,22.8l3.872-3.861H6V6H8.157V16.785h9.889l-3.872-3.861,1.531-1.531Z" transform="translate(1001.338 425.822) rotate(180)" fill="#d03827"/>
+  </g>
+</svg>

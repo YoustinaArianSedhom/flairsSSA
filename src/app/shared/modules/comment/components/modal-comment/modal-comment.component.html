@@ -1,0 +1,36 @@
+<app-form-modal>
+   <h2 mat-dialog-title class="uppercase text-primary border-b pb-2 border-gray-400">Add Comment</h2>
+   <mat-dialog-content class="custom-scrolling">
+      <form [formGroup]="commentForm">
+         <!--Comment-->
+         <div class="flex flex-wrap">
+
+            <mat-form-field class="flex-100" hintLabel="Max {{config?.commentMaxLength ? config?.commentMaxLength : '500'}} characters">
+               <mat-label class="font-bold">Comment</mat-label>
+   
+               <textarea required type="text" formControlName="commentBody" placeholder="comment" matInput></textarea>
+   
+               <mat-hint align="end">{{ formControls.commentBody.value?.length || 0 }}/{{config?.commentMaxLength ? config?.commentMaxLength : '500'}}</mat-hint>
+   
+               <mat-error>
+                  <app-validation-error [control]="formControls.commentBody" businessName="comment"
+                     [customValidatorsErrorMessages]="{ 'pattern':'Comment value consists of white space only!'}">
+                  </app-validation-error>
+               </mat-error>
+            </mat-form-field>
+         </div>
+      </form>
+   </mat-dialog-content>
+   <mat-dialog-actions align="end">
+      <div class="justify-between flex">
+          <button mat-button mat-dialog-close class="cancel-btn rounded-none" cdkFocusInitial>
+              Cancel
+          </button>
+
+          <button mat-button class="action-btn rounded-none" (click)="submit()"
+              [disabled]="commentForm.invalid">
+              Submit
+          </button>
+      </div>
+  </mat-dialog-actions>
+</app-form-modal>

@@ -1,0 +1,39 @@
+<div class='relative pt-6 pb-2 pl-5 px-5'>
+    <!-- <span class="bg-white absolute -top-4 left-2 font-bold text-black-700"> Raise Details:
+  </span> -->
+
+    <div class="relative border rounded-md py-2 pl-5">
+
+
+        <ssa-info-field label="Employee Name :" [value]="peerToPeerRequestDetails?.targetEmployee.fullName">
+        </ssa-info-field>
+
+        <ssa-info-field label="Employee Email :" type="email"
+            [value]="peerToPeerRequestDetails?.targetEmployee.organizationEmail">
+
+        </ssa-info-field>
+
+        <ssa-info-field *ngIf="peerToPeerRequestDetails?.entityName" label="Entity Name :"
+            [value]="peerToPeerRequestDetails?.entityName">
+        </ssa-info-field>
+
+        <ssa-info-field label="Reason :" type="note" [value]="peerToPeerRequestDetails?.reason"></ssa-info-field>
+
+        <ssa-info-field label="Message :" type="note" [value]="peerToPeerRequestDetails?.message"></ssa-info-field>
+    
+
+        <ssa-info-field label="Chosen Voucher :" *ngIf="peerToPeerRequestDetails?.chosenVoucher"
+            [value]="peerToPeerRequestDetails?.chosenVoucher">
+        </ssa-info-field>
+
+        <ssa-info-field label="Receipt :" *ngIf="peerToPeerRequestDetails?.receiptPath">
+            <span class="font-normal ml-2 text-sm italic break-words">
+                <a href="{{peerToPeerRequestDetails.receiptPath}}" target="blank">Receipt Link</a>
+            </span>
+        </ssa-info-field>
+
+        <ssa-info-field label="Amount :" *ngIf="peerToPeerRequestDetails?.amount" type="currency"
+            [value]="peerToPeerRequestDetails?.amount"></ssa-info-field>
+
+    </div>
+   </div>

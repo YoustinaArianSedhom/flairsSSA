@@ -1,0 +1,27 @@
+<div class='relative pt-6 pb-2' *ngIf="referralRequestDetails">
+    <!-- <span class="bg-white absolute -top-4 left-2 font-bold text-black-700"> Raise Details:
+    </span> -->
+
+    <div class="relative border rounded-md py-2 pl-5">
+
+        <ssa-info-field label="Entity :" [value]="referralRequestDetails?.entityName">
+        </ssa-info-field>
+
+        <ssa-info-field label="Referrer Name :" [value]="referralRequestDetails?.targetEmployee.fullName">
+        </ssa-info-field>
+
+        <ssa-info-field label="Referrer Email :" type="email"
+            [value]="referralRequestDetails?.targetEmployee.organizationEmail"></ssa-info-field>
+
+        <ssa-info-field label="Referee Name :" [value]="referralRequestDetails?.referee.fullName">
+        </ssa-info-field>
+
+        <ssa-info-field label="Referee Email :" type="email"
+            [value]="referralRequestDetails?.referee.organizationEmail"></ssa-info-field>
+
+        <ssa-info-field label="Amount :" type="currency" [value]="referralRequestDetails?.amount"></ssa-info-field>
+
+    </div>
+
+
+</div>

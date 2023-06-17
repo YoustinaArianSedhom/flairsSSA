@@ -1,0 +1,94 @@
+<div class='relative pt-6 pb-2 px-5' *ngIf="resignationDetails">
+
+  <div class="relative border rounded-md py-2 pl-5">
+
+    <ssa-info-field label="Request Type :" [value]="resignationDetails?.offBoardingType">
+    </ssa-info-field>
+
+    <ssa-info-field label="Employee Name :" [value]="resignationDetails?.targetEmployee.fullName">
+    </ssa-info-field>
+
+    <ssa-info-field label="Employee e-mail :" type="email"
+      [value]="resignationDetails?.targetEmployee.organizationEmail">
+    </ssa-info-field>
+    <ssa-info-field label="Employee Title :" *ngIf="resignationDetails?.EmployeeTitle"
+      [value]="resignationDetails?.EmployeeTitle">
+    </ssa-info-field>
+    <ssa-info-field label="Reason :" type="note" [value]="resignationDetails?.reason"
+      *ngIf="resignationDetails?.reason">
+    </ssa-info-field>
+
+    <ssa-info-field label="Last working day :" type="date" [value]="resignationDetails?.leaveDate">
+    </ssa-info-field>
+
+
+
+
+    <ssa-info-field label="Employee Leave Note :" type="note" [value]="resignationDetails?.notes"
+      *ngIf="resignationDetails?.notes">
+    </ssa-info-field>
+
+
+    <ssa-info-field label="Employee Account :" [value]="resignationDetails?.accountName"
+      *ngIf="resignationDetails?.accountName">
+    </ssa-info-field>
+
+    <ssa-info-field label="Portfolio :" *ngIf="resignationDetails?.portfolioName"
+      [value]="resignationDetails?.portfolioName">
+    </ssa-info-field>
+
+    <ssa-info-field label="Product :" *ngIf="resignationDetails?.teamName" [value]="resignationDetails?.teamName">
+    </ssa-info-field>
+
+    <ssa-info-field label="Team :" *ngIf="resignationDetails?.departmentName"
+      [value]="resignationDetails?.departmentName">
+    </ssa-info-field>
+
+    <ssa-info-field label="Account Manager :" *ngIf="resignationDetails?.accountManagerName"
+      [value]="resignationDetails?.accountManagerName">
+    </ssa-info-field>
+    <ssa-info-field label="Rejection Note :" type="note" [value]="resignationDetails?.rejectionNote"
+      *ngIf="resignationDetails?.rejectionNote">
+    </ssa-info-field>
+
+    <ssa-info-field label="Does the client know this employee is leaving? :"
+      *ngIf="resignationDetails?.doesClientKnowTheEmployeeLeaving"
+      [value]="resignationDetails?.doesClientKnowTheEmployeeLeaving">
+    </ssa-info-field>
+
+    <ssa-info-field label="Is a replacement employee available? :"
+      *ngIf="resignationDetails?.isReplacementEmployeeAvailable"
+      [value]="resignationDetails?.isReplacementEmployeeAvailable">
+    </ssa-info-field>
+
+    <ssa-info-field label="Client-approved replacement plan? :"
+      *ngIf="resignationDetails?.doesClientApproveReplacementPlan"
+      [value]="resignationDetails?.doesClientApproveReplacementPlan">
+    </ssa-info-field>
+
+    <ssa-info-field label="Is the client satisfied? :" *ngIf="resignationDetails?.isClientSatisfed"
+      [value]="resignationDetails?.isClientSatisfed">
+    </ssa-info-field>
+
+    <ssa-info-field label="Manager Note :" type="note" [value]="resignationDetails?.managerAcceptanceNote"
+      *ngIf="resignationDetails?.managerAcceptanceNote">
+    </ssa-info-field>
+
+    <ssa-info-field label="IT Receival Note :" type="note" [value]="resignationDetails?.itNotes"
+      *ngIf="resignationDetails?.itNotes">
+    </ssa-info-field>
+
+    <ssa-info-field label="Allowed Balance : " [value]="resignationDetails?.employeeBalance + ' Day (s)'"
+      *ngIf="resignationDetails?.employeeBalance">
+    </ssa-info-field>
+
+    <ssa-info-field label="Allocation balance :" [value]="resignationDetails?.employeeAllocationBalance  + ' day(s)'"
+      *ngIf="resignationDetails.employeeAllocationBalance !== null">
+    </ssa-info-field>
+  </div>
+
+
+
+
+
+</div>

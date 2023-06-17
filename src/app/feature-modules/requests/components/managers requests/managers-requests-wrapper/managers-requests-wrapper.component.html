@@ -1,0 +1,112 @@
+<div class="flex flex-wrap flex-row p-4 pt-0">
+
+    <!--Change Management Wrapper-->
+
+    <div matRipple *appAccessControl="{permissions:['CREATE_CHANGE_MANGER']}"
+        class="border-2 flex items-center mt-5 py-4 px-6 rounded-2xl hover:bg-gray-100 cursor-pointer mr-3"
+        (click)="openChangeManagerRequestForm()">
+
+
+        <mat-icon svgIcon="change-management" class="mat-icon-4x"></mat-icon>
+
+        <div class="ml-6 flex flex-col">
+            <span>
+                Change
+            </span>
+            <span>
+                Management
+            </span>
+        </div>
+
+    </div>
+
+
+     <!--Gouna Voucher Request Wrapper-->
+
+     <div matRipple *appAccessControl="{permissions: ['CREATE_GOUNA_VOUCHER']}"
+     class="border-2 flex items-center mt-5 py-4 px-6 rounded-2xl hover:bg-gray-100 cursor-pointer mr-3"
+     (click)="openGounaVoucherRequestForm()">
+
+
+     <mat-icon svgIcon="Gouna" class="mat-icon-4x"></mat-icon>
+
+     <span class="ml-6">Gouna Voucher</span>
+
+ </div>
+
+
+    <!--Promotion Request Wrapper-->
+
+    <div matRipple *appAccessControl="{permissions: ['CREATE_PROMOTION']}"
+        class="border-2 flex items-center mt-5 py-4 px-6 rounded-2xl hover:bg-gray-100 cursor-pointer mr-3"
+        (click)="openPromotionForm()">
+
+
+        <mat-icon svgIcon="promotion" class="mat-icon-4x"></mat-icon>
+
+        <span class="ml-6">Promotion</span>
+
+    </div>
+
+
+    <!--Raise Request Wrapper-->
+
+    <div matRipple *appAccessControl="{permissions: ['CREATE_RAISE']}"
+        class="border-2 flex items-center mt-5 py-4 px-6 rounded-2xl hover:bg-gray-100 cursor-pointer mr-3"
+        (click)="openRaiseForm()">
+
+
+        <mat-icon svgIcon="raise" class="mat-icon-4x"></mat-icon>
+
+        <span class="ml-6">Raise</span>
+
+    </div>
+
+
+    <!--Voucher Request Wrapper-->
+
+    <div matRipple *appAccessControl="{permissions:['CREATE_VOUCHER']}"
+        class="border-2 flex items-center mt-5 py-4 px-6 rounded-2xl hover:bg-gray-100 cursor-pointer mr-3"
+        (click)="openVoucherRequestForm()">
+
+
+        <mat-icon svgIcon="voucher" class="mat-icon-4x"></mat-icon>
+
+        <span class="ml-6">Voucher</span>
+
+    </div>
+
+    <div matRipple *appAccessControl="{permissions:['CREATE_RECRUITMENT']}"
+      class="border-2 flex items-center mt-5 py-4 px-6 rounded-2xl hover:bg-gray-100 cursor-pointer mr-3"
+      (click)="openRecruitmentRequestForm()">
+
+
+      <mat-icon svgIcon="recruitment" class="mat-icon-3x"></mat-icon>
+
+      <span class="ml-6">Recruitment</span>
+
+    </div>
+
+    <div matRipple *appAccessControl="{permissions:['EXPENSE_REPAYMENT']}"
+      class=" border-2 flex items-center mt-5 py-4 px-6 rounded-2xl hover:bg-gray-100 cursor-pointer mr-3"
+      (click)="openExpenseRepaymentRequestForm()">
+
+
+      <mat-icon svgIcon="expenses-repayment" class="mat-icon-3x"></mat-icon>
+
+      <span class="ml-6">Expense Repayment</span>
+
+    </div>
+
+    <div matRipple *appAccessControl="{permissions:['CREATE_PIP']}"
+    class=" border-2 flex items-center mt-5 py-4 px-6 rounded-2xl hover:bg-gray-100 cursor-pointer mr-3"
+    (click)="openStartPIPRequestForm()">
+
+
+    <mat-icon svgIcon="start-pip" class="mat-icon-3x"></mat-icon>
+
+    <span class="ml-6">Start PIP</span>
+
+  </div>
+
+</div>

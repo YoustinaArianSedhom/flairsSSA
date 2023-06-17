@@ -1,0 +1,40 @@
+<app-form-modal>
+   <h2 mat-dialog-title class="uppercase text-primary border-b pb-2 border-gray-400"> Start PIP </h2>
+   <mat-dialog-content class="custom-scrolling">
+      <form [formGroup]="pipForm" class="flex flex-100 flex-wrap" *ngIf="pipForm">
+         <div class="w-full">
+
+            <ssa-autocomplete placeHolder="Search with Employee name*" serviceMethod="getMySubs"
+               [isMultipleSelect]="false" (addItem)="onEmployeeSelect($event)"
+               subProperty="organizationEmail"
+               (checkValidity)="checkValidity($event, 'targetOrganizationEmail')">
+            </ssa-autocomplete>
+            <mat-error>
+               <app-validation-error class="text-sm" [control]="formControls.targetOrganizationEmail"
+                  businessName="Employee">
+               </app-validation-error>
+            </mat-error>
+         </div>
+         <mat-form-field class="flex-100 pt-3">
+            <mat-label class="font-bold">Note</mat-label>
+            <textarea type="text" formControlName="note" placeholder="Notes" matInput></textarea>
+
+         </mat-form-field>
+      </form>
+
+   </mat-dialog-content>
+   <mat-dialog-actions align="end">
+
+      <div class="justify-between flex">
+         <button mat-button mat-dialog-close class="cancel-btn rounded-none" cdkFocusInitial (click)="cancel()">
+            Cancel
+         </button>
+
+         <button mat-button class="action-btn rounded-none" [disabled]="pipForm?.invalid" (click)="onSubmit()">
+            Submit
+         </button>
+      </div>
+
+
+   </mat-dialog-actions>
+</app-form-modal>

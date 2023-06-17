@@ -1,0 +1,232 @@
+<app-form-modal>
+
+
+    <h2 mat-dialog-title> New Change Management Request</h2>
+
+
+    <mat-dialog-content class="custom-scrolling">
+
+        <form [formGroup]="changeManagerRequestForm">
+
+            <section class="flex flex-wrap">
+                <!-- Employee Name -->
+                <mat-form-field class="flex-100">
+                    <mat-label>Employee Name</mat-label>
+
+                    <input type="text" placeholder="Employee name" matInput required
+                        formControlName="targetOrganizationEmail" [matAutocomplete]="employeesAutoComplete"
+                        (input)="fireEmployeesAutocomplete()" (focus)="onFocusEmployeesAutocomplete()" />
+
+
+                    <mat-error>
+
+                        <app-validation-error [control]="formControls.targetOrganizationEmail"
+                            businessName="Employee name">
+                        </app-validation-error>
+                    </mat-error>
+                    <!--Auto Select-->
+
+                    <mat-autocomplete #employeesAutoComplete="matAutocomplete" class="custom-scrolling"
+                        (optionSelected)="onSelectEmployee($event.option.value)">
+                        <mat-option *ngFor="let employee of employeesList" [value]="employee.organizationEmail">
+                            {{ employee.organizationEmail }}
+                            <span class=' text-gray-400 text-sm'>({{employee.fullName}})</span>
+                        </mat-option>
+                    </mat-autocomplete>
+                </mat-form-field>
+
+
+
+                <mat-form-field class="flex-100">
+                    <mat-label>New Manager</mat-label>
+
+                    <input type="text" placeholder="New manager" matInput required
+                        formControlName="newManagerOrganizationEmail" [matAutocomplete]="newManagerAutoComplete"
+                        (input)="fireManagersAutocomplete()" (focus)="onFocusManagersAutocomplete()" />
+
+                    <mat-error>
+                        <app-validation-error [control]="formControls.newManagerOrganizationEmail"
+                            businessName="New manager">
+                        </app-validation-error>
+                    </mat-error>
+                    <!--Auto Select-->
+
+                    <mat-autocomplete #newManagerAutoComplete="matAutocomplete" class="custom-scrolling"
+                        (optionSelected)="onSelectNewManager($event.option.value)">
+                        <mat-option *ngFor="let manager of managersList" [value]="manager.organizationEmail">
+                            {{ manager.organizationEmail }}
+                            <span class=' text-gray-400 text-sm'>({{manager.fullName}})</span>
+                        </mat-option>
+                    </mat-autocomplete>
+
+
+
+                </mat-form-field>
+
+
+                     <!-- Old Department -->
+                     <section *ngIf="selectedEmployee"
+                     class="bg-gray-50 cursor-not-allowed flex-100 flex flex-col my-4 py-6 px-3 relative shadow-md">
+                     <span
+                         class="-top-3 absolute font-black left-2.5 px-0.5 text-sm break-words italic bg-white">Old Department
+                         Details</span>
+ 
+                     <div class="flex flex-col flex-100 lg:justify-between">
+ 
+                         <!--Old Manager Name-->
+                         <div class="flex justify-start items-baseline flex-wrap flex-50 mb-2.5">
+ 
+                             <span class=" text-sm">
+                                  Manager Name :
+                             </span>
+ 
+                             <span class="font-normal ml-2 text-sm text-gray-400 italic">
+                                 {{selectedEmployee?.manager?.fullName ? selectedEmployee?.manager?.fullName : 'N/A'}}
+                             </span>
+ 
+                            </div>
+                        <div class="flex">
+                            <div class="flex justify-start items-baseline flex-wrap flex-50 mb-2.5">
+                                <!--Old Department-->
+                                <span class=" text-sm">
+                                     Department :
+                                </span>
+    
+                                <span class="font-normal ml-2 text-sm text-gray-400 italic">
+                                    {{selectedEmployee?.department?.name ? selectedEmployee?.department?.name : 'N/A'}}
+                                </span>
+    
+                            </div>
+                            <div class="flex justify-start items-baseline flex-wrap flex-50 mb-2.5 ml-3">
+                                <!--Old Department Code-->
+                                <span class="text-sm">
+                                      Code :
+                                </span>
+    
+                                <span class="font-normal ml-2 text-gray-400 italic text-sm">
+                                    {{selectedEmployee?.department?.code ? selectedEmployee?.department?.code : 'N/A'}}
+                                </span>
+    
+                            </div>
+                        </div>
+
+                         
+                     </div>
+ 
+                 </section>
+
+                <!-- New Department -->
+                <section *ngIf="selectedManager"
+                    class="bg-gray-50 cursor-not-allowed flex-100 flex flex-col my-4 py-6 px-3 relative shadow-md">
+                    <span
+                        class="-top-3 absolute font-black left-2.5 px-0.5 text-sm break-words italic bg-white">New Department
+                        Details</span>
+
+                    <div class="flex flex-col lg:flex-row flex-100 lg:justify-between">
+
+
+                        <!--New Department-->
+                        <div class="flex justify-start items-baseline flex-wrap flex-50 mb-2.5">
+
+                            <span class=" text-sm">
+                                Department :
+                            </span>
+
+                            <span class="font-normal ml-2 text-sm text-gray-400 italic">
+                                {{selectedManager?.department?.name ? selectedManager?.department?.name : 'N/A'}}
+                            </span>
+
+                        </div>
+
+
+                        <!--New Code-->
+
+                        <div class="flex justify-start items-baseline flex-wrap flex-50 mb-2.5">
+
+                            <span class="text-sm">
+                                Code :
+                            </span>
+
+                            <span class="font-normal ml-2 text-gray-400 italic text-sm">
+                                {{selectedManager?.department?.code ? selectedManager?.department?.code : 'N/A'}}
+                            </span>
+
+                        </div>
+
+                    </div>
+
+                </section>
+
+                <mat-form-field class="flex-100">
+
+                    <mat-label>Effective Start Date</mat-label>
+
+                    <input readonly required matInput [matDatepicker]="effectiveStartDate" [min]="dateConfig.min"
+                        [max]="dateConfig.max" formControlName="effectiveStartDate" class="cursor-default">
+
+                    <mat-datepicker-toggle matSuffix [for]="effectiveStartDate"></mat-datepicker-toggle>
+
+                    <mat-datepicker #effectiveStartDate startView="month" disabled='false'>
+                    </mat-datepicker>
+
+                    <mat-error>
+                        <app-validation-error [control]="formControls.effectiveStartDate"
+                            businessName="Effective Start Date">
+                        </app-validation-error>
+                    </mat-error>
+
+
+                </mat-form-field>
+
+
+
+                <!--notes-->
+                <mat-form-field class="flex-100" hintLabel="Max 1000 characters">
+                    <mat-label>Notes</mat-label>
+
+                    <textarea type="text" formControlName="instanceNote" placeholder="Notes" matInput></textarea>
+
+                    <mat-hint align="end">{{ formControls.instanceNote.value?.length || 0 }}/1000</mat-hint>
+
+                    <mat-error>
+                        <app-validation-error [control]="formControls.instanceNote" businessName="Notes"
+                            [customValidatorsErrorMessages]="{ 'pattern':'Notes value consists of white space only!'}">
+                        </app-validation-error>
+                    </mat-error>
+                </mat-form-field>
+            </section>
+
+        </form>
+
+
+
+
+    </mat-dialog-content>
+
+
+
+    <mat-dialog-actions align="end">
+
+        <div class="justify-between flex">
+            <button mat-button mat-dialog-close class="cancel-btn rounded-none" cdkFocusInitial (click)="cancel()">
+                Cancel
+            </button>
+
+            <button mat-button class="action-btn rounded-none"
+                [disabled]="changeManagerRequestForm.invalid || employeeIsNotFound || managerIsNotFound"
+                (click)="submit()">
+                Submit
+            </button>
+        </div>
+
+
+    </mat-dialog-actions>
+
+
+
+
+
+
+
+
+</app-form-modal>

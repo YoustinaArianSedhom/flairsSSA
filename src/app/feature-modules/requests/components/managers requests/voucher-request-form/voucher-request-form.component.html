@@ -1,0 +1,108 @@
+<app-form-modal>
+    <h2 mat-dialog-title>New Voucher Request</h2>
+
+    <mat-dialog-content class="custom-scrolling">
+        <form [formGroup]="voucherForm" (focus)="$event.preventDefault()">
+
+
+
+            <section class="flex flex-wrap">
+
+                <!-- Employee Name -->
+                <mat-form-field class="flex-100 ">
+                    <mat-label>Employee Name</mat-label>
+
+                    <input type="text" placeholder="Employee Name" matInput required
+                        formControlName="targetOrganizationEmail" [matAutocomplete]="employeesAutoComplete"
+                        (input)="fireAutocomplete()" (focus)="onFocusAutoComplete()" />
+                    <mat-error>
+                        <app-validation-error [control]="voucherForm.get('targetOrganizationEmail')"
+                            businessName="Employee Email">
+                        </app-validation-error>
+                    </mat-error>
+
+                    <mat-autocomplete #employeesAutoComplete="matAutocomplete" class="custom-scrolling"
+                        (optionSelected)="onSelectEmployeeEmail($event.option.value)">
+                        <mat-option *ngFor="let employee of employeesList" [value]="employee.organizationEmail">
+                            {{ employee.organizationEmail }}
+                            <span class=' text-gray-400 text-sm'>({{employee.fullName}})</span>
+                        </mat-option>
+                    </mat-autocomplete>
+                </mat-form-field>
+
+                <!-- Entity Name-->
+                <mat-form-field class="flex-100">
+                    <mat-label>Entity</mat-label>
+                    <mat-select formControlName="entityName" required placeholder='Entity' auto-focus>
+                        <ng-container *ngIf="entityInfo?.entityName">
+                            <mat-option [value]="entityInfo.entityName">
+                                {{ entityInfo.entityName}}
+                            </mat-option>
+                        </ng-container>
+                    </mat-select>
+                    <mat-error>
+                        <app-validation-error [control]="formControls.entityName" businessName="Entity">
+                        </app-validation-error>
+                    </mat-error>
+                </mat-form-field>
+
+
+
+
+
+                <!-- Type -->
+                <mat-form-field class="flex-100">
+                    <mat-label>Type</mat-label>
+                    <mat-select matInput placeholder="Type" formControlName="type" required>
+                        <mat-option *ngFor="let type of types" [value]="type.value">
+                            {{type.name}}
+                        </mat-option>
+                    </mat-select>
+                    <mat-error>
+                        <app-validation-error [control]="formControls.amount" businessName="amount">
+                        </app-validation-error>
+                    </mat-error>
+                </mat-form-field>
+
+                <!-- Amount -->
+                <mat-form-field class="flex-100">
+                    <mat-label>Gross amount</mat-label>
+
+                    <input type="number" formControlName="amount" placeholder="Amount" required matInput />
+                    <mat-error>
+                        <app-validation-error [control]="formControls.amount" businessName="Amount">
+                        </app-validation-error>
+                    </mat-error>
+                </mat-form-field>
+
+
+
+                <!-- Note -->
+                <mat-form-field class="flex-100" hintLabel="Max 1000 characters">
+                    <mat-label>Summary</mat-label>
+                    <textarea type="text" formControlName="note" placeholder="Summary" required matInput></textarea>
+                    <mat-hint align="end">{{ formControls.note.value?.length || 0 }}/1000</mat-hint>
+                    <mat-error>
+                        <app-validation-error
+                            [customValidatorsErrorMessages]="{ 'pattern': 'Summary value consists of white space only!'}"
+                            [control]="formControls.note" businessName="Summary">
+                        </app-validation-error>
+                    </mat-error>
+                </mat-form-field>
+
+            </section>
+
+        </form>
+    </mat-dialog-content>
+
+    <mat-dialog-actions align="end">
+        <div class="justify-between flex">
+            <button mat-button mat-dialog-close (click)="cancel()" class="cancel-btn rounded-none" cdkFocusInitial>
+                Cancel
+            </button>
+            <button mat-button [disabled]="voucherForm.invalid" class="action-btn rounded-none" (click)="submit()">
+                Submit
+            </button>
+        </div>
+    </mat-dialog-actions>
+</app-form-modal>

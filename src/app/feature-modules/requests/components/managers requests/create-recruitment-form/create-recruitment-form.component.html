@@ -1,0 +1,583 @@
+<app-inner-page-layout>
+  <ng-container>
+    <div class="py-3 " [ngClass]="{'border-b-2': !editMode}">
+      <h1 class="text-primary " [ngClass]="{'w-1/2': editMode}">{{headInformation.title}} {{recruitmentDetails?.readableId ? ' - ' + recruitmentDetails?.readableId : ''}}</h1>
+      
+    </div>
+    <div class="border-t-2 bg-gray-100 flex flex-wrap items-center w-fit px-1 py-2" *ngIf="editMode">
+      <img src="./../../../../../../assets/images/hint.png" width="35" alt="">
+      <span class="text-sm px-3 text-yellow-600 " >
+        Recruitment request can be modified within 24 hrs of creation date 
+        <br>
+        Once an offer is created, recruitment request can not be modified
+      </span>
+    </div>
+    <section class=" py-3 px-5">
+      <form [formGroup]="recruitmentForm" class="w-full py-3 ">
+        <!-- General Info Wrapper  -->
+        <div class="lg:flex py-3">
+          <div class="w-2/12 lg:pl-3">
+            <p class="font-bold text-lg lg:px-2 pb-4 lg:pt-5">General Info</p>
+          </div>
+          <div class="w-3/5">
+
+            <!-- position Title -->
+            <div class="flex flex-col ">
+              <!-- Disabled Inputs -->
+              <div class="flex justify-between pt-5">
+                <!-- P & L Manager -->
+                <div class="w-1/2 pr-12">
+                  <p class="label-text">P&L</p>
+                  <input type="text" formControlName="fullPLName" class="input-border text-gray-600">
+                </div>
+                <!-- Source  -->
+                <div class="w-1/2 pl-12">
+                  <p class="label-text">Source</p>
+                  <input type="text" formControlName="source" class="input-border text-gray-600">
+                </div>
+              </div>
+              <div class="flex justify-between pt-5">
+                <!-- Department  -->
+                <div class="w-1/2 pr-12">
+                  <p class="label-text">Department</p>
+                  <input type="text" class="input-border text-gray-600" [value]="departmentName" disabled>
+                </div>
+                <!-- Team  -->
+                <div class="w-1/2 pl-12">
+                  <p class="label-text">Team</p>
+                  <input type="text" formControlName="teamName" class="input-border text-gray-600">
+                </div>
+              </div>
+
+              <div class="flex justify-between pt-5">
+                <!-- Position Title -->
+                <mat-form-field class="w-1/2 pr-12" hintLabel="Max 75 characters">
+                  <mat-label>Position title*</mat-label>
+                  <input matInput placeholder="Position title" formControlName="positionTitle">
+                  <mat-hint align="end">{{ formControls.positionTitle.value.length || 0 }}/75</mat-hint>
+
+                  <mat-error>
+                    <app-validation-error [control]="formControls?.positionTitle" businessName="Position Title"
+                      [customValidatorsErrorMessages]="{ 'pattern':'Title value consists of white space only!'}">
+                    </app-validation-error>
+                  </mat-error>
+                </mat-form-field>
+
+                <!-- Expected Hiring Date -->
+                <mat-form-field class="w-1/2 pl-12">
+                  <mat-label>Expected hiring date</mat-label>
+                  <input readonly matInput [matDatepicker]="picker" [min]="datePickerConfig.min" formControlName="expectedHiringDate">
+                  <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                  <mat-datepicker #picker></mat-datepicker>
+                  <mat-error>
+                    <app-validation-error [control]="formControls.expectedHiringDate"
+                      businessName="Expected hiring date">
+                    </app-validation-error>
+                  </mat-error>
+                </mat-form-field>
+              </div>
+
+              <div class="flex justify-between pt-5">
+                <!--Job Function Dropdown -->
+                <mat-form-field class="w-1/2 pr-12">
+                  <mat-label>Job Function*</mat-label>
+                  <mat-select formControlName="jobId" disableRipple (selectionChange)="onJobFunctionChanged($event)"
+                    panelClass="custom-scrolling">
+                    <mat-option *ngFor="let item of allJobs" [value]="item.id">
+                      {{item.function}}
+                    </mat-option>
+                  </mat-select>
+                  <mat-error>
+                    <app-validation-error [control]="formControls?.jobId" businessName="Job Function">
+                    </app-validation-error>
+                  </mat-error>
+                </mat-form-field>
+
+                <!-- Job Level Dropdown list -->
+                <mat-form-field class="w-1/2 pl-12">
+                  <mat-label>Job Levels*</mat-label>
+                  <mat-select formControlName="jobLevelId" panelClass="custom-scrolling">
+                    <mat-option *ngFor="let level of jobLevels" [value]="level.id">
+                      {{level.name}}
+                    </mat-option>
+                  </mat-select>
+                  <mat-error>
+                    <app-validation-error [control]="formControls?.jobLevelId" businessName="Job Level">
+                    </app-validation-error>
+                  </mat-error>
+                </mat-form-field>
+              </div>
+
+              <div class="flex justify-between ">
+                <!-- Employment Type -->
+                <mat-form-field class="w-1/2 pr-12">
+                  <mat-label>Employment Type*</mat-label>
+                  <mat-select formControlName="employmentType" disableRipple>
+                    <mat-option *ngFor="let type of employmentTypes" [value]="type.id">
+                      {{type.name}}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+
+                <!-- Expected Hiring Date -->
+                <mat-form-field class="w-1/2 pl-12">
+                  <mat-label>Location*</mat-label>
+                  <mat-select formControlName="location">
+                    <mat-option *ngFor="let location of locationsList " [value]="location">
+                      {{location}}
+                    </mat-option>
+                  </mat-select>
+                  <mat-error>
+                    <app-validation-error [control]="formControls.location" businessName="Location">
+                    </app-validation-error>
+                  </mat-error>
+                </mat-form-field>
+              </div>
+
+
+
+              <div class="flex justify-between">
+
+                <mat-form-field class="w-1/2 pr-12">
+                  <mat-label>Shift*</mat-label>
+                  <input [readonly]="formControls.shiftId.value" #shiftAutoCompleteInput type="text" placeholder="Pick shift" aria-label="Shift"
+                    matInput [formControl]="shiftFormControl" [matAutocomplete]="shiftAutoComplete"
+                    (blur)="validateAutoCompleteFormControl($event.target,'shiftId')">
+                  <button *ngIf="formControls.shiftId.value" type="button" matSuffix mat-icon-button
+                    aria-label="Clear-Shift" class="mat-hint" (click)="clearAutoCompleteValue($event,'shiftId')">
+                    <mat-icon>close</mat-icon>
+                  </button>
+                  <mat-autocomplete #shiftAutoComplete="matAutocomplete" class="custom-scrolling"
+                    (optionSelected)="onShiftSelect($event)" #shiftAutoCompletePanel>
+
+                    <mat-option *ngFor="let option of filteredShifts | async" [matTooltip]="option.name"
+                      [value]="option.id">
+                      {{option.name}}
+                    </mat-option>
+                  </mat-autocomplete>
+                  <mat-icon *ngIf="!formControls.shiftId.value" matSuffix mat-icon-button
+                    class="arrow-down cursor-pointer px-1">arrow_drop_down</mat-icon>
+                  <mat-error>
+                    <app-validation-error [control]="formControls.shiftId" businessName="Shift">
+                    </app-validation-error>
+                  </mat-error>
+                </mat-form-field>
+
+                <div class="w-1/2 flex pl-12" *ngIf="selectedShift">
+                  <div class="flex-shrink-0" *ngIf="selectedShift?.fromTo">
+                    <p class="label-text">From-To</p>
+                    <input type="text" readonly disabled [value]="selectedShift.fromTo" class="From-To text-gray-600">
+                  </div>
+                  <div class="flex-shrink-0 mx-2" *ngIf="selectedShift?.workingHours">
+                    <p class="label-text">Working hours</p>
+                    <input type="text" readonly disabled [value]="selectedShift.workingHours + ' Hours'"
+                      class="working-hours text-gray-600">
+                  </div>
+                  <div class="flex-shrink-0" *ngIf="selectedShift?.days">
+                    <p class="label-text">Working days</p>
+                    <input type="text" readonly disabled [value]="selectedShift.days"
+                      class="working-days text-gray-600">
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- Shift Dropdown-->
+          <div class="w-3.5/12"></div>
+
+        </div>
+
+        <!-- Recruitment Info Wrapper -->
+        <div class="lg:flex border-t py-3">
+          <div class="w-2/12 lg:pl-3">
+            <p class="font-bold text-lg lg:px-2 pb-4 lg:pt-5">Recruitment Info </p>
+          </div>
+          <div class="w-3/5">
+            <div class="flex justify-between ">
+              <!-- Priority Dropdown -->
+              <mat-form-field class="w-1/2 pr-12">
+                <mat-label>Priority*</mat-label>
+                <input [readonly]="formControls.priority.value" #priorityAutoCompleteInput type="text" placeholder="Pick one" aria-label="Priority"
+                  matInput [formControl]="priorityFormControl" [matAutocomplete]="auto"
+                  (blur)="validateAutoCompleteFormControl($event.target,'priority')">
+                <button *ngIf="formControls.priority.value" type="button" matSuffix mat-icon-button
+                  aria-label="Clear-Shift" class="mat-hint" (click)="clearAutoCompleteValue($event,'priority')">
+                  <mat-icon>close</mat-icon>
+                </button>
+                <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete"
+                  (optionSelected)="prioritySelected($event)">
+
+                  <mat-option *ngFor="let option of filteredPriorities | async" [matTooltip]="option.name"
+                    [value]="option.id">
+                    {{option.name}}
+                  </mat-option>
+                </mat-autocomplete>
+                <mat-icon *ngIf="!formControls.priority.value" matSuffix mat-icon-button
+                  class="arrow-down cursor-pointer px-1">arrow_drop_down</mat-icon>
+                <mat-error>
+                  <app-validation-error [control]="formControls.priority" businessName="Priority">
+                  </app-validation-error>
+                </mat-error>
+              </mat-form-field>
+
+              <!-- No of vacancies  -->
+              <mat-form-field class="w-1/2 pl-12">
+                <mat-label>No of vacancies*</mat-label>
+                <input matInput type="number" formControlName="NumOfVacancies">
+                <mat-error>
+                  <app-validation-error [control]="formControls?.NumOfVacancies" businessName="Vacancies">
+                  </app-validation-error>
+                </mat-error>
+              </mat-form-field>
+            </div>
+            <div class="flex justify-between ">
+              <mat-form-field class="w-1/2 pr-12">
+                <mat-label>English Level*</mat-label>
+                <input [readonly]="formControls.englishFluency.value" type="text" #englishLevelAutoCompleteInput placeholder="Pick one"
+                  aria-label="english" matInput [formControl]="englishFluencyFormControl"
+                  [matAutocomplete]="englishFluency"
+                  (blur)="validateAutoCompleteFormControl($event.target,'englishFluency')">
+                <button *ngIf="formControls.englishFluency.value" type="button" matSuffix mat-icon-button
+                  aria-label="Clear-Shift" class="mat-hint" (click)="clearAutoCompleteValue($event,'englishFluency')">
+                  <mat-icon>close</mat-icon>
+                </button>
+                <mat-autocomplete autoActiveFirstOption #englishFluency="matAutocomplete" class="custom-scrolling"
+                  (optionSelected)="englishLevelSelected($event)">
+
+                  <mat-option *ngFor="let level of filteredEnglishLevels | async" [value]="level" [matTooltip]="level">
+                    {{level}}
+                  </mat-option>
+                </mat-autocomplete>
+                <mat-icon *ngIf="!formControls.englishFluency.value" matSuffix mat-icon-button
+                  class="arrow-down cursor-pointer px-1">arrow_drop_down</mat-icon>
+                <mat-error>
+                  <app-validation-error [control]="formControls.englishFluency" businessName="English level">
+                  </app-validation-error>
+                </mat-error>
+              </mat-form-field>
+              <!-- Required Experience  -->
+              <mat-form-field class="w-1/2 pl-12" hintLabel="Max 75 characters">
+                <mat-label>Experience required</mat-label>
+                <input type="text" matInput placeholder="Years Of Experience" formControlName="experience" required
+                  (change)="validateOnlySpaces(formControls.experience)">
+                <mat-hint align="end">{{ formControls.experience.value.length || '0' }}/75</mat-hint>
+
+                <mat-error>
+                  <app-validation-error [control]="formControls?.experience" businessName="Experience Required"
+                    [customValidatorsErrorMessages]="{ 'pattern':'Title value consists of white space only!'}">
+                  </app-validation-error>
+                </mat-error>
+              </mat-form-field>
+            </div>
+            <!-- Type -->
+            <div class="w-1/2">
+              <section class="py-4 w-full">
+                <mat-radio-group class="w-full flex flex-wrap justify-between" formControlName="recruitmentType">
+                  <mat-radio-button class="pb-2 w-1/2" *ngFor="let recruitmentType of recruitmentTypes"
+                    [value]="recruitmentType.id">
+                    {{recruitmentType.name}}
+                  </mat-radio-button>
+                </mat-radio-group>
+              </section>
+            </div>
+            <!-- Skills Dropdown -->
+            <div class="w-full  pt-3">
+              <div class="chip-list-wrapper">
+                <mat-chip-list #chipList>
+                  <ng-container *ngFor="let item of selectedSkill; let i=index">
+                    <mat-chip class="cardinal-colors balance-chip" (click)="removeSkill(item.id)">
+                      {{ item.name }}
+                      <mat-icon class="mat-chip-remove text-gray-900">close</mat-icon>
+                    </mat-chip>
+                  </ng-container>
+                </mat-chip-list>
+              </div>
+              <ssa-autocomplete placeHolder="Select skills*" serviceMethod="searchSkill" [keepFilterWhenSelect]="true"
+                (checkValidity)="checkValidity($event, 'skills')" [list]="selectedSkill" (addItem)="addSkills($event)">
+              </ssa-autocomplete>
+              <mat-error>
+                <app-validation-error [control]="formControls?.skills" businessName="Skills">
+                </app-validation-error>
+              </mat-error>
+            </div>
+            <div class="w-full  pt-3">
+              <div class="chip-list-wrapper">
+                <mat-chip-list #chipList>
+                  <ng-container *ngFor="let interviewer of selectedInterviewer; let i=index">
+                    <mat-chip class="cardinal-colors balance-chip" (click)="removeTechnicalInterviewer(interviewer.id)">
+                      {{ interviewer.fullName }}
+                      <mat-icon class="mat-chip-remove text-gray-900">close</mat-icon>
+                    </mat-chip>
+                  </ng-container>
+                </mat-chip-list>
+              </div>
+              <ssa-autocomplete placeHolder="Select Technical Interviewer*" serviceMethod="searchTechnialInterviewer"
+                (checkValidity)="checkValidity($event, 'technicalInterviewer')" [list]="selectedInterviewer"
+                subProperty="organizationEmail" (addItem)="addTechnicalInterviewer($event)">
+              </ssa-autocomplete>
+              <mat-error>
+                <app-validation-error [control]="formControls?.technicalInterviewer"
+                  businessName="Technical Interviewer">
+                </app-validation-error>
+              </mat-error>
+            </div>
+            <!--Notes-->
+            <div class=" flex">
+              <mat-form-field class="flex-100" hintLabel="Max 500 characters">
+                <mat-label>Notes</mat-label>
+
+                <textarea type="text" formControlName="notes" placeholder="Notes" matInput></textarea>
+
+                <mat-hint align="end">{{ formControls.notes.value?.length || 0 }}/500</mat-hint>
+
+                <mat-error>
+                  <app-validation-error [control]="formControls.notes" businessName="Notes"
+                    [customValidatorsErrorMessages]="{ 'pattern':'Notes value consists of white space only!', 'maxlength': 'max length should be 500 characters'}">
+                  </app-validation-error>
+                </mat-error>
+              </mat-form-field>
+            </div>
+
+
+            <div class=" pt-3">
+              <div for="Roles" class="w-full py-2 text-sm text-left text-gray-500">Roles and Responsibilities*</div>
+              <ckeditor #ckEditor [editor]="ckEditorConfig.instance" [config]="ckEditorConfig.config" id="requirements" [ngClass]="{'hidden_Header': !recruitmentDetails}"
+                class="col-12" formControlName="requirements"
+                (change)="CKEditorValueObservable.next(formControls.requirements.value)">
+              </ckeditor>
+              <mat-hint class="text-xs">
+                Max Length: {{getRequirementsActualValue.length}} / {{ckEditorConfig.maxLength}}
+              </mat-hint>
+              <mat-error>
+                <app-validation-error [control]="formControls.requirements" businessName="Roles and Responsibilities">
+                </app-validation-error>
+              </mat-error>
+            </div>
+          </div>
+          <div class="w-3.5/12"></div>
+        </div>
+
+        <!-- Resource Based section -->
+        <div class="lg:flex border-t py-3">
+          <div class="w-2/12 lg:pl-3">
+            <p class="font-bold text-lg lg:px-2 pb-4 lg:pt-5">Account Info </p>
+          </div>
+          <div class="w-3/5">
+            <!-- Resource Based -->
+            <div class="flex mt-5 ">
+              <label class="mr-4">Resource Based ? </label>
+              <label class="switch"
+                [matTooltip]="formControls.isEmployeeResourceBased.disabled ? 'Access is denied to enable resource based' : ''">
+                <input type="checkbox" formControlName="isEmployeeResourceBased" (change)="onResourceBasedChange()">
+                <span class="slider round"></span>
+
+                <span class="slider-text"></span>
+              </label>
+
+            </div>
+            <ng-container *ngIf="formControls.isEmployeeResourceBased.value">
+
+              <div class="flex mt-5 ">
+                <!-- Account dropdown -->
+                <mat-form-field class="w-1/2 ">
+                  <mat-label>Account*</mat-label>
+                  <input [readonly]="formControls.account.value" type="text" #accountAutoCompleteInput placeholder="Pick account"
+                    aria-label="Account" matInput [formControl]="accountFormControl"
+                    [matAutocomplete]="accountAutoComplete"
+                    (blur)="validateAutoCompleteFormControl($event.target,'account')">
+                  <button *ngIf="formControls.account.value" type="button" matSuffix mat-icon-button aria-label="Clear"
+                    class="mat-hint" (click)="clearAutoCompleteValue($event,'account')">
+                    <mat-icon>close</mat-icon>
+                  </button>
+                  <mat-autocomplete #accountAutoComplete="matAutocomplete" class="custom-scrolling"
+                    (optionSelected)="onAccountSelect($event)" #shiftAutoCompletePanel>
+
+                    <mat-option *ngFor="let option of filteredAccounts | async" [matTooltip]="option.name"
+                      [value]="option.id">
+                      {{option.name}}
+                    </mat-option>
+                  </mat-autocomplete>
+                  <mat-icon *ngIf="!formControls.account.value" matSuffix mat-icon-button
+                    class="arrow-down cursor-pointer px-1">arrow_drop_down</mat-icon>
+                  <mat-error>
+                    <app-validation-error [control]="formControls.account" businessName="Account">
+                    </app-validation-error>
+                  </mat-error>
+                </mat-form-field>
+                <!-- Product dropdown as label -->
+                <mat-form-field class="w-3/4 ml-3">
+                  <mat-label>Platform*</mat-label>
+                  <input [readonly]="formControls.product.value" type="text" #productAutoCompleteInput placeholder="Pick one" aria-label="Product"
+                    matInput [matAutocomplete]="resourceProduct" [formControl]="productFormControl"
+                    (blur)="validateAutoCompleteFormControl($event.target,'product')">
+                  <mat-icon *ngIf="formControls.product.enabled && !formControls.product.value" matSuffix
+                    mat-icon-button class="arrow-down cursor-pointer px-1">arrow_drop_down</mat-icon>
+                  <button *ngIf="formControls.product.value" type="button" matSuffix mat-icon-button
+                    aria-label="Clear-product" class="mat-hint" (click)="clearAutoCompleteValue($event,'product')">
+                    <mat-icon>close</mat-icon>
+                  </button>
+                  <mat-autocomplete #resourceProduct="matAutocomplete" (optionSelected)="onProductSelect($event)">
+                    <mat-option *ngFor="let product of filteredProduct | async" [matTooltip]="product.name"
+                      [value]="product.id">
+                      {{product.name}}
+                    </mat-option>
+                  </mat-autocomplete>
+                  <mat-error>
+                    <app-validation-error [control]="formControls.product" businessName="Product">
+                    </app-validation-error>
+                  </mat-error>
+                </mat-form-field>
+
+
+                <!-- Team as label -->
+                <mat-form-field class="w-3/4 lg:pl-5">
+                  <mat-label>Department*</mat-label>
+                  <input [readonly]="formControls.resourceTeam.value" type="text" #teamAutoCompleteInput placeholder="Pick one"
+                    aria-label="Team" matInput [matAutocomplete]="team" [formControl]="teamFormControl"
+                    (blur)="validateAutoCompleteFormControl($event.target,'resourceTeam')">
+                  <mat-icon *ngIf="formControls.resourceTeam.enabled && !formControls.resourceTeam.value" matSuffix
+                    mat-icon-button class="arrow-down cursor-pointer px-1">arrow_drop_down</mat-icon>
+                  <button *ngIf="formControls.resourceTeam.value" type="button" matSuffix mat-icon-button
+                    aria-label="Clear-Shift" class="mat-hint" (click)="clearAutoCompleteValue($event,'resourceTeam')">
+                    <mat-icon>close</mat-icon>
+                  </button>
+                  <mat-autocomplete #team="matAutocomplete" (optionSelected)="onTeamSelect($event)">
+
+                    <mat-option *ngFor="let team of filteredTeams | async" [matTooltip]="team.name" [value]="team.id">
+                      {{team.name}}
+                    </mat-option>
+                  </mat-autocomplete>
+                  <mat-error>
+                    <app-validation-error [control]="formControls.resourceTeam" businessName="Team">
+                    </app-validation-error>
+                  </mat-error>
+                </mat-form-field>
+
+              </div>
+              <div class="flex mt-5 w-3/4">
+                <!-- Client Requester Dropdown -->
+                <mat-form-field class="w-1/2 ">
+                  <mat-label>Account Requester Name*</mat-label>
+                  <input [readonly]="formControls.clientRequesterName.value" #accountRequesterNameAutoCompleteInput type="text" placeholder="select requester"
+                    aria-label="Requester Name" matInput [formControl]="clientReFormControl"
+                    [matAutocomplete]="clientRequesterName"
+                    (blur)="validateAutoCompleteFormControl($event.target,'clientRequesterName')">
+                  <mat-icon *ngIf="formControls.clientRequesterName.enabled && !formControls.clientRequesterName.value"
+                    matSuffix mat-icon-button class="arrow-down cursor-pointer px-1">arrow_drop_down</mat-icon>
+                  <button *ngIf="formControls.clientRequesterName.value" type="button" matSuffix mat-icon-button
+                    aria-label="Clear-Name" class="mat-hint"
+                    (click)="clearAutoCompleteValue($event,'clientRequesterName')">
+                    <mat-icon>close</mat-icon>
+                  </button>
+                  <mat-autocomplete #clientRequesterName="matAutocomplete" class="custom-scrolling"
+                    (optionSelected)="onClientRequesterSelect($event)">
+
+                    <mat-option *ngFor="let client of filteredClientRequester | async" [value]="client.fullname"
+                      [matTooltip]="client.fullname">
+                      {{client.fullname}}
+                    </mat-option>
+                    <mat-option [value]=" clientReFormControl.value" *ngIf="!(filteredClientRequester | async)?.length">
+                      Click to add '{{clientReFormControl.value}}'
+                    </mat-option>
+                  </mat-autocomplete>
+                  <mat-error>
+                    <app-validation-error [control]="formControls.clientRequesterName"
+                      businessName="Account Requester Name">
+                    </app-validation-error>
+                  </mat-error>
+                </mat-form-field>
+                <!-- Requester Details -->
+                <div class=" ml-3">
+                  <ng-container class="flex-wrap mat-form-field-flex" *ngIf="formControls.clientRequesterName.value">
+                    <p class="label-text">Account Requester Email</p>
+                    <input type="text" formControlName="clientRequesterEmail"
+                      class="input-border text-gray-600 min-w-206 w-full">
+                    <mat-error>
+                      <app-validation-error class="text-xs" [control]="formControls.clientRequesterEmail"
+                        businessName="Account Requester Email">
+                      </app-validation-error>
+                    </mat-error>
+                  </ng-container>
+                </div>
+                <div class=" lg:pl-5">
+                  <div class="flex-wrap" *ngIf="formControls.clientRequesterName.value">
+                    <p class="label-text ml-3">Account Requester Title</p>
+                    <input type="text" formControlName="clientRequesterTitle"
+                      class="input-border text-gray-600 min-w-206 w-full">
+                    <ng-container>
+                      <mat-error>
+                        <app-validation-error class="text-xs" [control]="formControls.clientRequesterTitle"
+                          businessName="Account Requester Title">
+                        </app-validation-error>
+                      </mat-error>
+                    </ng-container>
+                  </div>
+                </div>
+              </div>
+              <div class="flex mt-5 ">
+                <!-- Role Dropdown -->
+                <div class="">
+                  <mat-label *ngIf="formControls.roleId.value"
+                    [ngClass]="{'roleUp text-gray-600 inline-block': formControls.roleId.value}">Role *</mat-label>
+                  <ssa-autocomplete #roleDropDown placeHolder="Role *" formFieldClasses="w-1/2"
+                    [disabledFormControl]="!formControls.isEmployeeResourceBased.value" [isMultipleSelect]="false"
+                    serviceMethod="searchRole" (checkValidity)="checkValidity($event, 'roleId')"
+                    (addItem)="addRole($event)">
+                  </ssa-autocomplete>
+                  <mat-error>
+                    <app-validation-error [control]="formControls.roleId" businessName="Role">
+                    </app-validation-error>
+                  </mat-error>
+                </div>
+              </div>
+              <div>
+                <!-- customer Success -->
+                <mat-form-field class="w-full  customer">
+                  <mat-label>Customer success representative</mat-label>
+                  <input [readonly]="formControls.customerSuccessRepOrganizationEmail.value" #customerSuccessRepresentativeAutoCompleteInput type="text"
+                    placeholder="Pick Representative" aria-label="Shift" matInput
+                    [formControl]="customerSuccessFormControl" [matAutocomplete]="customerSuccessAutoComplete"
+                    (blur)="validateAutoCompleteFormControl($event.target,'customerSuccessRepOrganizationEmail')">
+                  <button *ngIf="formControls.customerSuccessRepOrganizationEmail.value" type="button" matSuffix
+                    mat-icon-button aria-label="Clear-customer-success" class="mat-hint"
+                    (click)="clearAutoCompleteValue($event,'customerSuccessRepOrganizationEmail')">
+                    <mat-icon>close</mat-icon>
+                  </button>
+                  <mat-autocomplete #customerSuccessAutoComplete="matAutocomplete" class="custom-scrolling"
+                    (optionSelected)="onCustomerSuccessSelect($event)">
+
+                    <mat-option *ngFor="let option of filteredCustomerList | async" [matTooltip]="option.fullName"
+                      [value]="option.organizationEmail">
+                      {{option.fullName}}
+                      <span class="text-gray-400 pl-2 text-sm"
+                        *ngIf="option.organizationEmail">{{option.organizationEmail}}</span>
+                    </mat-option>
+                  </mat-autocomplete>
+                  <mat-icon *ngIf="!formControls.customerSuccessRepOrganizationEmail.value" matSuffix mat-icon-button
+                    class="arrow-down cursor-pointer px-1">arrow_drop_down</mat-icon>
+                </mat-form-field>
+              </div>
+            </ng-container>
+          </div>
+        </div>
+
+
+        <!-- actions Wrapper -->
+        <mat-dialog-actions align="end">
+          <div class=" flex justify-end">
+            <button mat-button mat-dialog-close class="cancel-btn rounded-none" cdkFocusInitial (click)="cancel()">
+              Cancel
+            </button>
+
+            <button mat-button class="action-btn rounded-none" [disabled]="recruitmentForm?.invalid"
+              (click)="onSubmit()">
+              Submit
+            </button>
+          </div>
+        </mat-dialog-actions>
+      </form>
+    </section>
+
+
+  </ng-container>
+</app-inner-page-layout>

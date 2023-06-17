@@ -1,0 +1,292 @@
+<app-form-modal>
+    <h2 mat-dialog-title>New Raise Request</h2>
+
+    <mat-dialog-content class="custom-scrolling">
+        <form [formGroup]="raiseForm" (focus)="$event.preventDefault()">
+
+
+
+            <section class="flex flex-wrap">
+
+
+
+                <!-- Employee Name -->
+                <mat-form-field class="flex-100 ">
+                    <mat-label>Employee Name</mat-label>
+
+                    <input type="text" placeholder="Employee Name" matInput required
+                        formControlName="targetOrganizationEmail" [matAutocomplete]="employeesAutoComplete"
+                        (input)="fireAutocomplete()" (focus)="onFocusAutoComplete()" />
+                    <mat-error>
+                        <app-validation-error [control]="raiseForm.get('targetOrganizationEmail')"
+                            businessName="Employee Email">
+                        </app-validation-error>
+                    </mat-error>
+
+                    <mat-autocomplete #employeesAutoComplete="matAutocomplete" class="custom-scrolling"
+                        (optionSelected)="onSelectEmployeeEmail($event.option.value)">
+                        <mat-option *ngFor="let employee of employeesList" [value]="employee.organizationEmail">
+                            {{ employee.organizationEmail }}
+                            <span class=' text-gray-400 text-sm'>({{employee.fullName}})</span>
+                        </mat-option>
+                    </mat-autocomplete>
+                </mat-form-field>
+
+                <!-- Entity Name-->
+                <mat-form-field class="flex-100">
+                    <mat-label>Entity</mat-label>
+                    <mat-select formControlName="entityName" required placeholder='Entity' auto-focus>
+                        <ng-container *ngIf="entityName">
+                            <mat-option [value]="entityName">
+                                {{ entityName }}
+                            </mat-option>
+                        </ng-container>
+                    </mat-select>
+                    <mat-error>
+                        <app-validation-error [control]="formControls.entityName" businessName="Entity">
+                        </app-validation-error>
+                    </mat-error>
+                </mat-form-field>
+
+
+                <!-- Department -->
+                <section *ngIf="selectedEmployee" @animatedInfoCard
+                    class="bg-gray-50 cursor-not-allowed flex-100 flex flex-col my-4 py-6 px-3 relative shadow-md">
+                    <span class="-top-3 absolute font-black left-2.5 px-0.5 text-sm break-words italic bg-white">Department Details</span>
+
+                    <!--current salaries card wrapper-->
+                    <div class="flex flex-col lg:flex-row flex-100 lg:justify-between">
+
+
+                        <!--Current Gross-->
+                        <div class="flex justify-start items-baseline flex-wrap flex-50 mb-2.5">
+
+                            <span class=" text-sm">
+                                Department :
+                            </span>
+
+                            <span class="font-normal ml-2 text-sm text-gray-400 italic">
+                                {{selectedEmployee?.department?.name ? selectedEmployee?.department?.name : 'N/A'}}
+                            </span>
+
+                        </div>
+
+
+                        <!--Current Net-->
+
+                        <div class="flex justify-start items-baseline flex-wrap flex-50 mb-2.5">
+
+                            <span class="text-sm">
+                                Code :
+                            </span>
+
+                            <span class="font-normal ml-2 text-gray-400 italic text-sm">
+                                {{selectedEmployee?.department?.code ? selectedEmployee?.department?.code : 'N/A'}}
+                            </span>
+
+                        </div>
+
+                    </div>
+
+                </section>
+
+
+                <!--current info Card-->
+
+                <section *ngIf="entityName" @animatedInfoCard
+                    class="bg-gray-50 cursor-not-allowed flex-100 flex flex-col my-4 py-6 px-3 relative shadow-md">
+                    <span class="-top-3 absolute font-black left-2.5 px-0.5 text-sm break-words italic bg-white">Current
+                        salary
+                        details</span>
+
+                    <!--current Job Name-->
+
+                    <div class="flex flex-col lg:flex-row flex-100 lg:justify-between lg:mb-2 ">
+
+
+                        <div class="flex justify-start items-baseline flex-wrap mb-2.5">
+
+                            <span class="text-sm">
+                                job :
+                            </span>
+
+                            <span class="font-normal ml-2 text-sm italic text-gray-400">
+                                {{formControls.currentJobName.value}}
+                            </span>
+
+                        </div>
+                    </div>
+
+
+                    <!--Salary level details wrapper-->
+
+                    <div class="flex flex-col lg:flex-row flex-100 lg:justify-between lg:mb-2 ">
+
+                        <!--Salary Level Name-->
+
+
+                        <div class="flex justify-start items-baseline flex-wrap mb-2.5">
+
+                            <span class="text-sm">
+                                Salary level :
+                            </span>
+
+                            <span class="font-normal ml-2 text-sm italic text-gray-400">
+                                {{formControls.currentLevelName.value}}
+                            </span>
+
+                        </div>
+
+                        <!--Salary Level From-->
+
+                        <div class="flex justify-start items-baseline flex-wrap mb-2.5">
+
+                            <span class="text-sm">
+                                From :
+                            </span>
+
+                            <span class="font-normal ml-2 text-sm italic text-gray-400">
+                                {{formControls.salaryLevelFrom.value |currency: '':'':'1.2'}}
+                            </span>
+
+                        </div>
+
+
+                        <!--Salary level To-->
+
+
+                        <div class="flex justify-start items-baseline flex-wrap  mb-2.5">
+
+                            <span class="text-sm">
+                                To :
+                            </span>
+
+                            <span class="font-normal ml-2 text-sm text-gray-400 italic ">
+                                {{formControls.salaryLevelTo.value |currency: '':'':'1.2'}}
+                            </span>
+
+                        </div>
+
+
+                    </div>
+
+                    <!--current salaries card wrapper-->
+                    <div class="flex flex-col lg:flex-row flex-100 lg:justify-between">
+
+
+                        <!--Current Gross-->
+                        <div class="flex justify-start items-baseline flex-wrap flex-50 mb-2.5">
+
+                            <span class=" text-sm">
+                                Current Gross :
+                            </span>
+
+                            <span class="font-normal ml-2 text-sm text-gray-400 italic">
+                                {{formControls.oldGrossSalary.value |currency: '':'':'1.2'}}
+                            </span>
+
+                        </div>
+
+
+                        <!--Current Net-->
+
+                        <div class="flex justify-start items-baseline flex-wrap flex-50 mb-2.5">
+
+                            <span class="text-sm">
+                                Current Net :
+                            </span>
+
+                            <span class="font-normal ml-2 text-gray-400 italic text-sm">
+                                {{formControls.oldNetSalary.value |currency: '':'':'1.2'}}
+                            </span>
+
+                        </div>
+
+                    </div>
+
+                </section>
+
+
+                <!-- Raise Reasons -->
+                <mat-form-field class="flex-100">
+                    <mat-label>Raise Reasons</mat-label>
+                    <mat-select formControlName="raiseReason" required placeholder='Raise Reasons'>
+                            <mat-option *ngFor="let raiseReason of raiseReasons" [value]="raiseReason">
+                                {{raiseReason}}
+                             </mat-option>
+                    </mat-select>
+                    <mat-error>
+                        <app-validation-error [control]="formControls.raiseReason" businessName="Raise Reasons">
+                        </app-validation-error>
+                    </mat-error>
+                </mat-form-field>
+
+
+                <div class="flex-100 lg:items-end flex flex-col lg:flex-row">
+                    <!-- New Gross -->
+                    <mat-form-field class="flex-100 lg:flex-50" [ngClass]="{'lg:pr-3':formControls.newNetSalary.value}">
+                        <mat-label>New gross</mat-label>
+                        <input type="number" min="1" formControlName="newGrossSalary" placeholder="New Gross" required
+                            matInput />
+                        <mat-error>
+                            <app-validation-error [control]="formControls.newGrossSalary" businessName="New Gross">
+                            </app-validation-error>
+                        </mat-error>
+                    </mat-form-field>
+
+                    <!-- New Net -->
+
+
+                    <div *ngIf="formControls.newNetSalary.value" @animatedInfoCard
+                        class="bg-gray-50 cursor-not-allowed flex flex-100 lg:flex-50 flex-wrap items-baseline justify-start mb-2 lg:mb-5 px-3 py-4 relative shadow-md">
+                        <span class="text-sm">
+                            New net :
+                        </span>
+
+                        <span class="font-normal ml-2 text-sm italic text-gray-400">
+                            {{formControls.newNetSalary.value | currency:"":"":"1.2"}}
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+                <!-- Note -->
+                <mat-form-field class="flex-100" hintLabel="Max 1000 characters">
+                    <mat-label>Notes</mat-label>
+                    <textarea type="text" formControlName="note" placeholder="Notes" matInput></textarea>
+                    <mat-hint align="end">{{ formControls.note.value?.length || 0 }}/1000</mat-hint>
+                    <mat-error>
+                        <app-validation-error
+                            [customValidatorsErrorMessages]="{ 'pattern': 'Notes value consists of white space only!'}"
+                            [control]="formControls.note" businessName="Notes">
+                        </app-validation-error>
+                    </mat-error>
+                </mat-form-field>
+
+            </section>
+
+
+
+
+
+
+
+
+
+        </form>
+    </mat-dialog-content>
+
+    <mat-dialog-actions align="end">
+        <div class="justify-between flex">
+            <button mat-button mat-dialog-close (click)="cancel()" class="cancel-btn rounded-none" cdkFocusInitial>
+                Cancel
+            </button>
+            <button mat-button [disabled]="raiseForm.invalid || +formControls.newNetSalary.value <=0"
+                class="action-btn rounded-none" (click)="submit()">
+                Submit
+            </button>
+        </div>
+    </mat-dialog-actions>
+</app-form-modal>

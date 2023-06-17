@@ -1,0 +1,176 @@
+@import '_variables.scss';
+@import './components/buttons.component';
+@import './components/dialogs.component';
+@import './components/snackbars.component';
+@import './components/tables.component';
+@import './components/cards.component';
+@import './components/custom-scrollbar.component';
+@import './components/SSA-icons';
+
+a {
+  color: var(--primary);
+  transition: all ease-in-out 0.2s;
+
+  &:hover {
+    text-decoration: underline;
+  }
+}
+
+.filterBox{
+  .dateField{
+      .mat-form-field-infix{
+          padding-top: 0;
+      }
+  }
+      &-search{
+      .mat-form-field{
+        background: transparent;
+        width: 100%!important;
+        margin-left:0!important;
+        margin-top:0!important;
+        &-appearance-fill .mat-form-field-flex {
+            background-color: transparent;
+        }
+        &-underline{
+          display: none;
+        }
+        &-wrapper{
+          padding-bottom: 0;
+        }
+        
+      }
+    }
+    .mat-form-field-appearance-standard {
+      .mat-form-field-wrapper{
+          padding-bottom: 0;
+          .mat-form-field-flex{
+            align-items: center;
+          }
+          .mat-form-field-infix{
+              border-top: 0;
+              padding-top: 0;
+              padding-bottom: 0;
+              width: 150px;
+          }
+          .mat-form-field-underline{
+              display: none;
+          }
+          .mat-form-field:not(.mat-form-field-appearance-legacy) .mat-form-field-suffix .mat-icon-button{
+            line-height: 1.5em;          }
+          .mat-select-arrow{
+              border: 0;
+              &:before{
+                  content: '‹';
+                  transform: rotate(-90deg)translateX(0.4em);
+                  display: block;
+                  font-size: 20px;
+                  color: black;
+                  
+              }
+          }
+      } 
+      &:not(.mat-form-field-should-float){
+          .mat-form-field-label{
+              transform: translateY(-0.6em)
+               }
+      }   
+    } 
+  }
+
+
+.disabled {
+  opacity: 0.5;
+  pointer-events: none;
+  cursor: auto;
+}
+
+:focus {
+  outline: 0 !important;
+}
+
+// .themeIcon {
+//     &:hover {
+//         color
+//     }
+// }
+
+.min-100 {
+  min-width: 100px !important;
+}
+
+.min-200 {
+  min-width: 200px !important;
+}
+
+
+.inner-wrapper {
+  min-height: calc(100vh - 120px);
+
+  @media screen and (max-height:660px) {
+    min-height: calc(100vh - 200px) !important;
+  }
+}
+
+h1,
+h2 {
+  font-family: var(--mainFont) !important;
+}
+
+.value {
+  word-break: break-all;
+}
+
+.value-inline {
+  word-break: keep-all;
+}
+
+
+.mat-slide-toggle.mat-primary.mat-checked .mat-slide-toggle-thumb {
+  background-color: var(--primary);
+  // margin-top: 0.2rem;
+}
+
+
+.ps__thumb-y {
+  background-color: var(--primary) !important;
+  border-radius: 6px;
+  transition: background-color .2s linear, width .2s ease-in-out;
+  -webkit-transition: background-color .2s linear, width .2s ease-in-out;
+  width: 8px !important;
+  right: 2px;
+  position: absolute;
+}
+
+
+.bg{
+  &-progress{
+    background: #f8ca2f;
+  }
+  &-applied{
+    background: #508e4b;
+  }
+  &-approved{
+    background: #73bfc7;
+  }
+  &-rejected{
+    background: #d03827;
+  }
+  &-archived{
+    background: #dc773f;
+  }
+  &-deleted{
+    background: #18355f;
+  }
+  &-expired{
+    background: #cfa22b;
+  }
+  &-failed{
+    background: #603f84;
+  }
+  &-closed{
+    background: #363636;
+  }
+  &-dismissed{
+    background: #a72e23;
+  }
+}

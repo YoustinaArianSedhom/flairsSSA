@@ -1,0 +1,49 @@
+<section class="px-5 mt-7">
+   
+<div class='relative border rounded-md py-2 pl-5'>
+
+
+      <ssa-info-field label="Employee Name :" [value]="leaveDetails?.targetEmployee.fullName">
+      </ssa-info-field>
+
+      <ssa-info-field label="Half day timing :" [value]="HALF_DAY_TYPE[leaveDetails?.halfDayType]"
+         *ngIf="leaveDetails?.halfDayType >= 0">
+      </ssa-info-field>
+
+      <ssa-info-field label="Leave Type :" [value]="REQUEST_TYPES[leaveDetails?.workflowType]" type="text">
+      </ssa-info-field>
+
+      <ssa-info-field label="Number of days :" [value]="leaveDetails?.requestedDays">
+      </ssa-info-field>
+
+      <ssa-info-field label="From :" type="date" [value]="leaveDetails?.from">
+      </ssa-info-field>
+
+      <ssa-info-field label="To :" type="date" [value]="leaveDetails?.to">
+      </ssa-info-field>
+
+      <ssa-info-field label="Reason :" type="note" [value]="leaveDetails?.reason" *ngIf="leaveDetails?.reason">
+      </ssa-info-field>
+
+      <ssa-info-field label="Attachments :" *ngIf="leaveDetails?.uploadedFiles">
+
+         <button class="block ml-4 px-3 py-1 action-btn rounded-none" (click)="downloadAllFiles()">
+            Download
+         </button>
+      </ssa-info-field>
+
+      <ssa-info-field label="Direct manager approval Note :" type="note" [value]="leaveDetails?.directLeadApprovalNote"
+      *ngIf="leaveDetails?.directLeadApprovalNote">
+   </ssa-info-field>
+
+   <ssa-info-field label="Team manager approval Note :" type="note" [value]="leaveDetails?.managerApprovalNote"
+      *ngIf="leaveDetails?.managerApprovalNote">
+   </ssa-info-field>
+
+   <ssa-info-field label="Rejection Note :" type="note" [value]="leaveDetails?.rejectionNote"
+      *ngIf="leaveDetails?.rejectionNote">
+   </ssa-info-field>
+
+</div>
+
+</section>

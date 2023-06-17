@@ -1,0 +1,27 @@
+//? Assigning global variables to scss variables to be integrated to the system
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@100;300;400;500;700;900&display=swap');
+@import '@angular/material/_theming.scss';
+
+:root {
+    --mainFont: 'Noto Sans JP', sans-serif;
+    --primary: #d03827;
+    --primaryAlt: #e3e3e3;
+    --accent: #f7f7f7;
+    --accentDark: #b6b6b6;
+    --accentAlt: #363636;
+    --success: #73bfc7;
+    --warn: #f9aa33;
+    --danger: #cf000f;
+    --lightBlack: #323232;
+    --gray: #232f34;
+    --gray2:#EEEEEE;
+    --gray3: #707070;
+    --overlay-bg:#e7e7e76e;
+    --arrow-bg: #4b4b4b;
+    --subItem-bg:#e5e5e5e5;
+    --productTitle-color:#717171;
+    --success-icon-color: #73bfc7;
+    --fail-icon-color:#ff0000;
+    --mat-sideNav-border:#e2e8f0;
+    --buttonHover: #ee412d
+}

@@ -1,0 +1,54 @@
+<div
+    class=" flex-col items-start justify-center mx-auto my-3 w-11/12 border border-solid border-gray-300 p-4 rounded-lg relative">
+
+    <ssa-info-field label="Request :">
+        <span class=" cursor-pointer text-primary underline font-normal ml-2 text-sm italic"
+            (click)="viewDetails(record)">
+            {{record.readableId}} - {{requestType[record.workflowType]}}
+        </span>
+    </ssa-info-field>
+
+    <ssa-info-field label="Creation Date :" type="date" [value]="record.createdDate"></ssa-info-field>
+
+    <ssa-info-field label="Creator Name :" [value]="record?.issuer?.fullName"></ssa-info-field>
+
+    <ssa-info-field label="Employee Name :" [value]="record?.targetEmployee?.fullName"></ssa-info-field>
+
+    <ssa-info-field label="Last Action Date :" type="date" [value]="record.lastModifiedDate"></ssa-info-field>
+
+    <ssa-info-field label="Last Action By :" [value]="record.lastModifiedBy"></ssa-info-field>
+
+    <ssa-info-field label="Details :">
+
+        <div [innerHTML]="record.details" *ngIf="record.details;else emptyDetails"></div>
+
+        <ng-template #emptyDetails>
+            <span class="font-normal italic text-sm ml-2 text-gray-700">N/A</span>
+        </ng-template>
+    </ssa-info-field>
+
+
+    <ssa-info-field label="Task Status :" [value]="record?.taskStatus">
+
+        <ng-container *ngIf="record.submittedChoice">
+
+            <span class=" text-xs font-medium ml-2 text-white px-1 rounded"
+                [ngClass]="record.submittedChoice.cssClass">{{record?.submittedChoice?.action}}
+            </span>
+        </ng-container>
+
+    </ssa-info-field>
+
+    <ssa-info-field label="Task Name :" [value]="record.taskName"></ssa-info-field>
+
+    <ng-container *ngIf="record.taskNotes.note">
+
+        <div class="inline-flex justify-center items-center text-xs text-center px-3 ">
+
+            <span [ngClass]="{'text-gray-400':!record.taskNotes.priority,'text-red-400':record.taskNotes.priority}">
+                {{record.taskNotes.note}}
+            </span>
+
+        </div>
+    </ng-container>
+</div>

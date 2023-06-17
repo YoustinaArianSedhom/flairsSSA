@@ -1,0 +1,144 @@
+<app-form-modal>
+    <h2 mat-dialog-title class="uppercase text-primary border-b pb-2 border-gray-400"> create Expense Repayment request
+    </h2>
+
+    <mat-dialog-content class="custom-scrolling">
+        <form [formGroup]="expenseRepaymentRequestForm">
+
+            <section class="flex flex-100 flex-wrap">
+                <div class="w-full flex items-center">
+                    <mat-form-field class="w-1/2 pr-5">
+                        <mat-label>Expense Types</mat-label>
+                        <mat-select formControlName="expenseTypeId" required
+                            (selectionChange)="onChangeExpenseRepayment($event.value)">
+                            <mat-option *ngFor="let budgetItemsDetail of myCurrentMonthlyTeamBudget?.budgetItemsDetails"
+                                [value]="budgetItemsDetail.budgetItemTypeId">
+                                {{budgetItemsDetail.budgetItemTypeName}}
+                            </mat-option>
+                        </mat-select>
+                        <mat-error>
+                            <app-validation-error [control]="formControls.expenseTypeId" businessName="Expense Types">
+                            </app-validation-error>
+                        </mat-error>
+                    </mat-form-field>
+
+                    <div *ngIf="remainingBudget">
+                        <section
+                            class="cursor-not-allowed flex flex-col justify-between lg:flex-row mb-2 mt-4 px-3 py-6 relative">
+                            <div class="flex justify-start items-baseline flex-wrap flex-50 mb-2.5 lg:mb-0">
+                                <span class="text-sm">
+                                    Remaining budget :
+                                </span>
+                                <span class="font-normal ml-2 text-sm italic text-gray-400">
+                                    {{remainingBudget}}
+                                </span>
+                            </div>
+                        </section>
+                    </div>
+                </div>
+                <div class="w-full flex items-center">
+                    <mat-form-field class="w-1/2 pr-5">
+                        <mat-label>Amount Needed</mat-label>
+                        <input matInput formControlName="amount" type="number" required>
+                        <mat-error>
+                            <app-validation-error [control]="formControls.amount" businessName="Amount Needed">
+                            </app-validation-error>
+                        </mat-error>
+                    </mat-form-field>
+
+                    <mat-form-field class="w-1/2 pr-5">
+                        <mat-label>Due date*</mat-label>
+                        <input matInput [matDatepicker]="picker" [min]="dateConfig.min" formControlName="dueDate"
+                            readonly (dateChange)="onChangeDueDate()">
+                        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                        <mat-datepicker #picker></mat-datepicker>
+                        <mat-error>
+                            <app-validation-error [control]="formControls.dueDate" businessName="Due Date">
+                            </app-validation-error>
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+                <div class="w-full flex items-center">
+                    <mat-form-field class="w-full">
+                        <mat-label>Type of Repayment</mat-label>
+                        <mat-select formControlName="repaymentType" required>
+                            <mat-option *ngFor="let repaymentType of repaymentTypes" [value]="repaymentType.value">
+                                {{repaymentType.name}}
+                            </mat-option>
+                        </mat-select>
+                        <mat-error>
+                            <app-validation-error [control]="formControls.repaymentType"
+                                businessName="Type of Repayment">
+                            </app-validation-error>
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+
+                <div class="w-full flex items-center">
+                    <!--notes-->
+                    <mat-form-field class="flex-100">
+                        <mat-label>Notes</mat-label>
+                        <textarea type="text" formControlName="instanceNote" placeholder="Notes" matInput></textarea>
+                    </mat-form-field>
+                </div>
+                <div class="w-full ">
+                    <section class="py-4 w-full">
+                        <mat-radio-group class="w-full flex flex-wrap justify-between" formControlName="radioButton"
+                            (change)="onChangeRequestType($event)">
+                            <mat-radio-button class="pb-2 w-1/2 radioButton" *ngFor="let request of requestTypes"
+                                [value]="request.id">
+                                {{request.name}}
+                            </mat-radio-button>
+                        </mat-radio-group>
+                    </section>
+
+
+
+                    <div role="status" class="flex justify-center" *ngIf="showAndHideSpinner">
+                        <svg class="inline mr-2 w-12 h-w-12 text-gray-200 animate-spin dark:text-gray-600 fill-red-600"
+                            viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path
+                                d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z"
+                                fill="currentColor" />
+                            <path
+                                d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z"
+                                fill="currentFill" />
+                        </svg>
+                        <span class="sr-only">Loading...</span>
+                    </div>
+                    <span *ngIf="formControls.radioButton.value === 1" class="flex mb-3">Beneficiaries</span>
+                    <mat-chip-list #chipList>
+                        <ng-container *ngFor="let item of selectedEmployees; let i=index">
+                            <mat-chip class="cardinal-colors balance-chip" (click)="removeEmployee(item.id)">
+                                {{ item.fullName }}
+                                <mat-icon class="mat-chip-remove text-gray-900">close</mat-icon>
+                            </mat-chip>
+                        </ng-container>
+                    </mat-chip-list>
+                    <ssa-autocomplete placeHolder="Beneficiary *" serviceMethod="getMySubs"
+                        *ngIf="showAndHideAutoComplete" (checkValidity)="checkValidity($event, 'beneficiaries')"
+                        subProperty="organizationEmail" [list]="selectedEmployees" (addItem)="addEmployee($event)">
+                    </ssa-autocomplete>
+                    <mat-error>
+                        <app-validation-error class="text-sm" [control]="formControls.beneficiaries"
+                            businessName="Beneficiary">
+                        </app-validation-error>
+                    </mat-error>
+                </div>
+            </section>
+        </form>
+    </mat-dialog-content>
+    <mat-dialog-actions align="end">
+
+        <div class="justify-between flex">
+            <button mat-button mat-dialog-close class="cancel-btn rounded-none" cdkFocusInitial (click)="cancel()">
+                Cancel
+            </button>
+
+            <button mat-button class="action-btn rounded-none" [disabled]="expenseRepaymentRequestForm.invalid"
+                (click)="onSubmit()">
+                Submit
+            </button>
+        </div>
+    </mat-dialog-actions>
+</app-form-modal>

@@ -1,0 +1,122 @@
+<div
+    class=" flex-col items-start justify-center mx-auto my-3 w-11/12 border border-solid border-gray-300 p-4 rounded-lg relative">
+
+
+    <ssa-info-field label="Request :">
+        <span class=" cursor-pointer text-primary underline font-normal ml-2 text-sm italic"
+            (click)="viewDetails(record)">
+            {{record.readableId}} - {{requestType[record.workflowType]}}
+        </span>
+    </ssa-info-field>
+
+    <!-- <ssa-info-field label="Request Type :" [value]="requestType[record.workflowType]"></ssa-info-field> -->
+
+    <ssa-info-field label="Creation Date :" type="date" [value]="record.createdDate"></ssa-info-field>
+
+    <ssa-info-field label="Creator Name :" [value]="record?.issuer?.fullName"></ssa-info-field>
+
+    <ssa-info-field label="Employee Name :" [value]="record?.targetEmployee?.fullName"></ssa-info-field>
+
+    <ssa-info-field label="Last Action Date :" type="date" [value]="record.lastModifiedDate"></ssa-info-field>
+    
+    <ssa-info-field label="Last Action By :"  [value]="record.lastModifiedBy"></ssa-info-field>
+    
+    <ssa-info-field label="Details :" >
+        
+        <div [innerHTML]="record.details" *ngIf="record.details;else emptyDetails"></div>
+
+        <ng-template #emptyDetails>
+            <span class="font-normal italic text-sm ml-2 text-gray-700">N/A</span>
+        </ng-template>
+    </ssa-info-field>
+
+
+    <ssa-info-field label="Task Status :" [value]="record?.taskStatus">
+
+        <ng-container *ngIf="record.submittedChoice">
+
+            <span class=" text-xs font-medium ml-2 text-white px-1 rounded"
+                [ngClass]="record.submittedChoice.cssClass">{{record?.submittedChoice?.action}}
+            </span>
+        </ng-container>
+
+    </ssa-info-field>
+
+    <ssa-info-field label="Task Name :" [value]="record.taskName"></ssa-info-field>
+
+    <ng-container *ngIf="record.taskNotes.note">
+
+        <div class="inline-flex justify-center items-center text-xs text-center px-3 ">
+
+            <span [ngClass]="{'text-gray-400':!record.taskNotes.priority,'text-red-400':record.taskNotes.priority}">
+                {{record.taskNotes.note}}
+            </span>
+
+        </div>
+    </ng-container>
+
+    <div class="inline absolute top-0 right-0">
+        <button mat-icon-button style="pointer-events: all;" [matMenuTriggerFor]="actionsMenu"
+            aria-label="Table Actions Menu">
+            <mat-icon>more_vert</mat-icon>
+        </button>
+
+
+        <mat-menu #actionsMenu="matMenu">
+
+            <button *ngIf="record?.isCommentable" mat-menu-item (click)="openCommentComponent(record)">
+                <mat-icon svgIcon="add_comment" class="mr-2"></mat-icon>
+                Add Comment
+            </button>
+
+            <button *ngFor="let action of record.availableChoices" (click)="takeAnAction(record,action)" mat-menu-item [hidden]="action.displayName.includes('NO_RESPONSE')">
+                <mat-icon class="mr-2 visibility">{{action.icon}}</mat-icon>
+                {{action.displayName}}
+            </button>
+
+            <button (click)="viewDetails(record)" mat-menu-item>
+                <mat-icon class="mr-2 visibility">visibility</mat-icon>
+                View Details
+            </button>
+
+            <!-- <button *ngIf="record.availableChoices?.includes('APPROVE')" (click)="takeAnAction(record, 'Approve')"
+                mat-menu-item>
+                <mat-icon class="mr-2 visibility">done</mat-icon>
+                Approve
+            </button>
+
+            <button *ngIf="record.availableChoices?.includes('INJECT_TENROX_GROUP')"
+                (click)="takeAnAction(record, 'INJECT_TENROX_GROUP')" mat-menu-item>
+                <mat-icon class="mr-2 visibility">done</mat-icon>
+                Approve
+            </button>
+
+            <button *ngIf="record.availableChoices?.includes('INJECT_FINANCE_P2P_DATA')"
+                (click)="takeAnAction(record, 'INJECT_FINANCE_P2P_DATA')" mat-menu-item>
+                <mat-icon class="mr-2 visibility">done_all</mat-icon>
+                Apply
+            </button>
+            
+            <button *ngIf="record.availableChoices?.includes('INJECT_RECIEVER_P2P_DATA')"
+                (click)="takeAnAction(record, 'INJECT_RECIEVER_P2P_DATA')" mat-menu-item>
+                <mat-icon class="mr-2 visibility">arrow_forward</mat-icon>
+                Complete Request
+            </button>
+
+            <button *ngIf="record.availableChoices?.includes('REJECT')" (click)="takeAnAction(record, 'Reject')"
+                mat-menu-item>
+                <mat-icon class="mr-2 visibility">clear</mat-icon>
+                Reject
+            </button>
+
+            <button *ngIf="record.availableChoices?.includes('APPLY')" (click)="takeAnAction(record, 'Apply')"
+                mat-menu-item>
+                <mat-icon class="mr-2 visibility">done_all</mat-icon>
+                Apply
+            </button> -->
+        </mat-menu>
+    </div>
+
+
+
+</div>

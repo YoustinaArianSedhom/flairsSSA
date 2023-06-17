@@ -1,0 +1,25 @@
+.content {
+  // padding: 10px 26px;
+  margin: 0;
+  ::ng-deep {
+    .success-icon,
+    .fail-icon {
+      font-size: 90px;
+      height: 90px;
+      width: 90px;
+      margin-bottom: 2.5rem;
+    }
+    .success-icon {
+      color: var(--success-icon-color);
+    }
+    .fail-icon {
+      color: var(--fail-icon-color);
+    }
+  }
+  p {
+    color: var(--arrow-bg);
+    font-family: "Segoe UI";
+    border-radius: 0;
+    font-size: 1.3rem;
+  }
+}

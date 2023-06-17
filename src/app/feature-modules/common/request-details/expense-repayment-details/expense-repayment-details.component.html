@@ -1,0 +1,45 @@
+<div class="relative pt-6 pb-2 px-5">
+    <div class="relative border rounded-md py-2 pl-5">
+        <ssa-info-field label="Expense Type :" *ngIf="expenseRepaymentDetails?.expenseTypeName"
+            [value]="expenseRepaymentDetails?.expenseTypeName">
+        </ssa-info-field>
+
+        <ssa-info-field type="currency" label="Amount :" *ngIf="expenseRepaymentDetails?.amount"
+            [value]="expenseRepaymentDetails?.amount">
+        </ssa-info-field>
+
+        <ssa-info-field label="Repayment Type :" *ngIf="expenseRepaymentDetails?.repaymentType"
+            [value]="expenseRepaymentDetails?.repaymentType">
+        </ssa-info-field>
+
+        <ssa-info-field type="date" label="Due Date :" *ngIf="expenseRepaymentDetails?.dueDate"
+            [value]="expenseRepaymentDetails?.dueDate">
+        </ssa-info-field>
+
+        <ssa-info-field label="Beneficiaries :" *ngIf="expenseRepaymentDetails?.beneficiaries">
+            <button class="pl-2" (click)="openBeneficiariesComponent()"><span class="underline">List of
+                    employees</span></button>
+        </ssa-info-field>
+
+        <ssa-info-field label="Out Of Budget :"
+            [value]="expenseRepaymentDetails?.isOutOfBudget ? 'yes' : 'no'">
+        </ssa-info-field>
+
+        <ssa-info-field label="Receipt :" *ngIf="expenseRepaymentDetails?.uploadedReceiptPaths.length">
+            <div *ngFor="let item of expenseRepaymentDetails?.uploadedReceiptPaths" class="flex justify-between">
+                <span class="pl-2">{{ item.fileName}}</span>
+                <button class="px-5 py-1" (click)="downloadFile(item)">
+                    <mat-icon svgIcon="file-download" class="mat-icon"></mat-icon>
+                </button>
+            </div>
+        </ssa-info-field>
+
+        <ssa-info-field type="note" label="Rejection Note :" *ngIf="expenseRepaymentDetails?.rejectionNote"
+            [value]="expenseRepaymentDetails?.rejectionNote">
+        </ssa-info-field>
+
+        <ssa-info-field type="note" label="Issuer Note :" *ngIf="expenseRepaymentDetails?.instanceNote"
+            [value]="expenseRepaymentDetails?.instanceNote">
+        </ssa-info-field>
+    </div>
+</div>

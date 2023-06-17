@@ -1,0 +1,26 @@
+<div class='relative pt-6 pb-2 px-5'>
+
+  <div class="relative border rounded-md py-2 pl-5 mb-3">
+    <ssa-info-field label="Leave Type :" [value]="leaveTypes[itemDetail?.leaveType].name" type="text">
+    </ssa-info-field>
+
+    <ssa-info-field label="Request For :" [value]="requestTypes[itemDetail?.balanceFor].name" type="text">
+    </ssa-info-field>
+
+    <ssa-info-field label="Cycle :" [value]="itemDetail?.cycleName" type="text">
+    </ssa-info-field>
+
+    <ssa-info-field label="Team Name :" [value]="itemDetail?.teamName" type="text" *ngIf="itemDetail?.teamName">
+    </ssa-info-field>
+    <ssa-info-field label="Employee Name :" [value]="itemDetail?.targetEmployee?.fullName" type="text" *ngIf="itemDetail?.targetEmployee">
+    </ssa-info-field>
+
+    <ssa-info-field label="Number of days :" [value]="itemDetail?.recoveredDays">
+    </ssa-info-field>
+
+    <ssa-info-field label="Reason :" type="note" [value]="itemDetail?.reason" *ngIf="itemDetail?.reason">
+    </ssa-info-field>
+
+  </div>
+  
+</div>

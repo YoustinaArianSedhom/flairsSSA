@@ -1,0 +1,86 @@
+<div class='relative pt-6 pb-2 px-5'>
+
+  <mat-expansion-panel [expanded]="step === 0">
+    <mat-expansion-panel-header>
+      <mat-panel-title> General Info </mat-panel-title>
+    </mat-expansion-panel-header>
+
+    <ssa-info-field label="Candidate Name :" *ngIf="onBoardingDetails?.candidateFullName"
+      [value]="onBoardingDetails?.candidateFullName">
+    </ssa-info-field>
+
+    <ssa-info-field label="Candidate Flairstech Email :" type="email" *ngIf="onBoardingDetails?.candidateOrganizationEmail"
+      [value]="onBoardingDetails?.candidateOrganizationEmail">
+    </ssa-info-field>
+
+    <ssa-info-field label="Joining Date :" type="date" *ngIf="onBoardingDetails?.joiningDate"
+      [value]="onBoardingDetails?.newJoiningDate ? onBoardingDetails?.newJoiningDate : onBoardingDetails?.joiningDate">
+    </ssa-info-field>
+
+    <ssa-info-field label="Direct Lead :" type="email" *ngIf="onBoardingDetails?.directLeadOrganizationEmail"
+      [value]="onBoardingDetails?.directLeadOrganizationEmail">
+    </ssa-info-field>
+
+    <ssa-info-field label="Resource Based :" *ngIf="onBoardingDetails?.isEmployeeResourceBased"
+      [value]="onBoardingDetails?.isEmployeeResourceBased ? 'yes' :'no'">
+    </ssa-info-field>
+
+    <ssa-info-field label="Received Hiring Documents" *ngIf="receivedDocuments">
+      <span class="text-primary italic underline cursor-pointer ml-3" (click)="openReceivedDocuments()">
+        View received documents
+      </span>
+    </ssa-info-field>
+
+    <ssa-info-field label="Onboarding Ticket Note :" type="note" [value]="onBoardingDetails?.onboardingEmailTicketNote"  *ngIf="onBoardingDetails?.onboardingEmailTicketNote"></ssa-info-field>
+    <ssa-info-field label="Cancellation Date :" type="date" [value]="onBoardingDetails?.cancellationDate"  *ngIf="onBoardingDetails?.cancellationDate"></ssa-info-field>
+    <ssa-info-field label="Cancellation Reason :" [value]="onBoardingDetails?.cancellationReason"  *ngIf="onBoardingDetails?.cancellationReason"></ssa-info-field>
+    <ssa-info-field label="Cancellation Notes :" type="notes" [value]="onBoardingDetails?.cancellationNote"  *ngIf="onBoardingDetails?.cancellationNote"></ssa-info-field>
+
+  </mat-expansion-panel>
+
+  <hr />
+
+  <mat-expansion-panel *ngIf="onBoardingDetails?.isEmployeeResourceBased">
+    <mat-expansion-panel-header>
+      <mat-panel-title> Account Info </mat-panel-title>
+    </mat-expansion-panel-header>
+
+    <ssa-info-field label="Account :" *ngIf="onBoardingDetails?.accountName" [value]="onBoardingDetails?.accountName">
+    </ssa-info-field>
+
+    <ssa-info-field label="Product :" *ngIf="onBoardingDetails?.productName" [value]="onBoardingDetails?.productName">
+    </ssa-info-field>
+
+    <ssa-info-field label="Team :" *ngIf="onBoardingDetails?.erbTeamName" [value]="onBoardingDetails?.erbTeamName">
+    </ssa-info-field>
+
+    <ssa-info-field label="Expected Service Start Date :" type="date" *ngIf="onBoardingDetails?.serviceStartDate"
+      [value]="onBoardingDetails?.serviceStartDate">
+    </ssa-info-field>
+
+    <ssa-info-field label="Role :" *ngIf="onBoardingDetails?.roleName" [value]="onBoardingDetails?.roleName">
+    </ssa-info-field>
+
+    <ssa-info-field label="Account Manager Name :" *ngIf="onBoardingDetails?.accountManagerName"
+      [value]="onBoardingDetails?.accountManagerName">
+    </ssa-info-field>
+
+    <ssa-info-field label="Account Manager Email :" type="email" *ngIf="onBoardingDetails?.accountManagerEmail"
+      [value]="onBoardingDetails?.accountManagerEmail">
+    </ssa-info-field>
+
+    <ssa-info-field label="Contract Type :" *ngIf="contractType[onBoardingDetails?.contractType]"
+      [value]="contractType[onBoardingDetails?.contractType]">
+    </ssa-info-field>
+
+    <ssa-info-field label="PO Number :" *ngIf="onBoardingDetails?.poNumber" [value]="onBoardingDetails?.poNumber">
+    </ssa-info-field>
+
+    <ssa-info-field label="Billing Rate :" *ngIf="onBoardingDetails?.billingRate"
+      [value]="onBoardingDetails?.billingRate">
+    </ssa-info-field>
+
+  </mat-expansion-panel>
+  <hr *ngIf="onBoardingDetails?.isEmployeeResourceBased" />
+
+</div>

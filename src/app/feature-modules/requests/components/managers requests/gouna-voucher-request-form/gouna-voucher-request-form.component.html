@@ -1,0 +1,76 @@
+<app-form-modal>
+
+
+    <h2 mat-dialog-title> New Gouna Voucher Request</h2>
+
+
+    <mat-dialog-content class="custom-scrolling">
+
+        <form [formGroup]="gounaVoucherForm">
+
+            <section class="flex flex-wrap h-72">
+
+                <!-- Employee Name -->
+                <mat-form-field class="flex-100 ">
+                    <mat-label>Employee Name</mat-label>
+
+                    <input type="text" placeholder="Employee Name" matInput required
+                        formControlName="targetOrganizationEmail" [matAutocomplete]="employeesAutoComplete"
+                        (input)="fireAutocomplete()" (focus)="onFocusAutoComplete()" />
+                    <mat-error>
+                        <app-validation-error [control]="formControls.targetOrganizationEmail"
+                            businessName="Employee Email">
+                        </app-validation-error>
+                    </mat-error>
+
+                    <mat-autocomplete #employeesAutoComplete="matAutocomplete" class="custom-scrolling">
+                        <mat-option *ngFor="let employee of employeesList" [value]="employee.organizationEmail">
+                            {{ employee.organizationEmail }}
+                            <span class=' text-gray-400 text-sm'>({{employee.fullName}})</span>
+                        </mat-option>
+                    </mat-autocomplete>
+                </mat-form-field>
+
+
+
+
+                <!-- Reason -->
+                <mat-form-field class="flex-100 -mt-8" hintLabel="Max 1000 characters">
+                    <mat-label>Reason</mat-label>
+                    <textarea type="text" formControlName="reason" placeholder="Reason" matInput></textarea>
+                    <mat-hint align="end">{{ formControls.reason.value?.length || 0 }}/1000</mat-hint>
+                    <mat-error>
+                        <app-validation-error
+                            [customValidatorsErrorMessages]="{ 'pattern': 'Reason value consists of white space only!'}"
+                            [control]="formControls.reason" businessName="Reason">
+                        </app-validation-error>
+                    </mat-error>
+                </mat-form-field>
+
+
+            </section>
+
+        </form>
+
+    </mat-dialog-content>
+
+
+
+
+
+    <mat-dialog-actions align="end">
+
+        <div class="justify-between flex">
+            <button mat-button mat-dialog-close class="cancel-btn rounded-none" cdkFocusInitial (click)="cancel()">
+                Cancel
+            </button>
+
+            <button mat-button class="action-btn rounded-none" (click)="submit()" [disabled]="gounaVoucherForm.invalid">
+                Submit
+            </button>
+        </div>
+
+
+    </mat-dialog-actions>
+
+</app-form-modal>

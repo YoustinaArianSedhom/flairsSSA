@@ -1,0 +1,323 @@
+<div class="relative pt-6 pb-2 px-5">
+  <!-- <div class="relative border rounded-md py-2"> -->
+
+  <mat-expansion-panel [expanded]="step === 0">
+    <mat-expansion-panel-header>
+      <mat-panel-title> General Info </mat-panel-title>
+    </mat-expansion-panel-header>
+
+    <ssa-info-field label="P&L :" *ngIf="recruitmentDetails?.teamPLName" [value]="recruitmentDetails?.teamPLName">
+    </ssa-info-field>
+
+    <ssa-info-field label="Source :" *ngIf="recruitmentDetails?.requestSource"
+      [value]="recruitmentDetails?.requestSource">
+    </ssa-info-field>
+
+    <ssa-info-field label="Team :" *ngIf="recruitmentDetails?.teamName" [value]="recruitmentDetails?.teamName">
+    </ssa-info-field>
+
+    <ssa-info-field label="Position Title :" *ngIf="recruitmentDetails?.positionTitle"
+      [value]="recruitmentDetails?.positionTitle">
+    </ssa-info-field>
+
+    <ssa-info-field label="Job Function :" *ngIf="recruitmentDetails?.positionJobName"
+      [value]="recruitmentDetails?.positionJobName">
+    </ssa-info-field>
+
+    <ssa-info-field label="Job Level :" *ngIf="recruitmentDetails?.positionLevelName"
+      [value]="recruitmentDetails?.positionLevelName">
+    </ssa-info-field>
+
+    <ssa-info-field label="Employment type :" [value]="employmentType[recruitmentDetails?.positionEmploymentType]">
+    </ssa-info-field>
+
+    <ssa-info-field label="Expected hiring date :" type="date" *ngIf="recruitmentDetails?.positionHiringDate"
+      [value]="recruitmentDetails?.positionHiringDate">
+    </ssa-info-field>
+
+    <ssa-info-field label="Department :" *ngIf="recruitmentDetails?.positionDepartmentName"
+      [value]="recruitmentDetails?.positionDepartmentName">
+    </ssa-info-field>
+
+    <ssa-info-field label="Location :" *ngIf="recruitmentDetails?.positionLocation"
+      [value]="recruitmentDetails?.positionLocation">
+    </ssa-info-field>
+
+    <ssa-info-field label="Shift :" *ngIf="recruitmentDetails?.shiftName" [value]="recruitmentDetails?.shiftName">
+    </ssa-info-field>
+
+    <ssa-info-field label="From - To :" *ngIf="recruitmentDetails?.shiftFromHour != null && recruitmentDetails?.shiftToHour != null">
+      <span class="ml-2 italic font-normal">
+        {{ recruitmentDetails?.shiftFromHour+ ':' + recruitmentDetails?.shiftFromMinutes + ' - ' +recruitmentDetails?.shiftToHour+':'+ recruitmentDetails?.shiftToMinutes }}</span>
+        <!-- </span> -->
+    </ssa-info-field>
+
+    <!-- <ssa-info-field 
+    label="To :" *ngIf="recruitmentDetails?.shiftToHour"
+      [value]="recruitmentDetails?.shiftFromHour+ ':' + recruitmentDetails?.shiftFromMinutes + ' - ' +recruitmentDetails?.shiftToHour+':'+ recruitmentDetails?.shiftToMinutes">
+    </ssa-info-field> -->
+
+    <ssa-info-field label="Working hours :" *ngIf="recruitmentDetails?.shiftWorkingHours"
+      [value]="recruitmentDetails?.shiftWorkingHours">
+    </ssa-info-field>
+
+    <ssa-info-field label="Working Days : " *ngIf="recruitmentDetails?.shiftWorkingDays.length">
+      <span class="font-normal ml-2 italic" *ngFor="let day of recruitmentDetails?.shiftWorkingDays">{{ daysOFWeeks[day]
+        }}</span>
+    </ssa-info-field>
+  </mat-expansion-panel>
+
+  <hr />
+
+  <mat-expansion-panel>
+    <mat-expansion-panel-header>
+      <mat-panel-title> Recruitment Info </mat-panel-title>
+    </mat-expansion-panel-header>
+
+    <ssa-info-field label="Position :">
+      <button>
+        <a [href]="recruitmentDetails?.positionLink" class="ml-2" target="_blank">
+          {{ recruitmentDetails?.positionTitle }}</a>
+      </button>
+    </ssa-info-field>
+
+    <ssa-info-field label="Priority :" [value]="priority[recruitmentDetails?.positionPriority]">
+    </ssa-info-field>
+
+    <ssa-info-field label="No of vacancies :" *ngIf="recruitmentDetails?.positionNumOfVacancies"
+      [value]="recruitmentDetails?.positionNumOfVacancies">
+    </ssa-info-field>
+
+    <ssa-info-field label="Type :" *ngIf="recruitmentDetails?.recruitmentType"
+      [value]="recruitmentDetails?.recruitmentType">
+    </ssa-info-field>
+
+    <ssa-info-field label="English level :" *ngIf="recruitmentDetails?.englishFluency"
+      [value]="recruitmentDetails?.englishFluency">
+    </ssa-info-field>
+
+    <ssa-info-field label="Years of experience :" *ngIf="recruitmentDetails?.positionExperienceNeeded"
+      [value]="recruitmentDetails?.positionExperienceNeeded">
+    </ssa-info-field>
+    <ssa-info-field label="Skills :" *ngIf="recruitmentDetails?.selectedSkills.length">
+      <span class="ml-2 italic font-normal" *ngFor="let skill of recruitmentDetails?.selectedSkills; let i = index">
+        {{ skill?.name }} {{i < (recruitmentDetails?.selectedSkills.length-1) ? ", " : ''}} 
+      </span>
+    </ssa-info-field>
+
+    <ssa-info-field *ngIf="recruitmentDetails?.technicalInterviewersProfiles.length"
+      label="Technical Interviewers :">
+      <span *ngFor="
+          let profile of recruitmentDetails?.technicalInterviewersProfiles;
+          let i = index
+        " class="font-normal ml-2 text-sm italic break-words">
+        <a [href]="'mailto:' + profile.organizationEmail">
+          {{ profile.organizationEmail }}
+          <span *ngIf="
+              i <
+              recruitmentDetails?.technicalInterviewersProfiles
+                .length -
+                1
+            ">,</span>
+        </a>
+      </span>
+    </ssa-info-field>
+
+    <ssa-info-field label="Notes :" *ngIf="recruitmentDetails?.instanceNote" [value]="recruitmentDetails?.instanceNote">
+    </ssa-info-field>
+
+    <ssa-info-field label="Resource based ?" *ngIf="recruitmentDetails?.isEmployeeResourceBased"
+      [value]="recruitmentDetails?.isEmployeeResourceBased ? 'yes' :'no'">
+    </ssa-info-field>
+  </mat-expansion-panel>
+
+  <hr />
+
+  <mat-expansion-panel *ngIf="recruitmentDetails?.isEmployeeResourceBased">
+    <mat-expansion-panel-header>
+      <mat-panel-title> Account Info </mat-panel-title>
+    </mat-expansion-panel-header>
+
+    <ssa-info-field label="Customer Success representative :" *ngIf="recruitmentDetails?.customerSuccessRepName"
+      [value]="recruitmentDetails?.customerSuccessRepName">
+    </ssa-info-field>
+    <ssa-info-field label="Account :" *ngIf="recruitmentDetails?.accountName" [value]="recruitmentDetails?.accountName">
+    </ssa-info-field>
+    <ssa-info-field label="Platform :" *ngIf="recruitmentDetails?.productName" [value]="recruitmentDetails?.productName">
+    </ssa-info-field>
+
+    <ssa-info-field label="Department :" *ngIf="recruitmentDetails?.erbTeamName" [value]="recruitmentDetails?.erbTeamName">
+    </ssa-info-field>
+
+    <ssa-info-field label="Account Requester :" *ngIf="recruitmentDetails?.clientRequesterName"
+      [value]="recruitmentDetails?.clientRequesterName">
+    </ssa-info-field>
+
+    <ssa-info-field label="Account Requester email :" type="email" *ngIf="recruitmentDetails?.clientRequesterEmail"
+      [value]="recruitmentDetails?.clientRequesterEmail">
+    </ssa-info-field>
+
+    <ssa-info-field label="Account Requester title:" *ngIf="recruitmentDetails?.clientRequesterTitle"
+      [value]="recruitmentDetails?.clientRequesterTitle">
+    </ssa-info-field>
+
+    <ssa-info-field label="Role :" *ngIf="recruitmentDetails?.roleName" [value]="recruitmentDetails?.roleName">
+    </ssa-info-field>
+  </mat-expansion-panel>
+  <hr *ngIf="recruitmentDetails?.isEmployeeResourceBased" />
+
+  <mat-expansion-panel>
+    <mat-expansion-panel-header>
+      <mat-panel-title> Roles & Responsibilities </mat-panel-title>
+    </mat-expansion-panel-header>
+    <article [innerHTML]="recruitmentDetails?.positionRolesAndResponsibilities?.normal | safeHtml"></article>
+  </mat-expansion-panel>
+
+  <hr />
+  <ng-container *ngIf="recruitmentDetails?.instanceComments?.length">
+    <mat-expansion-panel>
+      <mat-expansion-panel-header>
+        <mat-panel-title> Comments </mat-panel-title>
+      </mat-expansion-panel-header>
+      <div class="comments  overflow-y-auto" [ngClass]="{'custom-scrolling max-h-80': recruitmentDetails?.instanceComments?.length > 10}">
+        <ssa-info-field contentClasses="w-full" type="comments" [value]="recruitmentDetails?.instanceComments"></ssa-info-field>
+      </div>
+    </mat-expansion-panel>
+    <hr />
+  </ng-container>
+
+
+<div class="onBoarding flex flex-col rounded mt-3 pb-3" *ngIf="
+recruitmentDetails.appliedOnboardingRequests.length ||
+  recruitmentDetails.pendingOnboardingRequests.length ||
+  recruitmentDetails.canceledOnboardingRequests.length;
+else no_Onboardings_message
+">
+  <div class="font-bold text-center mt-2">Onboardings</div>
+  <div class="px-5 my-2">
+    <div class="text-center">
+      <div class="flex onBoarding-label-color mb-1 rounded w-full overflow-hidden base-height" [ngClass]="{'show-all' : showAndHideArrow.onBoardingCompleteArrow}" *ngIf="recruitmentDetails.appliedOnboardingRequests?.length">
+        <div class="flex w-1/2">
+          <span class="complete px-4 py-2 h-fit bg-accent">{{ recruitmentDetails.appliedOnboardingRequests?.length }}</span>
+          <span class="pl-3 mt-2"> Completed</span>
+        </div>
+        <div class="flex flex-wrap w-3/4 mt-2 mb-1">
+          <span *ngFor="
+          let applied of recruitmentDetails.appliedOnboardingRequests
+          "><a target="_blank" class="text-black underline decoration-solid px-2" [href]="applied.link">#{{ applied.readableId
+              }}</a></span>
+        </div>
+        <div class="w-12 mt-2">
+          <mat-icon *ngIf="recruitmentDetails.appliedOnboardingRequests.length >= 4" (click)="showAndHideArrow.onBoardingCompleteArrow = !showAndHideArrow.onBoardingCompleteArrow" class="cursor-pointer">{{ showAndHideArrow.onBoardingCompleteArrow ? 'keyboard_arrow_up' : 'keyboard_arrow_down' }}</mat-icon>
+        </div>
+      </div>
+      <div class="flex onBoarding-label-color mb-1 rounded w-full overflow-hidden base-height" [ngClass]="{'show-all' : showAndHideArrow.onBoardingInProgressArrow}" *ngIf="recruitmentDetails.pendingOnboardingRequests?.length">
+        <div class="flex w-1/2">
+          <span class="InProgress px-4 py-2 h-fit"> {{ recruitmentDetails.pendingOnboardingRequests?.length }}</span>
+          <span class="pl-3 mt-2">in progress</span>
+        </div>
+        <div class="flex flex-wrap w-3/4 mt-2 mb-1">
+          <span *ngFor="
+          let pending of recruitmentDetails.pendingOnboardingRequests
+          "><a target="_blank" class="text-black underline decoration-solid px-2" [href]="pending.link">#{{ pending.readableId
+              }}</a>
+          </span>
+        </div>
+        <div class="w-12 mt-2">
+          <mat-icon *ngIf="recruitmentDetails.pendingOnboardingRequests.length >= 4" (click)="showAndHideArrow.onBoardingInProgressArrow = !showAndHideArrow.onBoardingInProgressArrow" class="cursor-pointer">{{ showAndHideArrow.onBoardingInProgressArrow ? 'keyboard_arrow_up' : 'keyboard_arrow_down' }}</mat-icon>
+        </div>
+      </div>
+      <div class="flex onBoarding-label-color rounded w-full overflow-hidden base-height" [ngClass]="{'show-all' : showAndHideArrow.onBoardingCancelArrow}" *ngIf="recruitmentDetails.canceledOnboardingRequests?.length">
+        <div class="flex w-1/2">
+          <span class="cancelled px-4 py-2 h-fit">{{ recruitmentDetails.canceledOnboardingRequests?.length }}</span>
+          <span class="pl-3 mt-2"> Cancelled</span>
+        </div>
+        <div class="flex flex-wrap w-3/4 mt-2 mb-1">
+          <span *ngFor="
+          let canceled of recruitmentDetails.canceledOnboardingRequests
+          "><a target="_blank" class="text-black underline decoration-solid px-2" [href]="canceled.link">#{{ canceled.readableId
+              }}</a>
+          </span>
+          <div class="w-12 mt-2">
+            <mat-icon *ngIf="recruitmentDetails.canceledOnboardingRequests.length >= 4" (click)="showAndHideArrow.onBoardingCancelArrow = !showAndHideArrow.onBoardingCancelArrow" class="cursor-pointer">{{ showAndHideArrow.onBoardingCancelArrow ? 'keyboard_arrow_up' : 'keyboard_arrow_down' }}</mat-icon>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<ng-template #no_Onboardings_message>
+  <div class="pt-4">
+    <div class="bg-gray-300 py-2 rounded text-center italic">
+      There are no Onboardings yet.
+    </div>
+  </div>
+</ng-template>
+
+<div class="offers flex flex-col my-4 rounded pb-3" *ngIf="
+recruitmentDetails.acceptedOffersReadableIds.length ||
+  recruitmentDetails.pendingOffersReadableIds.length ||
+  recruitmentDetails.rejectedOffersReadableIds.length;
+else no_offer_message
+">
+  <div class="font-bold text-center mt-2">Offers</div>
+  <div class="px-5 my-2">
+    <div class="text-center">
+      <div class="flex offers-label-color mb-1 rounded w-full overflow-hidden base-height" [ngClass]="{'show-all' : showAndHideArrow.offersCompleteArrow}" *ngIf="recruitmentDetails.acceptedOffersReadableIds?.length">
+        <div class="flex w-1/2">
+          <span class="complete px-4 py-2 h-fit">{{ recruitmentDetails.acceptedOffersReadableIds?.length }}</span>
+          <span class="pl-3 mt-2"> Accepted</span>
+        </div>
+        <div class="flex flex-wrap w-3/4 mt-2 mb-1">
+          <span *ngFor="
+          let offer of recruitmentDetails.acceptedOffersReadableIds
+          "><a target="_blank" class="text-black underline decoration-solid px-2" [href]="offer.link">#{{ offer.readableId
+              }}</a></span>
+            </div>
+            <div class="w-12 mt-2">
+              <mat-icon *ngIf="recruitmentDetails.acceptedOffersReadableIds.length >= 4" (click)="showAndHideArrow.offersCompleteArrow = !showAndHideArrow.offersCompleteArrow" class="cursor-pointer">{{ showAndHideArrow.offersCompleteArrow ? 'keyboard_arrow_up' : 'keyboard_arrow_down' }}</mat-icon>
+            </div>
+      </div>
+      <div class="flex offers-label-color mb-1 rounded w-full overflow-hidden base-height" [ngClass]="{'show-all' : showAndHideArrow.offersInProgressArrow}" *ngIf="recruitmentDetails.pendingOffersReadableIds?.length">
+        <div class="flex w-1/2">
+          <span class="InProgress px-4 py-2 h-fit"> {{ recruitmentDetails.pendingOffersReadableIds?.length }}</span>
+          <span class="pl-3 mt-2"> in progress</span>
+        </div>
+        <div class="flex flex-wrap w-3/4 mt-2 mb-1">
+          <span *ngFor="
+          let offer of recruitmentDetails.pendingOffersReadableIds
+          "><a target="_blank" class="text-black underline decoration-solid px-2" [href]="offer.link">#{{ offer.readableId }}</a>
+          </span>
+        </div>
+        <div class="w-12 mt-2">
+          <mat-icon *ngIf="recruitmentDetails.pendingOffersReadableIds.length >= 4" (click)="showAndHideArrow.offersInProgressArrow = !showAndHideArrow.offersInProgressArrow" class="cursor-pointer">{{ showAndHideArrow.offersInProgressArrow ? 'keyboard_arrow_up' : 'keyboard_arrow_down' }}</mat-icon>
+        </div>
+      </div>
+      <div class="flex offers-label-color rounded w-full overflow-hidden base-height" [ngClass]="{'show-all' : showAndHideArrow.offersRejectedArrow}" *ngIf="recruitmentDetails.rejectedOffersReadableIds?.length">
+        <div class="flex w-1/2">
+          <span class="cancelled px-4 py-2 h-fit">{{ recruitmentDetails.rejectedOffersReadableIds?.length }}</span>
+          <span class="pl-3 mt-2">Rejected/Expired</span>
+        </div>
+
+        <div class="flex flex-wrap w-3/4 mt-2 mb-1">
+          <span *ngFor="
+          let offer of recruitmentDetails.rejectedOffersReadableIds
+          "><a target="_blank" class="text-black underline decoration-solid px-2" [href]="offer.link">#{{ offer.readableId
+              }}</a>
+          </span>
+        </div>
+        <div class="w-12 mt-2">
+          <mat-icon *ngIf="recruitmentDetails.rejectedOffersReadableIds.length >= 4" (click)="showAndHideArrow.offersRejectedArrow = !showAndHideArrow.offersRejectedArrow" class="cursor-pointer">{{ showAndHideArrow.offersRejectedArrow ? 'keyboard_arrow_up' : 'keyboard_arrow_down' }}</mat-icon>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<ng-template #no_offer_message>
+  <div class="pt-4">
+    <div class="bg-gray-300 py-2 rounded text-center italic">
+      There are no Offers yet.
+    </div>
+  </div>
+</ng-template>
+</div>

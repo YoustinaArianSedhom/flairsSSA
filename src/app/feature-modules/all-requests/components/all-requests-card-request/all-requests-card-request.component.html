@@ -1,0 +1,61 @@
+<div
+   class=" flex-col items-start justify-center mx-auto my-3 w-11/12 border border-solid border-gray-300 p-4 rounded-lg relative">
+
+   <ssa-info-field label="Request ID :">
+      <span class=" cursor-pointer text-primary underline font-normal ml-2 text-sm italic"
+         (click)="openRequestDetails(record)">
+         {{record.readableId}}
+      </span>
+   </ssa-info-field>
+
+   <ssa-info-field label="Request Type :" [value]="requestType[record.workflowType]"></ssa-info-field>
+
+
+   <ssa-info-field label="Creation Date :" type="date" [value]="record.createdDate"></ssa-info-field>
+
+   <ssa-info-field label="Creator Name :" [value]="record?.issuer?.fullName"></ssa-info-field>
+
+
+   <ssa-info-field label="Employee Name :" [value]="record?.targetEmployee?.fullName"></ssa-info-field>
+
+   <ssa-info-field label="Request Status :">
+      <span [ngClass]="{
+            'text-yellow-500': requestStatusesEnum.Archived == record.requestStatus,
+            'text-teal-500': requestStatusesEnum.Applied == record.requestStatus,
+            'text-red-500': requestStatusesEnum.Rejected == record.requestStatus,
+            'text-red-700': requestStatusesEnum.Deleted == record.requestStatus,
+            'text-gray-500': requestStatusesEnum.inProgress == record.requestStatus,
+            'font-normal ml-2 text-sm italic':true
+        }">
+         {{record.requestStatus}}
+      </span>
+   </ssa-info-field>
+
+
+
+   <div class="inline absolute top-0 right-0">
+      <button mat-icon-button style="pointer-events: all;" [matMenuTriggerFor]="actionsMenu"
+         aria-label="Table Actions Menu">
+         <mat-icon>more_vert</mat-icon>
+      </button>
+
+      <!-- Actions Menu -->
+      <mat-menu #actionsMenu="matMenu">
+         <button *ngIf=" requestStatusesEnum.inProgress == record.requestStatus" (click)="archiveRequest(record)"
+            mat-menu-item>
+            <mat-icon class="mr-2 archive">archive</mat-icon>
+            Archive
+         </button>
+         
+         <button (click)="openRequestDetails(record)" mat-menu-item>
+            <mat-icon class="mr-2 visibility">visibility</mat-icon>
+            View Details
+         </button>
+         <button (click)="openSupportRequestDetails(record)" mat-menu-item>
+            <mat-icon svgIcon="support" class="mr-2"></mat-icon>
+            Support
+         </button>
+
+      </mat-menu>
+   </div>
+</div>

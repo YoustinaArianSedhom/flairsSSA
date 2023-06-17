@@ -1,0 +1,38 @@
+<app-form-modal>
+    <h2 mat-dialog-title> {{data.action === 'Archive' ? 'Archive' : 'Delete'}} </h2>
+    <mat-dialog-content>
+        <form [formGroup]="archiveOrDeleteModalForm">
+
+            <h2>Please confirm to {{data.action === 'Archive' ? 'Archive' : 'Delete'}}
+                {{ data.record.readableId }}</h2>
+            <h5 class="text-red-600" *ngIf="data.record.workflowType == 25">
+                'Any “in progress” offer will continue its cycle, position will be closed, recruitment task will be
+                closed'
+            </h5>
+            <div class="w-full flex items-center">
+                <!--notes-->
+                <mat-form-field class="flex-100" hintLabel="Max 500 characters">
+                    <mat-label>Notes</mat-label>
+                    <textarea type="text" formControlName="instanceNote" placeholder="Notes" matInput required></textarea>
+                    <mat-hint align="end">{{ formControls.instanceNote.value?.length || 0 }}/500</mat-hint>
+                    <mat-error>
+                        <app-validation-error [control]="formControls.instanceNote" businessName="Notes">
+                        </app-validation-error>
+                    </mat-error>
+                </mat-form-field>
+            </div>
+        </form>
+    </mat-dialog-content>
+    <mat-dialog-actions align="end">
+
+        <div class="justify-between flex">
+            <button mat-button mat-dialog-close class="cancel-btn rounded-none" cdkFocusInitial (click)="onClose()">
+                Cancel
+            </button>
+            <button [disabled]="archiveOrDeleteModalForm.invalid" mat-button mat-dialog-close
+                class="action-btn rounded-none" cdkFocusInitial (click)="onSubmit()">
+                {{data.action === 'Archive' ? 'Archive' : 'Delete'}}
+            </button>
+        </div>
+    </mat-dialog-actions>
+</app-form-modal>

@@ -1,0 +1,38 @@
+<section class="px-5">
+    <ng-container *ngIf="requestSummary?.availableChoices">
+
+        <div class="mt-2 flex flex-col lg:flex-row items-center justify-end">
+
+            <button mat-button *ngFor="let action of requestSummary?.availableChoices; last as isLast" [hidden]="action.displayName.includes('NO_RESPONSE')"
+                (click)="takeAnAction(action,requestSummary.id)" class="rounded-none" [matTooltip]="action.note"
+                 [ngClass]="isLast ? 'mr-0 '+actionColor[action.type] : 'mr-2 '+actionColor[action.type]">{{action.displayName}}</button>
+
+        </div>
+
+    </ng-container>
+
+
+    <div class='relative border rounded-md py-2 pl-5 mt-4'>
+
+
+
+        <ssa-info-field label="Creator Name :" [value]="requestSummary?.issuer?.fullName" *ngIf="requestSummary?.issuer?.fullName"></ssa-info-field>
+
+        <ssa-info-field label="Creator Email :" type="email" [value]="requestSummary?.issuer?.organizationEmail" *ngIf="requestSummary?.issuer?.organizationEmail">
+        </ssa-info-field>
+
+        <ssa-info-field label="Manager Name :"
+            [value]="requestSummary?.issuerManager?.fullName | NAReplacer:'Has no Manager'"> </ssa-info-field>
+
+
+        <ssa-info-field label="Manager Email :" type="email" [value]="requestSummary?.issuerManager?.organizationEmail" *ngIf="requestSummary?.issuerManager?.organizationEmail">
+        </ssa-info-field>
+
+
+        <ssa-info-field label="Creation Date :" type="date" [value]="requestSummary?.createdDate">
+        </ssa-info-field>
+
+        
+    </div>
+
+</section>

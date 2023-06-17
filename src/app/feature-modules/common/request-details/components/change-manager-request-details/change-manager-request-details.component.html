@@ -1,0 +1,41 @@
+<div class='relative pt-6 pb-2' *ngIf="changeManagerRequestDetails">
+    <!-- <span class="bg-white absolute -top-4 left-2 font-bold text-black-700"> Raise Details:
+    </span> -->
+
+
+    <div class="relative border rounded-md py-2 pl-5 mb-3">
+
+        <ssa-info-field label="Employee Name :" [value]="changeManagerRequestDetails?.targetEmployee.fullName">
+        </ssa-info-field>
+
+        <ssa-info-field label="Employee Email :" type="email" [value]="changeManagerRequestDetails?.targetEmployee.organizationEmail">
+        </ssa-info-field>
+
+        <ssa-info-field label="Current Manager Name :" [value]="changeManagerRequestDetails?.oldManager.fullName">
+        </ssa-info-field>
+
+        <ssa-info-field label="Current Manager Email :" type="email" [value]="changeManagerRequestDetails?.oldManager.organizationEmail"></ssa-info-field>
+        <ssa-info-field label="Old department name :" [value]="changeManagerRequestDetails?.oldDepartmentName"></ssa-info-field>
+        <ssa-info-field label="Old department code :" [value]="changeManagerRequestDetails?.oldDepartmentCode"></ssa-info-field>
+
+         <ssa-info-field label="New Manager Name :" [value]="changeManagerRequestDetails?.newManager.fullName">
+        </ssa-info-field>
+
+        <ssa-info-field label="New Manager Email :" type="email" [value]="changeManagerRequestDetails?.newManager.organizationEmail">
+        </ssa-info-field>
+            <ssa-info-field label="New department name :" [value]="changeManagerRequestDetails?.newDepartmentName"></ssa-info-field>
+            <ssa-info-field label="New department code :" [value]="changeManagerRequestDetails?.newDepartmentCode"></ssa-info-field>
+
+        <ssa-info-field label="New Tenrox Group :" [value]="changeManagerRequestDetails?.newTenroxGroup">
+        </ssa-info-field>
+
+
+        <ssa-info-field label="Effective Start Date :" type="date" [value]="changeManagerRequestDetails?.effectiveStartDate">
+        </ssa-info-field>
+
+        <ssa-info-field label="Notes :" type="note" [value]="changeManagerRequestDetails?.instanceNote">
+        </ssa-info-field>
+    </div>
+  
+
+</div>

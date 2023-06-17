@@ -1,0 +1,143 @@
+.file {
+  top: 0;
+  z-index: -1;
+  opacity: 0;
+}
+
+:host::ng-deep .mat-radio-button.mat-accent.mat-radio-checked .mat-radio-outer-circle,
+:host ::ng-deep.mat-radio-button.mat-accent .mat-radio-inner-circle {
+  border-color: var(--primary);
+  background: var(--primary);
+}
+
+:host::ng-deep .hide-arrow {
+  .mat-select-arrow-wrapper {
+    visibility: hidden;
+  }
+}
+
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 48px;
+  height: 24px;
+}
+
+/* Hide default HTML checkbox */
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+/* The slider */
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #d65344;
+  -webkit-transition: 0.4s;
+  transition: 0.4s;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 6px;
+  width: 6px;
+  left: 8px;
+  bottom: 9px;
+  outline: 1px solid #fff;
+  outline-offset: 2px;
+  background-color: white;
+  -webkit-transition: 0.4s;
+  transition: 0.4s;
+}
+
+input:checked + .slider {
+  background-color: #09ce51;
+}
+
+input:disabled + .slider {
+  cursor: no-drop;
+  opacity: 0.5;
+}
+
+input:focus + .slider {
+  box-shadow: 0 0 1px #09ce51;
+}
+
+input:checked + .slider:before {
+  -webkit-transform: translateX(26px);
+  -ms-transform: translateX(26px);
+  transform: translateX(26px);
+}
+
+/* Rounded sliders */
+.slider.round {
+  border-radius: 34px;
+}
+
+.slider.round:before {
+  border-radius: 50%;
+}
+
+.slider-text:before {
+  position: absolute;
+  content: "No";
+  left: 25px;
+  bottom: 3px;
+  transition: all 0.2s linear;
+  color: #fff;
+  pointer-events: none;
+  font-size: 11px;
+}
+
+input:checked ~ .slider-text:before {
+  content: "Yes";
+  -webkit-transform: translateX(-18px);
+  -ms-transform: translateX(-18px);
+  transform: translateX(-18px);
+}
+
+:host ::ng-deep {
+  .mat-checkbox-layout {
+    white-space: normal;
+    font-size: 1rem;
+    display: block;
+  }
+
+  .mat-checkbox-inner-container {
+    margin: 0px;
+  }
+
+  .disabled-text:disabled {
+    color: rgba(0, 0, 0, 0.6);
+  }
+  .cut-text {
+    display: contents !important;
+  }
+  .form-control {
+    .mat-form-field-infix {
+        width: auto !important;
+    }
+  }
+
+  .small-form-control {
+    display: inline-block;
+    .mat-form-field {
+        display: initial;
+    }
+    .mat-select-arrow-wrapper {
+        display: flex;
+    }
+  }
+}
+
+.hint-message {
+  transform: translateY(-14px);
+  font-size: x-small;
+}

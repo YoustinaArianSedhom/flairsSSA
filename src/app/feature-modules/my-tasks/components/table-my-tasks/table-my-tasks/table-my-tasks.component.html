@@ -1,0 +1,25 @@
+<ng-container *ngIf="(myTasks$ |async)?.length; else noResult">
+    <!--__________Table_______________-->
+    <app-table-wrapper [config]='tableConfig' [records$]='myTasks$'
+    (actionTaken)='mapTableAction($event)'
+    (sortChange)="fireSortTasksAction($event)"
+    (checkboxChange)="fireSelectAll($event)"
+    [check]="allSelected"
+    [showAndHideDrippledColumns]="true"
+    [showAndHideShowDetails]="true"
+    (showDetailsChange)="toggleShowDetails($event)"
+    [classes]="pagination?.pageSize > 10 ? 'scroll' : 'no-scroll'">
+    
+    </app-table-wrapper>
+
+
+    <!--_____________pagination__________-->
+    <!-- Pagination -->
+    <app-pagination [config]="pagination" (paginationChange)='firePaginateMyTasks($event)'>
+    </app-pagination>
+</ng-container>
+
+
+<ng-template #noResult>
+    <app-no-result></app-no-result>
+</ng-template>

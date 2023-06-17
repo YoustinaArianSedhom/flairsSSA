@@ -1,0 +1,28 @@
+<div class='relative pt-6 pb-2' *ngIf="voucherRequestDetails">
+    <!-- <span class="bg-white absolute -top-4 left-2 font-bold text-black-700"> Raise Details:
+    </span> -->
+
+    <div class="relative border rounded-md py-2 pl-5">
+
+        <ssa-info-field label="Entity :" [value]="voucherRequestDetails?.entityName">
+        </ssa-info-field>
+
+        <ssa-info-field label="Employee Name :" [value]="voucherRequestDetails?.targetEmployee.fullName">
+        </ssa-info-field>
+
+        <ssa-info-field label="Employee Email :" type="email"
+            [value]="voucherRequestDetails?.targetEmployee.organizationEmail"></ssa-info-field>
+
+        <ssa-info-field label="Voucher Type :" [value]="voucherType[voucherRequestDetails.type]">
+        </ssa-info-field>
+
+
+        <ssa-info-field label="Amount :" type="currency" [value]="voucherRequestDetails?.amount">
+        </ssa-info-field>
+
+        <ssa-info-field label="Summary :" type="note" [value]="voucherRequestDetails?.instanceNote"></ssa-info-field>
+
+    </div>
+
+
+</div>

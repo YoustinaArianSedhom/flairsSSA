@@ -1,0 +1,114 @@
+<div class="flex justify-start items-baseline my-2 flex-wrap">
+
+    <span class="font-bold">{{label}}</span>
+
+    <div #ref>
+        <ng-content></ng-content>
+    </div>
+
+
+    <ng-container *ngIf="!ref.children.length">
+        <ng-container *ngIf="value; else noValue">
+            <ng-container [ngSwitch]="type">
+
+                <ng-template ngSwitchCase="email">
+                    <span class="font-normal ml-2 text-sm italic break-words">
+                        <a [href]="'mailto:'+value">
+                            {{value}}
+                        </a>
+                    </span>
+                </ng-template>
+
+
+                <ng-template ngSwitchCase="currency">
+                    <span class="font-normal ml-2 text-gray-700 text-sm italic break-words">
+                        {{value|currency:'':'':'1.2' }}
+                    </span>
+                </ng-template>
+
+                <ng-template ngSwitchCase="date">
+                    <span class="font-normal ml-2 text-gray-700 text-sm italic break-words">
+                        {{value|date }}
+                    </span>
+                </ng-template>
+
+
+                <ng-template ngSwitchCase="note">
+                    <div class="inline-flex flex-col ml-2">
+                        <span *ngFor="let item of value.split('\n')"
+                            class="font-normal text-sm text-gray-700 break-word">
+                            {{item}}
+                        </span>
+                    </div>
+                </ng-template>
+
+                <ng-template ngSwitchCase="list">
+                    <ng-container *ngIf="value.length===1; else list">
+                        <div class="inline-flex flex-col ml-2">
+                            <span class="font-normal italic text-sm text-gray-700">
+                                {{value[0]}}
+                            </span>
+                        </div>
+                    </ng-container>
+
+                    <ng-template #list>
+                        <ul class="inline-flex flex-col ml-8 list-disc">
+                            <li *ngFor="let item of value" class="font-normal italic text-sm text-gray-700">
+                                {{item}}
+                            </li>
+                        </ul>
+                    </ng-template>
+                </ng-template>
+
+                <ng-template ngSwitchCase="comments">
+                    <ul class="ml-8 " [ngClass]="contentClasses">
+                        <li *ngFor="let item of value; let i=index" class="px-3 flex"
+                            [ngClass]="{'border-b mb-5' : i < value.length-1}">
+                            <div class="profilePicture flex items-center justify-items-center">
+                                <img *ngIf="item?.createdBy?.profileImageLink" [src]="item?.createdBy?.profileImageLink" class="rounded-3xl">
+                                <mat-icon *ngIf="!item?.createdBy?.profileImageLink" class="text-gray-400"> account_circle </mat-icon>
+
+                            </div>
+                            <div>
+                                <div class="flex flex-wrap mb-5">
+                                    <span class="mr-10 text-gray-400 italic">
+                                        {{item?.createdBy?.fullName}}
+                                    </span>
+                                    <span class="ml-16 text-gray-400 italic">
+                                        {{item?.createdDate | date : 'd MMM yy hh:mm a'}}
+                                    </span>
+                                </div>
+                                <div class="pb-2">
+                                    <ng-container *ngIf="item?.content?.split('\n')?.length; else normalValue">
+                                        <p *ngFor="let item of item?.content?.split('\n')"
+                                            class="font-normal ml-2 text-gray-700 text-sm italic break-words">
+                                            <span [innerHTML]="item"></span>
+                                        </p>
+
+                                    </ng-container>
+                                    <ng-template #normalValue>
+                                        <p class="font-normal ml-2 text-gray-700 text-sm italic break-words">
+                                            {{item?.content}}</p>
+                                    </ng-template>
+                                </div>
+                            </div>
+
+                        </li>
+                    </ul>
+                </ng-template>
+
+
+                <ng-template ngSwitchDefault>
+                    <span class="font-normal ml-2 text-gray-700 text-sm italic break-words">{{value}}</span>
+                </ng-template>
+
+            </ng-container>
+        </ng-container>
+
+        <ng-template #noValue>
+
+            <span class="font-normal italic text-sm ml-2 text-gray-700">N/A</span>
+
+        </ng-template>
+    </ng-container>
+</div>

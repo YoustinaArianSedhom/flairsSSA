@@ -1,0 +1,35 @@
+<div class='relative pt-6 pb-2'>
+    <!-- <span class="bg-white absolute -top-4 left-2 font-bold text-black-700"> Raise Details:
+  </span> -->
+
+    <div class="relative border rounded-md py-2 pl-5">
+
+        <ssa-info-field label="Entity :" [value]="raiseRequestDetails?.entityName"></ssa-info-field>
+
+        <ssa-info-field label="Employee Name :" [value]="raiseRequestDetails?.targetEmployee.fullName"></ssa-info-field>
+
+        <ssa-info-field label="Employee Email :" type="email"
+            [value]="raiseRequestDetails?.targetEmployee.organizationEmail"></ssa-info-field>
+
+        <ssa-info-field label="Department :" [value]="raiseRequestDetails?.department"></ssa-info-field>
+        
+        <ssa-info-field label="Department Code:" [value]="raiseRequestDetails?.departmentCode"></ssa-info-field>
+        <ssa-info-field label="Raise Reason:" [value]="raiseRequestDetails?.raiseReason"></ssa-info-field>
+
+        <ssa-info-field label="Current Gross :" type="currency" [value]="raiseRequestDetails?.oldGrossSalary">
+        </ssa-info-field>
+
+        <ssa-info-field label="Current Net :" type="currency" [value]="raiseRequestDetails?.oldNetSalary">
+        </ssa-info-field>
+
+        <ssa-info-field label="New Gross :" type="currency" [value]="raiseRequestDetails?.newGrossSalary">
+        </ssa-info-field>
+
+        <ssa-info-field label="New Net :" type="currency" [value]="raiseRequestDetails?.newNetSalary"></ssa-info-field>
+        <ssa-info-field label="Notes :" type="note" [value]="raiseRequestDetails?.instanceNote"></ssa-info-field>
+
+
+    </div>
+
+    
+</div>

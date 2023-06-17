@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="19.015" height="14.203" viewBox="0 0 19.015 14.203">
+  <g id="Group_813" data-name="Group 813" transform="translate(5127.078 -7543.341)">
+    <g id="Group_812" data-name="Group 812">
+      <g id="Group_806" data-name="Group 806" transform="translate(-5127.078 7548.909)">
+        <g id="Group_811" data-name="Group 811" transform="translate(0 0)">
+          <g id="Group_807" data-name="Group 807" transform="translate(8.455 4.927)">
+            <path id="Path_591" data-name="Path 591" d="M16.67,13.13a2.51,2.51,0,0,1,1.257,2.088v1.619h2.158V15.218C20.086,14.042,18.159,13.346,16.67,13.13Z" transform="translate(-16.67 -13.13)" fill-rule="evenodd"/>
+          </g>
+          <g id="Group_808" data-name="Group 808" transform="translate(1.742 0.041)">
+            <ellipse id="Ellipse_49" data-name="Ellipse 49" cx="2.356" cy="2.356" rx="2.356" ry="2.356" transform="translate(0)"/>
+          </g>
+          <g id="Group_809" data-name="Group 809" transform="translate(6.837)">
+            <path id="Path_592" data-name="Path 592" d="M14.388,8.317a2.159,2.159,0,0,0,0-4.317,2.254,2.254,0,0,0-.718.13,3.227,3.227,0,0,1,0,4.058A2.254,2.254,0,0,0,14.388,8.317Z" transform="translate(-13.67 -4)" fill-rule="evenodd"/>
+          </g>
+          <g id="Group_810" data-name="Group 810" transform="translate(0 4.857)">
+            <path id="Path_593" data-name="Path 593" d="M5.317,13C3.876,13,1,13.723,1,15.159v1.619H9.634V15.159C9.634,13.723,6.757,13,5.317,13Z" transform="translate(-1 -13)" fill-rule="evenodd"/>
+          </g>
+        </g>
+      </g>
+      <path id="Union_1" data-name="Union 1" d="M0,7.242V.905A.908.908,0,0,1,.905,0H7.241a.908.908,0,0,1,.905.905V7.242a.908.908,0,0,1-.905.905H1.348l-.186.239L0,9.886Zm1.811-.905H4.979V5.431H1.811Zm0-1.811H6.336V3.621H1.811Zm0-1.81H6.336V1.811H1.811Z" transform="translate(-5116.209 7543.341)"/>
+    </g>
+  </g>
+</svg>

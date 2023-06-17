@@ -1,0 +1,28 @@
+<app-form-modal>
+  <h2 mat-dialog-title class="uppercase text-primary border-b pb-2 border-gray-400"> Beneficiaries names and emails
+  </h2>
+  <mat-dialog-content class="custom-scrolling">
+    <ng-container *ngIf="(beneficiaries$ | async)?.length; else noResult">
+
+      <!-- Table -->
+      <app-table-wrapper [records$]="beneficiaries$" [config]="tableConfig">
+      </app-table-wrapper>
+
+      <!-- Pagination -->
+      <!-- <app-pagination [config]="pagination" (paginationChange)="firePaginateRequestsAction($event)">
+      </app-pagination> -->
+    </ng-container>
+
+    <ng-template #noResult>
+      <app-no-result></app-no-result>
+    </ng-template>
+  </mat-dialog-content>
+  <mat-dialog-actions align="end">
+
+    <div class="justify-between flex">
+      <button mat-button mat-dialog-close class="cancel-btn rounded-none" cdkFocusInitial (click)="cancel()">
+        Cancel
+      </button>
+    </div>
+  </mat-dialog-actions>
+</app-form-modal>

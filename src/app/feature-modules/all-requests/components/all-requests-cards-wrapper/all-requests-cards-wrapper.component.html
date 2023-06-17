@@ -1,0 +1,13 @@
+<ng-container *ngIf="(records$ |async)?.length; else noResult">
+   <ng-container *ngFor="let request of (records$ |async)">
+       <ssa-all-requests-card-request [record]="request" ></ssa-all-requests-card-request>
+   </ng-container>
+   <!-- Pagination -->
+   <app-pagination [config]="pagination" (paginationChange)="firePaginate($event)">
+   </app-pagination>
+</ng-container>
+
+
+<ng-template #noResult>
+   <app-no-result></app-no-result>
+</ng-template>

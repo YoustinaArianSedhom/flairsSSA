@@ -1,0 +1,96 @@
+:host {
+    display: block;
+}
+.uploader-wrapper {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    display: block;
+}
+
+:host ::ng-deep {
+
+    ngx-awesome-uploader {
+        margin: auto !important;
+        background: var(--gray2);
+        border: 1px dashed var(--gray3) !important;
+
+    }
+    file-preview-container{
+    background: transparent !important;
+    
+
+    file-preview-item{
+        max-width:100%!important;
+        padding-top:0!important;
+        border-bottom: 0 !important;
+        .file-preview-wrapper{
+        border-top: 1px solid rgba(0,0,0,0.1) !important;
+        padding-top:20px !important;
+        }
+        &:first-child{
+            .file-preview-wrapper{
+                border-top: 0;
+            }
+        }
+    }
+}
+    .files-preview-wrapper {
+        margin: auto !important;
+    }
+    .svg-icon {
+        fill: var(--accentDark) !important;
+        width: 112px !important;
+        height: auto !important;
+    }
+    .file-browse-button {
+        padding: .5rem 1rem !important;
+        border-radius: 0!important;
+        background: var(--primary) !important;
+        font-weight: 500!important;
+        text-transform: capitalize!important;
+    }
+    #dropZone {
+        padding: 0 0 20px !important;
+        background: transparent !important;
+        border: 0px !important;
+    }
+    .file-drop-wrapper {
+        background: transparent !important;
+        border: 0px !important;
+        border-bottom: 1px solid rgba(0,0,0,0.2) !important;
+    }
+
+    .content-top-text {
+        font-size: 16px !important;
+        color: var(--accentAlt)!important;
+        font-weight: 500!important;
+    }
+    .content-center-text {
+        margin: 2px !important;
+        color: var(--accentAlt)!important;
+    }
+    .file-preview-wrapper .file-preview-thumbnail .other-preview-thumbnail {
+        font-weight: 300 !important;
+        // margin: auto;
+    }
+
+    .file-preview-wrapper .file-preview-description .file-preview-title {
+        font-weight: 300 !important;
+        color: var(--accentAlt)!important;
+    }
+    .file-preview-wrapper .file-preview-thumbnail {
+        pointer-events: none;
+    }
+    .ngx-checkmark-wrapper{
+        display: none;
+    }
+    .ngx-close-icon{
+        svg{
+            fill: var(--danger);
+        }
+    }
+}

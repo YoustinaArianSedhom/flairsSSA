@@ -1,0 +1,13 @@
+<!-- Request Header -->
+<div class="flex justify-between pb-3 items-center px-5">
+    <div class="flex flex-wrap items-center header-items w-full">
+        <span class="text-lg font-bold">{{requestType[requestSummary.workflowType]}} Request (</span>
+        <span class="text-lg text-gray-700 font-bold">{{requestSummary?.readableId}})</span>
+        <span class="block sm:inline-block max-w-max sm:ml-2 font-bold text-sm py-1 px-3 text-white {{REQUESTS_STATUSES_BG_COLOR[requestSummary?.requestStatus]}}" >
+            {{requestSummary?.requestStatus}}
+        </span>
+    </div>
+    <span (click)="closeDialog()" class="material-icons text-3xl cursor-pointer text-gray-400">close</span>
+</div>
+
+<div class="border-b-2"></div>

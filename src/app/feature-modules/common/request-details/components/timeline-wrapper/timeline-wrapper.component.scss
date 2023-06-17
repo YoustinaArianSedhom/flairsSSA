@@ -1,0 +1,41 @@
+:host {
+    display: block;
+}
+.mat-expansion-panel {
+    border-radius: 0 !important;
+    box-shadow: none !important;
+}
+.mat-expansion-panel-header {
+    padding-left: 0 !important;
+}
+.mat-expansion-indicator::after  {
+    color: #323232 !important;
+}
+
+:host ::ng-deep {
+    mat-icon.timeline-icon-svg {
+        width: 43px;
+        height: 43px;
+        z-index: 9;
+
+        svg {
+            display: inline-block;
+            width: 100%;
+            vertical-align: baseline;
+        }
+    }
+    mat-icon.timeline-icon {
+        font-size: 51px;
+        height: 43px;
+        width: 43px;
+        line-height: 43px;
+        z-index: 9;
+    }
+    .bg-transparent {
+        background-color: transparent !important;
+    }
+    .transparent-text {
+        color: rgba(156, 163, 175) !important;
+    }
+    
+}

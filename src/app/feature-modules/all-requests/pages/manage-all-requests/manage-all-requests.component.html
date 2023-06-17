@@ -1,0 +1,64 @@
+<app-inner-page-layout>
+
+
+   <ng-container>
+      <div class="py-3 border-b-2">
+
+         <h1>{{headInformation.title}}</h1>
+      </div>
+      <div class="flex items-center justify-end pt-4">
+         <button mat-button class="action-btn rounded-none self-end" (click)="exportAllRequests()"
+            title="Download results as Excel File">
+            Export
+         </button>
+
+      </div>
+
+      <div class="w-full">
+         <div class="md:flex md:justify-between md:items-center bg-white px-5 pt-2 pb-3 my-3 filterBox">
+            <div class="flex items-center flex-grow">
+               <mat-icon class="text-gray-400">filter_alt</mat-icon>
+               <app-search-input [withResult]="false" [search]="resetSearch ? '' : null"
+                  (searchChange)="fireSearchMyRequestsAction($event)" class="flex-grow filterBox-search"
+                  searchTooltip="Search by request ID, name or email" [isMobileScreen]="isMobile">
+               </app-search-input>
+            </div>
+
+
+            <!-- Filters Wrapper -->
+            <div class="flex md:flex-nowrap flex-wrap justify-end items-center">
+               <!-- Request Types -->
+               <app-basic-select class="px-3 block" [emitPassedValue]="false" [options]="requestTypes"
+                  [config]="requestTypesSelectConfig" (optionsChange)="fireFilterMyRequestsByTypes($event)"
+                  label="Request type">
+               </app-basic-select>
+               <!-- Request States -->
+               <app-basic-select class="px-3 block" [emitPassedValue]="false" [options]="requestStatuses"
+                  [config]="requestStatesSelectConfig" (optionsChange)="fireFilterMyRequestsByStatus($event)"
+                  label="Request status">
+               </app-basic-select>
+               <div class="mt-2">
+
+                  <button (click)="resetFilter()" mat-button color="warn" aria-label="Clear Filter">
+                     Clear
+                  </button>
+               </div>
+            </div>
+         </div>
+      </div>
+      <div class="inner-wrapper bg-white w-full p-1 lg:p-5 ">
+
+         <ng-container *ngIf="!isMobile; else mobileCardsView">
+            <ssa-table-all-requests [records$]="allRequests$" [pagination]="pagination" [actions]="tableActions">
+            </ssa-table-all-requests>
+         </ng-container>
+
+         <ng-template #mobileCardsView>
+            <ssa-all-requests-cards-wrapper [records$]="allRequests$" [pagination]="pagination"
+               [actions]="tableActions">
+            </ssa-all-requests-cards-wrapper>
+         </ng-template>
+      </div>
+
+   </ng-container>
+</app-inner-page-layout>

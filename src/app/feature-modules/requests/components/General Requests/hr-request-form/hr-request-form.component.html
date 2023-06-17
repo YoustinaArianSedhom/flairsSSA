@@ -1,0 +1,102 @@
+<app-form-modal>
+
+
+    <h2 mat-dialog-title> New HR Letter Request</h2>
+
+    <mat-dialog-content class="custom-scrolling">
+
+        <form [formGroup]="HRRequestForm">
+
+            <section class="flex flex-wrap">
+
+                <!--Employee name-->
+
+                <mat-form-field class="flex-100">
+                    <mat-label>Full Name</mat-label>
+
+                    <input placeholder="Full Name" formControlName="fullName" type="text" matInput required>
+
+                    <mat-hint align="end">{{ formControls.fullName.value?.length || 0 }}/150</mat-hint>
+
+                    <mat-error>
+                        <app-validation-error [control]="HRRequestForm.get('fullName')" businessName="Full Name"
+                            [customValidatorsErrorMessages]="{'pattern':' Your full name value consists of white space only!' }">
+                        </app-validation-error>
+                    </mat-error>
+
+                </mat-form-field>
+
+                <!--Employee title-->
+                <mat-form-field class="flex-100">
+                    <mat-label>Title </mat-label>
+
+                    <input placeholder="Title" formControlName="title" type="text" matInput required>
+
+                    <mat-hint align="end">{{ formControls.title.value?.length || 0 }}/150</mat-hint>
+
+                    <mat-error>
+                        <app-validation-error [control]="HRRequestForm.get('title')" businessName="Title"
+                            [customValidatorsErrorMessages]="{'pattern':'Your title value consists of white space only!' }">
+                        </app-validation-error>
+                    </mat-error>
+                </mat-form-field>
+
+                <!--Letter language-->
+
+                <mat-form-field class="flex-100">
+                    <mat-label>Letter Language</mat-label>
+                    <mat-select formControlName="language" required placeholder="Letter language">
+                        <mat-option *ngFor="let language of letterLanguages" [value]="language.id">{{language.type}}
+                        </mat-option>
+                    </mat-select>
+
+                    <mat-error>
+                        <app-validation-error [control]="formControls.language" businessName="Letter language">
+                        </app-validation-error>
+                    </mat-error>
+                </mat-form-field>
+
+                <!--To whom-->
+
+                <mat-form-field class="flex-100">
+                    <mat-label>To Whom It May Concern </mat-label>
+
+                    <input placeholder="To Whom" formControlName="toWhomItMayConcern" type="text" matInput required>
+
+                    <mat-hint align="end">{{ formControls.toWhomItMayConcern.value?.length || 0 }}/150</mat-hint>
+
+                    <mat-error>
+                        <app-validation-error [control]="HRRequestForm.get('toWhomItMayConcern')" businessName="To Whom"
+                            [customValidatorsErrorMessages]="{'pattern':'To Whom value consists of white space only!' }">
+                        </app-validation-error>
+                    </mat-error>
+                </mat-form-field>
+
+                <!--salary included-->
+
+                <mat-checkbox color="warn" formControlName="grossSalaryIncluded">
+                    Salary Included
+                </mat-checkbox>
+
+            </section>
+
+        </form>
+
+
+    </mat-dialog-content>
+
+    <mat-dialog-actions align="end">
+        <div class="justify-between flex">
+            <button mat-button mat-dialog-close class="cancel-btn rounded-none" cdkFocusInitial (click)="cancel()">
+                Cancel
+            </button>
+
+            <button mat-button [disabled]="HRRequestForm.invalid" class="action-btn rounded-none" (click)='submit()'>
+                Submit
+            </button>
+        </div>
+    </mat-dialog-actions>
+
+
+
+</app-form-modal>

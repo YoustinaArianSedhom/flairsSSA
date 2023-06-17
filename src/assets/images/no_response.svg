@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="35" height="35" viewBox="0 0 35 35">
+  <g id="Group_918" data-name="Group 918" transform="translate(-2715 -1236)">
+    <circle id="Ellipse_18" data-name="Ellipse 18" cx="17.5" cy="17.5" r="17.5" transform="translate(2715 1236)" fill="#857b7b"/>
+    <path id="chat_bubble_FILL0_wght400_GRAD0_opsz48_1_" data-name="chat_bubble_FILL0_wght400_GRAD0_opsz48 (1)" d="M4,20.809V5.261a1.221,1.221,0,0,1,.378-.872A1.194,1.194,0,0,1,5.261,4H19.548a1.206,1.206,0,0,1,.872.389,1.206,1.206,0,0,1,.389.872V16.186a1.334,1.334,0,0,1-1.261,1.261H7.362Zm1.261-3.047,1.576-1.576H19.548V5.261H5.261Zm0-12.5v0Z" transform="translate(2720.096 1241.845)" fill="#fff"/>
+    <path id="close_FILL0_wght400_GRAD0_opsz48" d="M10.882,17.272l-.532-.532,2.929-2.929L10.35,10.882l.532-.532,2.929,2.929L16.74,10.35l.532.532-2.929,2.929,2.929,2.929-.532.532-2.929-2.929Z" transform="translate(2718.689 1238.7)" fill="#fff"/>
+  </g>
+</svg>

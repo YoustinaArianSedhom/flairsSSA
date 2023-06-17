@@ -1,0 +1,13 @@
+<ng-container *ngIf="(myTeamsTasks$ |async)?.length"; else noResult>
+    <ng-container *ngFor="let task of (myTeamsTasks$ |async)">
+        <ssa-cards-my-teams-tasks [record]="task"></ssa-cards-my-teams-tasks>
+    </ng-container>
+    <!-- Pagination -->
+    <app-pagination [config]="pagination" (paginationChange)="firePaginateMyTasks($event)">
+    </app-pagination>
+</ng-container>
+
+
+<ng-template #noResult>
+    <app-no-result></app-no-result>
+</ng-template>

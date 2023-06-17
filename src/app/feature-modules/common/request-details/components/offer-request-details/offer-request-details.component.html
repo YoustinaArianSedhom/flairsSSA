@@ -1,0 +1,71 @@
+<div class='relative pt-6 pb-2 pl-5 px-5'>
+    <!-- <span class="bg-white absolute -top-4 left-2 font-bold text-black-700"> Raise Details:
+  </span> -->
+
+    <div class="relative border rounded-md py-2 pl-5">
+
+
+        <ssa-info-field label="Offer Title :" *ngIf="offerRequestDetails.title" [value]="offerRequestDetails?.title">
+        </ssa-info-field>
+
+        <ssa-info-field label="Candidate Name :" [value]="offerRequestDetails.candidateFullName">
+
+        </ssa-info-field>
+
+        <ssa-info-field label="Candidate Profile URL :">
+
+            <a target="blank" [href]="offerRequestDetails.candidateHunterURL"
+                class="font-normal ml-2 text-sm italic break-words">
+                {{offerRequestDetails.candidateFullName}}</a>
+
+        </ssa-info-field>
+
+        <ssa-info-field label="Team Manager :" [value]="offerRequestDetails?.teamManagerFullName"></ssa-info-field>
+
+
+
+        <ssa-info-field label="Team :" [value]="offerRequestDetails.teamName">
+
+        </ssa-info-field>
+        <ssa-info-field label="Position :" [value]="offerRequestDetails.positionName">
+
+        </ssa-info-field>
+
+
+
+        <ssa-info-field label="Employment Type :" [value]="employmentTypes[offerRequestDetails?.offerEmploymentType]">
+        </ssa-info-field>
+
+        <ssa-info-field label="Hiring Date :" type="date" [value]="offerRequestDetails.hiringDate">
+        </ssa-info-field>
+
+
+
+        <ssa-info-field label="Working Hours :" [value]="offerRequestDetails?.shiftWorkingHours">
+        </ssa-info-field>
+
+        <ssa-info-field label="Shift :" [value]="offerRequestDetails?.shiftName">
+        </ssa-info-field>
+
+        <ssa-info-field label="Gross Salary :" [value]="offerRequestDetails?.grossSalary" type="currency"
+            *ngIf="offerRequestDetails.grossSalary">
+        </ssa-info-field>
+
+
+        <ssa-info-field label="ExpiryDate :" *ngIf="offerRequestDetails.expiryDate"
+            [value]="offerRequestDetails.expiryDate" type="date">
+        </ssa-info-field>
+
+        <ssa-info-field label="Candidate Rejection Note :" *ngIf="offerRequestDetails.candidateRejectionNote"
+        [value]="offerRequestDetails.candidateRejectionNote" type=note>
+        </ssa-info-field>
+
+        <ssa-info-field label="Candidate Rejection Reasons :"
+            *ngIf="offerRequestDetails?.candidateRejectionReasons.length"
+            [value]="offerRequestDetails?.candidateRejectionReasons" type="list">
+        </ssa-info-field>
+
+
+    </div>
+   
+</div>

@@ -1,0 +1,16 @@
+<div class='relative pt-6 pb-2 px-5'>
+   <div class="relative border rounded-md py-2 pl-5 mb-3">
+      <ssa-info-field label="Employee Name :" [value]="allocationDetail?.targetEmployee['fullName']" type="text"
+         *ngIf="allocationDetail?.targetEmployee['fullName'].length > 0">
+      </ssa-info-field>
+     
+      <ssa-info-field label="Allocation duration :" [value]="allocationDetail?.workAmount + ' day '" *ngIf="allocationDetail?.workAmount">
+   </ssa-info-field>
+
+      <ssa-info-field label="Worked Day :" type="date" [value]="allocationDetail?.day |date">
+      </ssa-info-field>
+
+      <ssa-info-field label="Reason :" type="note" [value]="allocationDetail?.reason" *ngIf="allocationDetail?.reason">
+      </ssa-info-field>
+   </div>
+</div>

@@ -1,0 +1,5 @@
+:host ::ng-deep {
+    .mat-autocomplete-panel{
+        max-height: 150px !important;
+    }
+}

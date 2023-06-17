@@ -1,0 +1,125 @@
+<app-form-modal>
+
+   <h2 mat-dialog-title class="uppercase text-primary border-b pb-2 border-gray-400"> balance management </h2>
+
+   <mat-dialog-content class="custom-scrolling">
+      <form [formGroup]="balanceManageForm" class="flex flex-100 flex-wrap" *ngIf="balanceManageForm">
+
+         <!-- Radio Buttons for request Types -->
+         <section class="py-3 w-full">
+            <mat-radio-group class="w-full flex flex-wrap justify-between" formControlName="balanceFor"
+               (change)="onChangeRequestType($event)">
+               <mat-radio-button class="pb-3 w-1/3" *ngFor="let request of requestTypes" [value]="request.id">
+                  {{request.name}}
+               </mat-radio-button>
+            </mat-radio-group>
+         </section>
+         <section class="w-full flex justify-between flex-wrap">
+            <div class="chip-list-wrapper" *ngIf="formControls.balanceFor.value === 0">
+               <mat-chip-list #chipList>
+                  <ng-container *ngFor="let item of selectedEmployees; let i=index">
+                     <mat-chip class="cardinal-colors balance-chip" (click)="removeEmployee(i)">
+                        {{ item.fullName }}
+                        <mat-icon class="mat-chip-remove text-gray-900">close</mat-icon>
+                     </mat-chip>
+                  </ng-container>
+               </mat-chip-list>
+            </div>
+            <div class="w-full" [ngClass]="{hidden: formControls.balanceFor.value === 2}">
+               <div [ngClass]="{hidden: formControls.balanceFor.value !== 0}">
+                  <ssa-autocomplete placeHolder="Search with Employee name*" serviceMethod="searchEmployee" subProperty="organizationEmail" (checkValidity)="checkValidity($event, 'selectedEmployeesOrganizationEmails')" [list]="selectedEmployees"
+                     (addItem)="addEmployee($event)">
+                  </ssa-autocomplete>
+                  <mat-error>
+                     <app-validation-error class="text-sm" [control]="formControls.selectedEmployeesOrganizationEmails" businessName="Employee">
+                     </app-validation-error>
+                  </mat-error>
+               </div>
+               <div [ngClass]="{hidden: formControls.balanceFor.value !== 1}">
+                  <ssa-autocomplete placeHolder="Type team name or manager name*" serviceMethod="searchTeams" [isMultipleSelect]="false"
+                     (addItem)="addTeam($event)" (checkValidity)="checkValidity($event, 'teamId')">
+                  </ssa-autocomplete>  
+                  <mat-error>
+                     <app-validation-error class="text-sm" [control]="formControls.teamId" businessName="Team">
+                     </app-validation-error>
+                  </mat-error>
+               </div>
+            </div>
+            <div class="w-full">
+
+               <ssa-autocomplete placeHolder="Search with cycle name*" serviceMethod="searchCycles"  [isMultipleSelect]="false"
+               (addItem)="onCycleSelect($event)" (checkValidity)="checkValidity($event, 'cycleId')">
+            </ssa-autocomplete>  
+               <mat-error>
+                  <app-validation-error class="text-sm" [control]="formControls.cycleId" businessName="Cycle">
+                  </app-validation-error>
+               </mat-error>
+            </div>
+         </section>
+
+         <!-- Radio Buttons for Leave Types -->
+         <section class="py-3 w-full">
+            <mat-radio-group class="w-full flex flex-wrap justify-between" formControlName="leaveType">
+               <mat-radio-button class="pb-3 w-1/3" *ngFor="let leave of leaveTypes" [value]="leave.id">
+                  {{leave.name}}
+               </mat-radio-button>
+            </mat-radio-group>
+         </section>
+
+         <!-- Recovered Days -->
+
+         <div class="py-4 flex">
+
+               <mat-label class="font-bold">
+                  Recovered Days
+               </mat-label>
+            <div class="flex flex-col ml-6">
+               <div class="shadow px-3 py-1 w-1/3">
+                  <input type="text" required formControlName="recoveredDays" class="w-full"/>
+               </div>
+               <mat-error>
+                  <app-validation-error class="text-sm" [control]="formControls.recoveredDays"
+                     businessName="Recovered Days">
+                  </app-validation-error>
+               </mat-error>
+
+            </div>
+         </div>
+
+         <!--reason-->
+         <mat-form-field class="flex-100" hintLabel="Max 500 characters">
+            <mat-label class="font-bold">Reason</mat-label>
+
+            <textarea required type="text" formControlName="reason" placeholder="Reason" matInput></textarea>
+
+            <mat-hint align="end">{{ formControls.reason.value?.length || 0 }}/500</mat-hint>
+
+            <mat-error>
+               <app-validation-error [control]="formControls.reason" businessName="Reason"
+                  [customValidatorsErrorMessages]="{ 'pattern':'Reason value consists of white space only!'}">
+               </app-validation-error>
+            </mat-error>
+         </mat-form-field>
+      </form>
+
+
+
+   </mat-dialog-content>
+
+   <mat-dialog-actions align="end">
+
+      <div class="justify-between flex">
+         <button mat-button mat-dialog-close class="cancel-btn rounded-none" cdkFocusInitial (click)="cancel()">
+            Cancel
+         </button>
+
+         <button mat-button class="action-btn rounded-none" [disabled]="balanceManageForm?.invalid"
+            (click)="onSubmit()">
+            Submit
+         </button>
+      </div>
+
+
+   </mat-dialog-actions>
+
+</app-form-modal>

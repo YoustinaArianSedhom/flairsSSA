@@ -1,0 +1,33 @@
+<app-form-modal>
+   <h2 mat-dialog-title class="uppercase text-primary border-b pb-2 border-gray-400"> Received Documents
+   </h2>
+   <mat-dialog-content class="custom-scrolling">
+      <ng-container *ngIf="documents.length ;else noData">
+         <div class="px-3">
+            <ul class="dashed">
+               <li class="font-normal text-gray-700 text-sm italic break-words py-2 flex" *ngFor="let document of documents; let i = index">
+                  <div class="w-7">
+                     {{i+1}} - 
+                  </div>
+                  <span class="ml-2">
+
+                  {{document}}
+               </span>
+            </li>
+            </ul>
+         </div>
+
+      </ng-container>
+      <ng-template #noData>
+         <span>No Documents received</span>
+      </ng-template>
+   </mat-dialog-content>
+   <mat-dialog-actions align="end">
+ 
+     <div class="justify-between flex">
+       <button mat-button mat-dialog-close class="cancel-btn rounded-none" cdkFocusInitial (click)="cancel()">
+         Cancel
+       </button>
+     </div>
+   </mat-dialog-actions>
+ </app-form-modal>

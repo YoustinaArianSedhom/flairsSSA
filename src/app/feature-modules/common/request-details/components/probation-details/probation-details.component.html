@@ -1,0 +1,48 @@
+<div class='relative pt-6 pb-2 pl-5 px-5'>
+
+    <div class="relative border rounded-md py-2 pl-5">
+
+        <ssa-info-field label="Employee Name :" [value]="probationDetails?.targetEmployee.fullName">
+        </ssa-info-field>
+
+        <ssa-info-field label="Employee Email :" [value]="probationDetails?.targetEmployee.organizationEmail"
+            type="email">
+        </ssa-info-field>
+
+        <ssa-info-field label="Job Title :" [value]="probationDetails?.title">
+        </ssa-info-field>
+
+        <ssa-info-field label="Start working date :" type="date" [value]="probationDetails?.startDate">
+        </ssa-info-field>
+
+        <ssa-info-field label="End of Probation date :" type="date" [value]="probationDetails?.endDate">
+        </ssa-info-field>
+
+        <ssa-info-field label="Note :" type="note" [value]="probationDetails?.instanceNote"
+    *ngIf="probationDetails?.instanceNote">
+    </ssa-info-field>
+
+        
+        <div *ngIf="probationDetails?.extensions">
+            <ng-container *ngFor="let extension of probationDetails?.extensions">
+                <ssa-info-field label="Extension date :" type="date" [value]="extension?.extensionDate">
+                </ssa-info-field>
+
+                <ssa-info-field label="Extension note :" type="note" [value]="extension?.extensionNote">
+                </ssa-info-field>
+            </ng-container>
+        </div>  
+        
+        <ssa-info-field label="Passing note :" type="note" [value]="probationDetails?.passingNote"
+    *ngIf="probationDetails?.passingNote">
+    </ssa-info-field>
+
+    <ssa-info-field label="Failure note :" type="note" [value]="probationDetails?.failureNote"
+    *ngIf="probationDetails?.failureNote">
+    </ssa-info-field>
+
+    </div>
+    
+    
+
+</div>

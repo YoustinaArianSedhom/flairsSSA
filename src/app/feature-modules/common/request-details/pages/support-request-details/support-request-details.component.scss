@@ -1,0 +1,16 @@
+@media only screen and (orientation: landscape) {
+    .manage-height {
+        height: 62vh;
+    }
+}
+@media only screen and (orientation: portrait) {
+    .manage-height {
+        height: 72vh;
+    }
+}
+
+@media screen and (min-width: 991px) {
+    .manage-height {
+        height: 72vh;
+    }
+}

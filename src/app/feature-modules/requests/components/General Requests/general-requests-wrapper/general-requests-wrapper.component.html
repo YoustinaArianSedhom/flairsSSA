@@ -1,0 +1,84 @@
+<div class="flex flex-wrap p-4 pt-0">
+
+    <!--HR letter Request Wrapper-->
+
+    <div matRipple *appAccessControl="{permissions:['CREATE_HR_LETTER']}"
+        class="border-2 flex items-center mt-5 py-4 px-6 rounded-2xl hover:bg-gray-100 cursor-pointer mr-3"
+        (click)="openHRRequestForm()">
+
+
+        <mat-icon svgIcon="HR-letter" class="mat-icon-4x"></mat-icon>
+
+        <span class="ml-6">HR letter</span>
+
+    </div>
+
+
+    <div matRipple *appAccessControl="{permissions:['CREATE_TRAINING']}"
+        class="border-2 flex items-center mt-5 py-4 px-6 rounded-2xl hover:bg-gray-100 cursor-pointer mr-3"
+        (click)="openTrainingRequestForm()">
+
+
+        <mat-icon svgIcon="Training" class="mat-icon-4x"></mat-icon>
+
+        <span class="ml-6">Training</span>
+
+    </div>
+
+
+    <div matRipple *appAccessControl="{permissions:['CREATE_PEER_TO_PEER']}"
+        class="border-2 flex items-center mt-5 py-4 px-6 rounded-2xl hover:bg-gray-100 cursor-pointer mr-3"
+        (click)="openPeerToPeerRequestForm()">
+
+
+        <mat-icon svgIcon="P2P" class="mat-icon-4x"></mat-icon>
+
+        <span class="ml-6">Peer-to-Peer</span>
+
+    </div>
+    <ssa-leave-request-form></ssa-leave-request-form>
+
+    <div matRipple *appAccessControl="{permissions:['BALANCE_MANAGEMENT']}"
+        class="border-2 flex items-center mt-5 py-4 px-6 rounded-2xl hover:bg-gray-100 cursor-pointer mr-3"
+        (click)="openBalanceManagementForm()">
+
+
+        <mat-icon svgIcon="balance-recovery" class="mat-icon-4x"></mat-icon>
+
+        <span class="ml-6">Balance Management</span>
+
+    </div>
+
+    <div matRipple *appAccessControl="{permissions:['CREATE_ALLOCATION']}"
+        class="border-2 flex items-center mt-5 py-4 px-6 rounded-2xl hover:bg-gray-100 cursor-pointer mr-3"
+        (click)="openCreateAllocationForm()">
+
+
+        <mat-icon svgIcon="allocation" class="mat-icon-4x"></mat-icon>
+
+        <span class="ml-6">Allocation</span>
+
+    </div>
+
+    <div matRipple *appAccessControl="{permissions:['CREATE_RESIGNATION']}"
+        class="border-2 flex items-center mt-5 py-4 px-6 rounded-2xl hover:bg-gray-100 cursor-pointer mr-3"
+        (click)="openResignationForm()">
+
+
+        <mat-icon svgIcon="resignation" class="mat-icon-3x"></mat-icon>
+
+        <span class="ml-6">Resignation</span>
+
+    </div>
+
+    <div matRipple *appAccessControl="{permissions:['CREATE_TERMINATION']}"
+        class="border-2 flex items-center mt-5 py-4 px-6 rounded-2xl hover:bg-gray-100 cursor-pointer mr-3"
+        (click)="openTerminationForm()">
+
+
+        <mat-icon svgIcon="termination" class="mat-icon-3x"></mat-icon>
+
+        <span class="ml-6">Termination</span>
+
+    </div>
+</div>

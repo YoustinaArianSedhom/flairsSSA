@@ -1,0 +1,31 @@
+# Node.js
+# Build a general Node.js project with npm.
+# Add steps that analyze code, save build artifacts, deploy, and more:
+# https://docs.microsoft.com/azure/devops/pipelines/languages/javascript
+
+trigger:
+- staging
+
+pool:
+  vmImage: ubuntu-latest
+
+steps:
+- task: NodeTool@0
+  inputs:
+    versionSpec: '14.16'
+  displayName: 'Install Node.js'
+- task: Npm@1
+  inputs:
+    command: 'install'
+    customRegistry: 'useFeed'
+    customFeed: 'b9cec47b-61d4-4047-a13d-0e482ae50514/341ef0f7-47ba-49cf-aaeb-04ba0fc9c47e'
+- script: |
+    npm run build:staging
+  displayName: 'npm install and build'
+
+- task: PublishBuildArtifacts@1
+  inputs:
+    PathtoPublish: '/home/vsts/work/1/s/dist'
+    ArtifactName: 'SSA-FE'
+    publishLocation: 'Container'
+    

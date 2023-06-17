@@ -1,0 +1,128 @@
+<ng-container *ngIf="record && column">
+    <div [ngSwitch]="column.type">
+
+
+        <!-- Link cell -->
+        <ng-template ngSwitchCase="link">
+            <ng-container *ngIf="column.value(record)?.title; else noLinkValueTemplate">
+                <app-link [icon]="false" [blank]="false" [link]="column.value(record).link">
+                    {{column.value(record).title}}</app-link>
+            </ng-container>
+
+            <ng-template #noLinkValueTemplate> N/A </ng-template>
+
+        </ng-template>
+
+
+        <ng-template ngSwitchCase="eventEmitter">
+            <span (click)="emitEvent(record, column.value(record))"
+                class="{{setCellClasses(column.view.bodyCell?.classes, record)}}">
+                {{column.value(record).label}}
+            </span>
+
+        </ng-template>
+
+        <!-- Index -->
+        <ng-template ngSwitchCase="index">
+            <span class="{{setCellClasses(column.view.bodyCell?.classes, record)}}">
+                {{column.value(record) + index }}
+            </span>
+
+        </ng-template>
+
+
+        <!-- Email Cell -->
+        <ng-template ngSwitchCase="email">
+            <a href="mailto:{{column.value(record)}}"> {{column.value(record)}}</a>
+        </ng-template>
+
+
+        <!-- Date Cell -->
+        <ng-template ngSwitchCase="date">
+            <span *ngIf="column.value(record); else noDateValueTemplate">{{column.value(record) | date}}</span>
+            <ng-template #noDateValueTemplate>N/A</ng-template>
+        </ng-template>
+
+        <!-- HTML Cell -->
+        <ng-template ngSwitchCase="html">
+            <div *ngIf="column.value(record); else noDateValueTemplate" [innerHTML]="column.value(record)"></div>
+            <ng-template #noDateValueTemplate>N/A</ng-template>
+        </ng-template>
+
+        <!-- Status cell -->
+        <ng-template ngSwitchCase="status">
+            <span class="{{setCellClasses(column.view.bodyCell?.classes, record)}}">
+                {{column.value(record)}}
+            </span>
+        </ng-template>
+
+
+        <!-- Currency cell -->
+        <ng-template ngSwitchCase="currency">
+            <span *ngIf="column.value(record); else noCurrencyValueTemplate">
+                {{column.value(record) | currency:'':'':'1.2'}}
+            </span>
+            <ng-template #noCurrencyValueTemplate>
+                N/A
+            </ng-template>
+        </ng-template>
+
+
+        <!--Labeled Cell-->
+        <ng-template ngSwitchCase='extraInfo'>
+            <span class="flex-col flex items-center justify-center">
+
+                <span class="{{setCellClasses(column.view.bodyCell?.classes, record)}}">
+                    {{column.value(record)}}
+                </span>
+                <span class="{{setExtraInfoClasses(column.view.bodyCell?.extraInfoClasses,record)}}">
+                    {{column.extraInfoValue(record)}}
+                </span>
+            </span>
+        </ng-template>
+
+
+
+        <!--<ng-template ngSwitchCase='withNote'>
+            <div class="my-1 text-center">{{column.value(record).value}}</div>
+            <div *ngIf="column.value(record)?.note" class="flex text-gray-400 text-xs text-center my-1 px-1 rounded">
+
+                <span> {{column.value(record).note}}</span>
+            </div>
+        </ng-template>-->
+
+        <!-- check box Cell -->
+        <ng-template ngSwitchCase="checkbox">
+            <span *ngIf="!column?.disabled(record)">
+
+                <mat-checkbox class="px-3" color="warn" [disabled]="column.disabled(record)"
+                    [checked]="column.value(record)?.checked" (change)="onCheckboxChange($event,record)"></mat-checkbox>
+            </span>
+        </ng-template>
+
+        <!-- Normal cell -->
+        <ng-template ngSwitchDefault>
+            <span class="{{setCellClasses(column.view.bodyCell?.classes, record)}}">
+                {{column.value(record) || 'N/A'}}
+            </span>
+        </ng-template>
+
+
+        <!-- icon cell -->
+        <ng-template ngSwitchCase="icon">
+            <span class="flex-col flex items-center justify-center">
+                <mat-icon matTooltipPosition="above" matTooltipTouchGestures="auto" [matTooltip]="column.value(record)"
+                    class="{{setCellClasses(column.view.bodyCell?.classes, record)}}"
+                    svgIcon="{{column.value(record)}}">
+                </mat-icon>
+                <span *ngIf="column.extraInfoValue"
+                    class="{{setExtraInfoClasses(column.view.bodyCell?.extraInfoClasses,record)}}">
+                    {{column.extraInfoValue(record)}}
+                </span>
+            </span>
+        </ng-template>
+
+
+    </div>
+
+</ng-container>

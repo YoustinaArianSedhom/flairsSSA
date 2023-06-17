@@ -1,0 +1,18 @@
+<div class="bg-white w-full p-1 lg:p-5 mb-6">
+
+    <mat-tab-group dynamicHeight animationDuration="600ms">
+        <mat-tab label="General">
+            <ssa-general-requests-wrapper></ssa-general-requests-wrapper>
+        </mat-tab>
+
+        <mat-tab label="Managers" *appAccessControl="{permissions:['VIEW_MANAGERS_REQUESTS']}">
+            <ssa-managers-requests-wrapper></ssa-managers-requests-wrapper>
+        </mat-tab>
+
+        <mat-tab label="HR" *appAccessControl="{permissions:['CREATE_REFERRAL']}">
+            <ssa-hr-requests-wrapper></ssa-hr-requests-wrapper>
+        </mat-tab>
+    </mat-tab-group>
+
+
+</div>

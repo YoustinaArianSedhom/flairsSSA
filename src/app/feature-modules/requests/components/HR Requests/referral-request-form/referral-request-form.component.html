@@ -1,0 +1,118 @@
+<app-form-modal>
+
+
+    <h2 mat-dialog-title> New Referral Bonus Request</h2>
+
+
+    <mat-dialog-content class="custom-scrolling">
+
+        <form [formGroup]="referralRequestForm">
+
+            <section class="flex flex-wrap">
+
+                <!-- Referrer Name -->
+                <mat-form-field class="flex-100" floatLabel="always">
+                    <mat-label>Referrer</mat-label>
+
+                    <input type="text" placeholder="The employee who will get the bonus" matInput required
+                        formControlName="targetOrganizationEmail" [matAutocomplete]="referrersAutoComplete"
+                        (input)="fireReferrersAutocomplete()" (focus)="onFocusReferrersAutocomplete()" />
+
+                    <mat-error>
+                        <app-validation-error [control]="formControls.targetOrganizationEmail" businessName="Referrer">
+                        </app-validation-error>
+                    </mat-error>
+                    <!--Auto Select-->
+
+                    <mat-autocomplete #referrersAutoComplete="matAutocomplete" class="custom-scrolling"
+                        (optionSelected)="onSelectReferrer($event.option.value)">
+                        <mat-option *ngFor="let referrer of referrersList" [value]="referrer.organizationEmail">
+                            {{ referrer.organizationEmail }}
+                            <span class=' text-gray-400 text-sm'>({{referrer.fullName}})</span>
+                        </mat-option>
+                    </mat-autocomplete>
+                </mat-form-field>
+
+
+                <!-- Entity Name-->
+                <mat-form-field class="flex-100">
+                    <mat-label>Entity</mat-label>
+                    <mat-select formControlName="entityName" required placeholder='Entity'>
+                        <ng-container *ngIf="entityName">
+                            <mat-option [value]="entityName">
+                                {{ entityName }}
+                            </mat-option>
+                        </ng-container>
+                    </mat-select>
+                    <mat-error>
+                        <app-validation-error [control]="formControls.entityName" businessName="Entity">
+                        </app-validation-error>
+                    </mat-error>
+                </mat-form-field>
+
+
+                <!-- Referee Name -->
+                <mat-form-field class="flex-100" floatLabel="always">
+                    <mat-label>Referee</mat-label>
+
+                    <input type="text" placeholder="The employee who got employed" matInput required
+                        formControlName="refereeOrganizationEmail" [matAutocomplete]="refereesAutoComplete"
+                        (input)="fireRefereesAutocomplete()" (focus)="onFocusRefereesAutocomplete()" />
+
+                    <mat-error>
+                        <app-validation-error [control]="formControls.refereeOrganizationEmail" businessName="Referee">
+                        </app-validation-error>
+                    </mat-error>
+                    <!--Auto Select-->
+
+                    <mat-autocomplete #refereesAutoComplete="matAutocomplete" class="custom-scrolling"
+                        (optionSelected)="onSelectReferee()">
+                        <mat-option *ngFor="let referee of refereesList" [value]="referee.organizationEmail">
+                            {{ referee.organizationEmail }}
+                            <span class=' text-gray-400 text-sm'>({{referee.fullName}})</span>
+                        </mat-option>
+                    </mat-autocomplete>
+                </mat-form-field>
+
+
+                <!-- Amount -->
+                <mat-form-field class="flex-100">
+                    <mat-label>Amount</mat-label>
+                    <mat-select matInput placeholder="Amount" formControlName="amount" required>
+                        <mat-option *ngFor="let item of amountList" [value]="item">
+                            {{item}}
+                        </mat-option>
+                    </mat-select>
+                    <mat-error>
+                        <app-validation-error [control]="formControls.amount" businessName="amount">
+                        </app-validation-error>
+                    </mat-error>
+                </mat-form-field>
+
+
+            </section>
+        </form>
+
+    </mat-dialog-content>
+
+
+
+
+
+    <mat-dialog-actions align="end">
+
+        <div class="justify-between flex">
+            <button mat-button mat-dialog-close class="cancel-btn rounded-none" cdkFocusInitial (click)="cancel()">
+                Cancel
+            </button>
+
+            <button mat-button class="action-btn rounded-none" (click)="submit()"
+                [disabled]="referralRequestForm.invalid || refereeIsNotFound">
+                Submit
+            </button>
+        </div>
+
+
+    </mat-dialog-actions>
+
+</app-form-modal>

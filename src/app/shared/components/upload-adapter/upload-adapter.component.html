@@ -1,0 +1,11 @@
+<div class="uploader-wrapper flex flex-col">
+  <ngx-awesome-uploader classList="w-full" #uploader [adapter]="adapter" [fileMaxSize]="3" [totalMaxSize]="3" [uploadType]="'multi'"
+    (validationError)="onValidationError($event)" [fileExtensions]="['pdf', 'jpg', 'jpeg', 'png']"
+    [enableCropper]="false" (removeSuccess)="onRemoveSuccess($event)" (fileAdded)="onFileAdded($event)"
+    [customValidator]="CustomValidatorFun" [captions]="captions" [accept]="'.pdf, .jpg, .jpeg, .png'">
+
+  </ngx-awesome-uploader>
+
+
+  <mat-error *ngIf="errorMsg" class=" py-3 text-center">{{errorMsg}}</mat-error>
+</div>

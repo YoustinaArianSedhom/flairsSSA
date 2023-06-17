@@ -1,0 +1,83 @@
+<app-form-modal>
+    <h2 mat-dialog-title>New Peer-to-Peer Request</h2>
+
+    <mat-dialog-content class="custom-scrolling">
+        <form [formGroup]="peerToPeerForm">
+
+            <section class="flex flex-wrap">
+                <!-- Employee Name -->
+                <mat-form-field class="flex-100">
+                    <mat-label>Employee Name</mat-label>
+
+                    <input type="text" placeholder="Employee name" matInput required
+                        formControlName="targetOrganizationEmail" [matAutocomplete]="employeesAutoComplete"
+                        (input)="fireAutocomplete()" (focus)="onFocusAutoComplete()" />
+
+                    <mat-error>
+                        <app-validation-error [control]="formControls.targetOrganizationEmail"
+                            businessName="Employee name">
+                        </app-validation-error>
+                    </mat-error>
+                    <!--Auto Select-->
+
+                    <mat-autocomplete #employeesAutoComplete="matAutocomplete" class="custom-scrolling">
+                        <mat-option *ngFor="let employee of employeesList" [value]="employee.organizationEmail">
+                            {{ employee.organizationEmail }}
+                            <span class=' text-gray-400 text-sm'>({{employee.fullName}})</span>
+                        </mat-option>
+                    </mat-autocomplete>
+                </mat-form-field>
+
+
+                <!--Reason-->
+                <mat-form-field class="flex-100" hintLabel="Max 500 characters">
+                    <mat-label>Reason</mat-label>
+
+                    <textarea type="text" formControlName="reason" placeholder="Reason" matInput required></textarea>
+
+                    <mat-hint align="end">{{ formControls.reason.value?.length || 0 }}/500</mat-hint>
+
+                    <mat-error>
+                        <app-validation-error [control]="formControls.reason" businessName="Reason">
+                        </app-validation-error>
+                    </mat-error>
+                </mat-form-field>
+
+
+                <!--Message-->
+                <mat-form-field class="flex-100" hintLabel="Max 1000 characters">
+                    <mat-label>Message To Your Colleague</mat-label>
+
+                    <textarea type="text" formControlName="message" placeholder="Message" matInput ></textarea>
+
+                    <mat-hint align="end">{{ formControls.message.value?.length || 0 }}/1000</mat-hint>
+
+                    <mat-error>
+                        <app-validation-error [control]="formControls.message" businessName="Message"
+                            [customValidatorsErrorMessages]="{ 'pattern':'Message value consists of white space only!'}">
+                        </app-validation-error>
+                    </mat-error>
+                </mat-form-field>
+
+            </section>
+
+            <div class="flex-100 mt-6">
+                <p class="text-sm text-gray-500 mt-3">Hint: Voucher will be based on the receiver choice</p>
+            </div>
+
+
+        </form>
+    </mat-dialog-content>
+
+    <mat-dialog-actions align="end">
+        <div class="justify-between flex">
+            <button mat-button mat-dialog-close (click)="cancel()" class="cancel-btn rounded-none" cdkFocusInitial>
+                Cancel
+            </button>
+
+            <button mat-button [disabled]="peerToPeerForm.invalid" class="action-btn rounded-none" (click)="submit()">
+                Submit
+            </button>
+        </div>
+    </mat-dialog-actions>
+</app-form-modal>
